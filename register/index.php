@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AdminLTE 3 | Registration Page</title>
+
+  <!-- Google Font: Source Sans Pro -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="../plugins/fontawesome-free/css/all.min.css">
+  <!-- icheck bootstrap -->
+  <link rel="stylesheet" href="../plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="../dist/css/adminlte.min.css">
+
+  <!-- SweetAlert2 -->
+  <link rel="stylesheet" href="../plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css">
+
+  <!-- Select2 -->
+  <link rel="stylesheet" href="../plugins/select2/css/select2.min.css">
+  <link rel="stylesheet" href="../plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
+
+</head>
+
+<body class="hold-transition register-page">
+	<div class="register-box w-50">
+		<div class="register-logo">
+			<a href="#">
+				<b>Resource Generation Management System </b>(RGMO)
+			</a>
+		</div>
+
+		<div class="card">
+			<div class="card-body register-card-body">
+				<p class="login-box-msg">Create an Account</p>
+
+				<form id="register-user" autocomplete="off">
+					
+					<div class="row">
+						
+						<div class="input-group mb-3 col-4">
+							<input type="text" name="lname" class="form-control" placeholder="Last Name">
+							<div class="input-group-append">
+								<div class="input-group-text">
+									<span class="fas fa-user"></span>
+								</div>
+							</div>
+						</div>
+
+						<div class="input-group mb-3 col-4">
+							<input type="text" name="fname" class="form-control" placeholder="First Name">
+							<div class="input-group-append">
+								<div class="input-group-text">
+									<span class="fas fa-user"></span>
+								</div>
+							</div>
+						</div>
+
+						<div class="input-group mb-3 col-4">
+							<input type="text" name="mname" class="form-control" placeholder="Middle Name">
+							<div class="input-group-append">
+								<div class="input-group-text">
+									<span class="fas fa-user"></span>
+								</div>
+							</div>
+						</div>
+
+					</div>
+					<!-- /.row -->
+
+					<div class="input-group mb-3">
+						<input type="text" name="address" class="form-control" placeholder="Address">
+						<div class="input-group-append">
+							<div class="input-group-text">
+								<span class="fas fa-address-card"></span>
+							</div>
+						</div>
+					</div>
+
+					<div class="row">
+
+						<div class="input-group mb-3 col-4">
+							<select name="sex"><option value=""></option></select>
+						</div>
+
+						<div class="input-group mb-3 col-4">
+							<input type="number" name="contact_number" class="form-control" placeholder="Contact Number">
+							<div class="input-group-append">
+								<div class="input-group-text">
+									<span class="fas fa-phone"></span>
+								</div>
+							</div>
+						</div>
+
+						<div class="input-group mb-3 col-4">
+							<input type="email" name="email" class="form-control" placeholder="Email">
+							<div class="input-group-append">
+								<div class="input-group-text">
+									<span class="fas fa-envelope"></span>
+								</div>
+							</div>
+						</div>
+
+					</div>
+					<!-- /.row -->
+
+					<div class="input-group mb-3">
+						<input type="password" id="pass" name="password" class="form-control" placeholder="Password">
+						<div class="input-group-append">
+							<div class="input-group-text">
+								<span class="fas fa-lock"></span>
+							</div>
+						</div>
+					</div>
+					<div class="input-group mb-3">
+						<input type="password" name="confirm_password" class="form-control" placeholder="Confirm Password">
+						<div class="input-group-append">
+							<div class="input-group-text">
+								<span class="fas fa-lock"></span>
+							</div>
+						</div>
+					</div>
+
+					<div class="row">
+
+						<div class="col-8">
+							<p class="mb-2"></p>
+								<p class="mb-0">
+									<a href="../login" class="text-center">Already Registered? Login here</a>
+								</p>
+						</div>
+
+						<div class="col-4">
+							<button type="submit" class="btn btn-primary btn-block">Register</button>
+						</div>
+
+					</div>
+					<!-- /.row -->
+
+				</form>
+
+			</div>
+			<!-- /.form-box -->
+
+		</div>
+		<!-- /.card -->
+	</div>
+	<!-- /.register-box -->
+
+<!-- jQuery -->
+<script src="../plugins/jquery/jquery.min.js"></script>
+<!-- Bootstrap 4 -->
+<script src="../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- AdminLTE App -->
+<script src="../dist/js/adminlte.min.js"></script>
+
+<!-- Sweet Alert-->
+<script src="../plugins/sweetalert2/sweetalert2.min.js"></script>
+
+<!-- jquery-validation -->
+<script src="../plugins/jquery-validation/jquery.validate.min.js"></script>
+<script src="../plugins/jquery-validation/additional-methods.min.js"></script>
+
+<!-- Select2 -->
+<script src="../plugins/select2/js/select2.full.min.js"></script>
+
+<script>
+
+	$(document).ready(function() {
+
+		// Sex Select2
+		let selectSex = $('#register-user select');
+		let sex_selection = [
+			{"id": 'Male', "text": 'Male'},
+			{"id": 'Female', "text": 'Female'}
+		]
+
+		selectSex.select2({
+			width: '100%',
+			theme: 'bootstrap4',
+			placeholder: 'Select Sex',
+			allowClear: true,
+			data:sex_selection
+		}).on('change', function() {
+			
+			// If has value
+			if($(this).val() != " ") {
+				$(this).removeClass('is-invalid');
+			}
+			else {
+				$(this).addClass('is-invalid');
+			}
+
+		});
+
+		
+		$('#register-user').validate({
+			rules: {
+				lname: {required: true},
+				fname: {required: true},
+				mname: {required: true},
+				address: {required: true},
+				sex: {required: true},
+				contact_number: {required: true, maxlength: 11, minlength: 11},
+				email: {required: true},
+				password: {required: true, minlength: 8},
+				confirm_password: {equalTo: "#pass"}
+			},
+			messages: {
+				confirm_password: "Must be same value with Password"
+			},
+			errorElement: 'span',
+			errorPlacement: function(error, element) {
+				error.addClass('invalid-feedback');
+				element.closest('.input-group').append(error);
+			},
+			highlight: function(element, errorClass, validClass) { $(element).addClass('is-invalid'); },
+			unhighlight: function(element, errorClass, validClass) { $(element).removeClass('is-invalid'); },
+			submitHandler: function(form) {
+			
+				Swal.fire({
+					position: 'top',
+					title: 'Are you sure!',
+					text: 'You want to Register?',
+					showCancelButton: true,
+					confirmButtonColor: '#3085d6',
+					cancelButtonColor: '#d33',
+					confirmButtonText: 'Register',
+				}).then((result) => {
+
+					if(result.isConfirmed) {
+						
+						let formData = new FormData(form);
+
+						$.ajax({
+							url: '../controller/LoginController.php',
+							type: 'POST',
+							processData: false,
+							contentType: false,
+							data:formData,
+							success: function(response) {
+
+								if(response.status == true) {
+
+									Swal.fire({
+										position: 'top',
+										icon: 'success',
+										title: 'Registered!',
+										showConfirmButton: false,
+										timer: 1000
+									}).then(function() {
+										window.location.href = '../login/';
+									});
+
+								}
+								else {
+
+									Swal.fire({
+										position: 'top',
+										icon: 'error',
+										title: response.message,
+										showConfirmButton: true
+									});
+
+								}
+
+							}
+						});
+						
+					}
+					
+				});
+			
+			}// submit handler
+		});// validate
+	
+	});// document ready
+
+</script>
+
+</body>
+</html>
