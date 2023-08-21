@@ -21,13 +21,14 @@
     $db = $DATABASE->getConnection();
     
     // Get password if email matched
-    $query = "SELECT user_id, password FROM tbl_user_login WHERE email = '$user_email' ";
+    $query = "SELECT user_id, password FROM tbl_user_login WHERE email = ? ";
     $stmt = $db->prepare($query);
+    $stmt->bindParam(1, $user_email);
     $stmt->closeCursor();
     $stmt->execute();
     $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    if(!is_null($row)) {
+    if($row) {
 
         if(password_verify($user_pass, $row['password'])) {
 
@@ -38,7 +39,7 @@
             $ROLE = new Role($db, $row['user_id']);
 
             // Create Session
-            $ACCESS = new Access;
+            $ACCESS = new Access();
             $ACCESS->user_id = $row['user_id'];
             $ACCESS->name = $PROFILE->fullname;
             $ACCESS->user_role = $ROLE->role_name;

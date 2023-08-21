@@ -24,6 +24,8 @@
   <link rel="stylesheet" href="../plugins/icheck-bootstrap/icheck-bootstrap.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="../dist/css/adminlte.min.css">
+  <!-- SweetAlert2 -->
+  <link rel="stylesheet" href="../plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css">
 </head>
 
 <body class="hold-transition login-page">
@@ -110,6 +112,8 @@
 <script src="../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <!-- AdminLTE App -->
 <script src="../dist/js/adminlte.min.js"></script>
+<!-- Sweet Alert-->
+<script src="../plugins/sweetalert2/sweetalert2.min.js"></script>
 
 <script>
 
@@ -128,6 +132,8 @@
 				data: formData,
 				success: function(response) {
 
+					console.log("res", response);
+
 					// If Login is Successful
 					if(response) {
 
@@ -138,13 +144,18 @@
 						});
 		
 						setTimeout(function() {
-							window.location.href = ''
+							window.location.href = '../dashboard/';
 						},1000);
-
 
 					}
 					// If not
 					else {
+
+						Swal.mixin({
+							toast: true, position: 'top-end', showConfirmButton: false, timer: 3000
+						}).fire({ 
+							icon: 'error', title: 'Username or Password do not match! Please Try Again!'
+						});
 
 					}
 				}

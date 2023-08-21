@@ -8,6 +8,8 @@
         public $user_role;
         public $name;
 
+        public function __construct() {}
+
         public function sessionUser() {
 
             $data = Session::getInstance();
