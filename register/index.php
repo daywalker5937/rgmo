@@ -234,7 +234,7 @@
 						let formData = new FormData(form);
 
 						$.ajax({
-							url: '../controller/LoginController.php',
+							url: '../controller/RegisterController.php',
 							type: 'POST',
 							processData: false,
 							contentType: false,
