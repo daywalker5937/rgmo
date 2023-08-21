@@ -46,7 +46,7 @@
 
 					<form id="login-user">
 						<div class="input-group mb-3">
-							<input type="email" class="form-control" placeholder="Email">
+							<input type="email" name="_email" class="form-control" placeholder="Email">
 							<div class="input-group-append">
 								<div class="input-group-text">
 									<span class="fas fa-envelope"></span>
@@ -54,7 +54,7 @@
 							</div>
 						</div>
 						<div class="input-group mb-3">
-							<input type="password" class="form-control" placeholder="Password">
+							<input type="password" name="_pass" class="form-control" placeholder="Password">
 							<div class="input-group-append">
 								<div class="input-group-text">
 									<span class="fas fa-lock"></span>
@@ -77,7 +77,6 @@
 
 						</div>
 						<!-- /.row -->
-
 					</form>
 
 					<!-- <p class="mb-1">
@@ -106,10 +105,56 @@
 
 
 <!-- jQuery -->
-<script src="../../plugins/jquery/jquery.min.js"></script>
+<script src="../plugins/jquery/jquery.min.js"></script>
 <!-- Bootstrap 4 -->
-<script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <!-- AdminLTE App -->
-<script src="../../dist/js/adminlte.min.js"></script>
+<script src="../dist/js/adminlte.min.js"></script>
+
+<script>
+
+	$(document).ready(function() {
+
+		$('#login-user').on('submit', function(e) {
+
+			let formData = new FormData(this);
+			e.preventDefault();
+
+			$.ajax({
+				url: '../controller/LoginController.php',
+				type: 'POST',
+				processData: false,
+				contentType: false,
+				data: formData,
+				success: function(response) {
+
+					// If Login is Successful
+					if(response) {
+
+						Swal.mixin({
+							toast: true, position: 'top-end', showConfirmButton: false
+						}).fire({ 
+							icon: 'success', title: 'Login Successful'
+						});
+		
+						setTimeout(function() {
+							window.location.href = ''
+						},1000);
+
+
+					}
+					// If not
+					else {
+
+					}
+				}
+			});
+
+		});// submit
+
+	});// document ready
+
+</script>
+
 </body>
 </html>
