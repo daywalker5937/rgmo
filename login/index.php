@@ -37,9 +37,8 @@
 
 		<div class="login-box">
 			<div class="login-logo">
-				<a href="#">
-					<b>Resource Generation Management System </b>(RGMO)
-				</a>
+				<a href="#"><b>Resource Generation Management Office </b>(RGMO)</a>
+				<div class="row"><a href="#"><i>Rental Services Monitoring System</i></a></div>
 			</div>
 			<!-- /.login-logo -->
 			<div class="card">
