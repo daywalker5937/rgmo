@@ -26,9 +26,8 @@
 <body class="hold-transition register-page">
 	<div class="register-box w-50">
 		<div class="register-logo">
-			<a href="#">
-				<b>Resource Generation Management System </b>(RGMO)
-			</a>
+			<div class="row"><a href="#"><b>Resource Generation Management System </b>(RGMO)</a></div>
+			<div class="row justify-content-center"><a href="#"><i>Rental Services Monitoring System</i></a></div>
 		</div>
 
 		<div class="card">
