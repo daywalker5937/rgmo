@@ -103,19 +103,10 @@
       </li>
 
       <!-- User Profile and Logout Menu -->
-      <li class="nav-item dropdown">
-        <a class="nav-link" data-toggle="dropdown" href="#">
-          <i class="far fa-user"></i>
+      <li class="nav-item">
+        <a href="#" class="nav-link" onclick="signout_user()">
+          <i class="fas fa-sign-out-alt"></i>
         </a>
-        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-          <a href="#" class="dropdown-item">
-            <i class="fas fa-user mr-2"></i> Profile
-          </a>
-          <div class="dropdown-divider"></div>
-          <a href="#" class="dropdown-item" onclick="sign_out_user()">
-            <i class="fas fa-sign-out-alt mr-2"></i> Sign out
-          </a>
-        </div>
       </li>
 
     </ul>
@@ -123,8 +114,11 @@
   <!-- /.navbar -->
 
   <script>
-      function sign_out_user() {
+      function signout_user() {
         answer = confirm("Are you sure you want to logout?");
-        if(answer) { window.location.href = '../objects/logout.php'; }
+        if(answer) {
+          alert('Logged out!');
+          window.location.href = '../objects/logout.php'; 
+        }
       }
   </script>
