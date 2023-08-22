@@ -24,8 +24,8 @@
     <div class="wrapper">
 
         <?php
-            require_once __DIR__ . '/../components/navbar.html';
-            require_once __DIR__ . '/../components/sidebar.html';
+            require_once __DIR__ . '/../components/navbar.php';
+            require_once __DIR__ . '/../components/sidebar.php';
         ?>
 
         <!-- Content Wrapper. Contains page content -->
@@ -35,15 +35,9 @@
             <div class="content-header">
                 <div class="container-fluid">
                     <div class="row mb-2">
-                    <div class="col-sm-6">
-                        <h1 class="m-0">Dashboard</h1>
-                    </div><!-- /.col -->
-                    <div class="col-sm-6">
-                        <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item active">Dashboard v1</li>
-                        </ol>
-                    </div><!-- /.col -->
+                        <div class="col-sm-6">
+                            <h1 class="m-0">Dashboard</h1>
+                        </div><!-- /.col -->
                     </div><!-- /.row -->
                 </div><!-- /.container-fluid -->
             </div>
@@ -60,7 +54,7 @@
                         <div class="inner">
                             <h3>150</h3>
 
-                            <p>New Orders</p>
+                            <p>New Orders <?php echo $SES->role_name; ?></p>
                         </div>
                         <div class="icon">
                             <i class="ion ion-bag"></i>
