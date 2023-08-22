@@ -23,6 +23,7 @@
 
           <!-- Add icons to the links using the .nav-icon class with font-awesome or any other icon font library -->
 
+          <!-- Both Role Dashboard Sidebar -->
           <li class="nav-item">
             <a href="#" class="nav-link active">
               <i class="nav-icon fas fa-tachometer-alt"></i>
@@ -30,33 +31,73 @@
             </a>
           </li>
 
-          <li class="nav-item">
-            <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-map-marker"></i>
-              <p>Location</p>
-            </a>
-          </li>
+          <!-- Admin Sidebar -->
+          <?php if($SES->role_name == 'admin') { ?>
 
-          <li class="nav-item">
-            <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-building"></i>
-              <p>Leaseholder</p>
-            </a>
-          </li>
+            <li class="nav-item">
+              <a href="#" class="nav-link">
+                <i class="nav-icon fas fa-map-marker"></i>
+                <p>Location</p>
+              </a>
+            </li>
 
-          <li class="nav-item">
-            <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-bolt"></i>
-              <p>Services</p>
-            </a>
-          </li>
+            <li class="nav-item">
+              <a href="#" class="nav-link">
+                <i class="nav-icon fas fa-building"></i>
+                <p>Leaseholder</p>
+              </a>
+            </li>
 
-          <li class="nav-item">
-            <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-chart-bar"></i>
-              <p>Reports</p>
-            </a>
-          </li>
+            <li class="nav-item">
+              <a href="#" class="nav-link">
+                <i class="nav-icon fas fa-bolt"></i>
+                <p>Services</p>
+              </a>
+            </li>
+
+            <li class="nav-item">
+              <a href="#" class="nav-link">
+                <i class="nav-icon fas fa-chart-bar"></i>
+                <p>Reports</p>
+              </a>
+            </li>
+
+          <?php } ?>
+
+          <!-- Client Sidebar -->
+          <?php if($SES->role_name == 'client') { ?>
+
+            <li class="nav-item">
+              <a href="#" class="nav-link">
+                <i class="nav-icon fas fa-user"></i>
+                <p>Profile</p>
+              </a>
+            </li>
+
+            <li class="nav-item">
+              <a href="#" class="nav-link">
+                <i class="nav-icon fas fa-bolt"></i>
+                <p>Services</p>
+              </a>
+            </li>
+
+            <li class="nav-item">
+              <a href="#" class="nav-link">
+                <i class="nav-icon fas fa-chart-bar"></i>
+                <p>Reports</p>
+              </a>
+            </li>
+
+            <li class="nav-item">
+              <a href="#" class="nav-link">
+                <i class="nav-icon fas fa-question-circle"></i>
+                <p>About</p>
+              </a>
+            </li>
+
+          <?php } ?>
+
+          
 
         </ul>
       </nav>
