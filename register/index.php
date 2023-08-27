@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>AdminLTE 3 | Registration Page</title>
+  <title>Registration</title>
 
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -34,7 +34,7 @@
 			<div class="card-body register-card-body">
 				<p class="login-box-msg">Create an Account</p>
 
-				<form id="register-user" autocomplete="off">
+				<form id="register-user" autocomplete="off" enctype="multipart/form-data">
 					
 					<div class="row">
 						
@@ -122,6 +122,14 @@
 					</div>
 
 					<div class="row">
+						<div class="form-group col-12">
+							<label>Upload a Picture: </label>
+							<input type="file" id="upload-id" name="upload_pic">
+						</div>
+					</div>
+					<!-- /.row -->
+
+					<div class="row">
 
 						<div class="col-8">
 							<p class="mb-2"></p>
@@ -193,7 +201,28 @@
 
 		});
 
-		
+		$('#upload-id').on('change', function() {
+
+			let file = $('#upload-id').val().split(".");
+
+			// Check file extension if image
+			if(file[file.length - 1] == "jpg" || file[file.length - 1] == "jpeg" || file[file.length - 1] == "png") {}
+			else {
+
+				Swal.fire({
+					position: 'top',
+					icon: 'warning',
+					title: 'Invalid File!',
+					text: 'JPEG, JPG and PNG image file only.',
+					showConfirmButton: true
+				});
+
+				$(this).val('');
+
+			}// else 
+
+		});
+
 		$('#register-user').validate({
 			rules: {
 				lname: {required: true},
@@ -204,7 +233,8 @@
 				contact_number: {required: true, maxlength: 11, minlength: 11},
 				email: {required: true},
 				password: {required: true, minlength: 8},
-				confirm_password: {equalTo: "#pass"}
+				confirm_password: {equalTo: "#pass"},
+				upload_pic: {required: true}
 			},
 			messages: {
 				confirm_password: "Must be same value with Password"
@@ -213,6 +243,7 @@
 			errorPlacement: function(error, element) {
 				error.addClass('invalid-feedback');
 				element.closest('.input-group').append(error);
+				element.closest('.form-group').append(error);
 			},
 			highlight: function(element, errorClass, validClass) { $(element).addClass('is-invalid'); },
 			unhighlight: function(element, errorClass, validClass) { $(element).removeClass('is-invalid'); },
@@ -239,6 +270,8 @@
 							contentType: false,
 							data:formData,
 							success: function(response) {
+
+								console.log("d", response);
 
 								if(response.status == true) {
 

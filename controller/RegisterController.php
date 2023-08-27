@@ -1,15 +1,18 @@
 <?php
 
-    ini_set('display_errors', 1); 
-    ini_set('display_startup_errors', 1); 
-    error_reporting(E_ALL);
+ini_set('display_errors', 1); 
+ini_set('display_startup_errors', 1); 
+error_reporting(E_ALL);
 
-    header("Access-Control-Allow-Methods: POST");
-    header('Content-Type: application/json; charset=utf-8');
+header("Access-Control-Allow-Methods: POST");
+header('Content-Type: application/json; charset=utf-8');
 
-    include_once __DIR__ .  '/../includes/config/database.php';
+include_once __DIR__ .  '/../includes/config/database.php';
 
-    
+try {
+
+    $target_dir = __DIR__ . "/../includes/images/";
+    $target_file = $target_dir . basename($_FILES["upload_pic"]["name"]);
     $last_name = $_POST['lname'];
     $first_name = $_POST['fname'];
     $middle_name = $_POST['mname'];
@@ -19,11 +22,19 @@
     $email_address = $_POST['email'];
     $pass = $_POST['password'];
     $con_pass = $_POST['confirm_password'];
-    
-    // If Password is Same with Confirm Password
-    if($pass == $con_pass) {
+    $file_name = $_FILES["upload_pic"]["name"];
 
-        try {
+    // Check if file already exists
+    if (file_exists($target_file)) {
+        throw new Exception("File Name Already Exists! Try other Name!");
+    }
+
+    // Upload Image
+    if(move_uploaded_file($_FILES["upload_pic"]["tmp_name"], $target_file)) {
+        
+        /** Create User Account **/
+        // If Password is Same with Confirm Password
+        if($pass == $con_pass) {
 
             $DATABASE = new Database();
             $DATABASE->getConnection();
@@ -33,8 +44,8 @@
             
             // Insert to user_info table
             $info_query = "INSERT INTO tbl_user_info 
-                (first_name, last_name, middle_name, address, contact_number, sex)
-                VALUES (?,?,?,?,?,?)
+                (first_name, last_name, middle_name, address, contact_number, sex, user_image)
+                VALUES (?,?,?,?,?,?,?)
             ";
 
             $stmt_info = $DATABASE->connection->prepare($info_query);
@@ -44,6 +55,7 @@
             $stmt_info->bindParam(4, $address);
             $stmt_info->bindParam(5, $contact_number);
             $stmt_info->bindParam(6, $sex);
+            $stmt_info->bindParam(7, $file_name);
             $stmt_info->closeCursor();
             $stmt_info->execute();
 
@@ -70,10 +82,17 @@
 
             echo json_encode(['status' => true]);
 
-        }catch(Exception $e) {
-            echo json_encode(['status' => false, 'message' => $e->getMessage()]);
-        }
+        }// if
 
-    }// if
+    }else {
+        throw new Exception("Something wrong with uploading your image! Please Try Again!");
+    }
+
+}catch(Exception $e) {
+    echo json_encode(['status' => false, 'message' => $e->getMessage()]);
+}
+
+
+    
 
 ?>
