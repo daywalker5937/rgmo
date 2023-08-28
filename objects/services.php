@@ -28,6 +28,16 @@ class Services {
 
     }// get_services
 
+    public function get_available_services() {
+
+        $query = "SELECT * FROM tbl_type_of_service WHERE availability_status = 'Yes' ";
+        $stmt = $this->conn->prepare($query);
+        $stmt->closeCursor();
+        $stmt->execute();
+        $this->services = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    }// get all services
+
 }// class
 
 ?>
