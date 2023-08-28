@@ -207,7 +207,7 @@
         $.ajax({
             url: '../controller/DashboardController.php',
             type: 'POST',
-            data: {case: 'fetch_services'},
+            data: {case: 'fetch service'},
             success: function(data) {
 
                 // Icon Total Number of Services
