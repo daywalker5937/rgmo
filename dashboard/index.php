@@ -205,7 +205,7 @@
         displaySidebar(role, 'Dashboard');
 
         $.ajax({
-            url: '../controller/DashboardController.php',
+            url: '../controller/ServicesController.php',
             type: 'POST',
             data: {case: 'fetch service'},
             success: function(data) {

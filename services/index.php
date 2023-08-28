@@ -96,7 +96,7 @@
 
         // List of Services Available
         $.ajax({
-            url: '../controller/DashboardController.php',
+            url: '../controller/ServicesController.php',
             type: 'POST',
             data: {case: 'available service'},
             success: function(data) {
