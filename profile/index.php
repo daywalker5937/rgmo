@@ -117,18 +117,18 @@
                 let info_col = $($('#basic-info-row div')[1]);
 
                 // Display Image
-                image_col.append($("<img src='../includes/images/"+data.user_image+"' width='100%' alt='Profile Picture'>"));
+                image_col.append($("<img src='../includes/images/"+data.user_image+"' width='80%' alt='Profile Picture'>"));
 
                 // Display User Info
-                info_col.append($("<div class='row p-2'>"+ "<b>Name</b>: "+ data.first_name +" "+ data.middle_name +" "+ data.last_name +"</div>"));
-                info_col.append($("<div class='row p-2'>"+ "<b>Phone Number</b>: "+ data.contact_number +"</div>"));
-                info_col.append($("<div class='row p-2'>"+ "<b>Address</b>: "+ data.address +"</div>"));
-                info_col.append($("<div class='row p-2'>"+ "<b>Email</b>: "+ data.email +"</div>"));
+                info_col.append($("<div class='row p-3'>"+ "<b>Name</b>: "+ data.first_name +" "+ data.middle_name +" "+ data.last_name +"</div>"));
+                info_col.append($("<div class='row p-3'>"+ "<b>Phone Number</b>: "+ data.contact_number +"</div>"));
+                info_col.append($("<div class='row p-3'>"+ "<b>Address</b>: "+ data.address +"</div>"));
+                info_col.append($("<div class='row p-3'>"+ "<b>Email</b>: "+ data.email +"</div>"));
 
             }
         });
 
-    });
+    });// document
 
 </script>
 
