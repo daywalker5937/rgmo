@@ -25,7 +25,7 @@ function displaySidebar(role, page) {
                 // Check if what sidebar will be active
                 if(element.element_text == page) { a.addClass('active') }
 
-                p.text(element.element_text);
+                p.text(" " + element.element_text);
                 i.addClass(element.element_class);
                 a.append(i).append(p);
                 li.append(a);
