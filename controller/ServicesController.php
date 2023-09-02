@@ -21,8 +21,8 @@ function services($db) {
 
 function service_type($db) {
     $SERVICES = new Services($db);
-    $SERVICES->service_id = $_POST['service_id'];
-    return json_encode($SERVICES->id_get_type());
+    $SERVICES->service_name = $_POST['service_name'];
+    return json_encode($SERVICES->idGetType());
 }
 
 switch($_POST['case']) {
