@@ -22,19 +22,18 @@ try {
         ['Transylvania Room', 'Cubao', '500000', 'Room with jacuzzi and veranda', 'yes', 5],
     ];
 
-    foreach($arr as $k => $v) {
+    $r = [
+        ['luxury1.jpg', 'Transylvania Room']
+    ];
 
-        $query = "INSERT INTO tbl_type_of_service (type_name, location, price, description, availability_status, service_id) 
-            VALUES (?,?,?,?,?,?)";
+    foreach($r as $k => $v) {
+
+        $query = "UPDATE tbl_type_of_service SET service_image = ? WHERE type_name = ? ";
         $stmt = $db->prepare($query);
         $stmt->bindParam(1, $v[0]);
         $stmt->bindParam(2, $v[1]);
-        $stmt->bindParam(3, $v[2]);
-        $stmt->bindParam(4, $v[3]);
-        $stmt->bindParam(5, $v[4]);
-        $stmt->bindParam(6, $v[5]);
         $stmt->closeCursor();
-        // $stmt->execute();
+        $stmt->execute();
 
     }
 
