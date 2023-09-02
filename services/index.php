@@ -98,7 +98,7 @@
         $.ajax({
             url: '../controller/ServicesController.php',
             type: 'POST',
-            data: {case: 'available service'},
+            data: {case: 'services'},
             success: function(data) {
                 
                 data.forEach(element => {
@@ -108,7 +108,7 @@
                     let inner = $("<div class='inner'></div>");
 
                     inner.append("<p>"+element.service_name+"</p>");
-                    small_box.append(inner);
+                    small_box.append(inner).css('cursor', 'pointer');
                     div_col.append(small_box);
                     $('#services-row-id').append(div_col);
                     

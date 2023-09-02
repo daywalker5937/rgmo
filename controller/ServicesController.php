@@ -10,14 +10,33 @@ header('Content-Type: application/json; charset=utf-8');
 include_once  __DIR__ . '/../includes/config/database.php';
 include_once __DIR__ . '/../objects/services.php';
 
-function services($service_function) {
-    $DATABASE = new Database();
-    $db = $DATABASE->getConnection();
+$DATABASE = new Database();
+$db = $DATABASE->getConnection();
+
+function services($db) {
     $SERVICES = new Services($db);
-    ($service_function == 'fetch service') ? $SERVICES->get_services() : $SERVICES->get_available_services();
+    $SERVICES->get_services();
     return json_encode($SERVICES->services);
 }
 
-echo services($_POST['case']);
+function service_type($db) {
+    $SERVICES = new Services($db);
+    $SERVICES->service_id = $_POST['service_id'];
+    return json_encode($SERVICES->id_get_type());
+}
+
+switch($_POST['case']) {
+
+    // Get All Services
+    case 'services':
+        echo services($db);
+    break;
+
+    // Get Type of Service depends on service_id
+    case 'fetch type':
+        echo service_type($db);
+    break;
+
+}// switch
 
 ?>

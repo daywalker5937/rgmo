@@ -20,13 +20,24 @@ class Services {
 
     public function get_services() {
 
-        $query = "SELECT * FROM tbl_type_of_service";
+        $query = "SELECT * FROM tbl_list_of_service";
         $stmt = $this->conn->prepare($query);
         $stmt->closeCursor();
         $stmt->execute();
         $this->services = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     }// get_services
+
+    public function id_get_type() {
+
+        $query = "SELECT * FROM tbl_type_of_service WHERE service_id = ? ";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(1, $this->service_id);
+        $stmt->closeCursor();
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    }// get type of services using id
 
     public function get_available_services() {
 
