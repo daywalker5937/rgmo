@@ -15,7 +15,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Profile</title>
+    <title>Services</title>
     <?php require_once __DIR__ . '/../components/link.html'; ?>
 </head>
 
@@ -108,7 +108,10 @@
                     let inner = $("<div class='inner'></div>");
 
                     inner.append("<p>"+element.service_name+"</p>");
-                    small_box.append(inner).css('cursor', 'pointer');
+                    small_box.append(inner).css('cursor', 'pointer').on('click', () => {
+                        window.location.href = 'service_type.php?s=' + element.service_name;
+                    });
+                    
                     div_col.append(small_box);
                     $('#services-row-id').append(div_col);
                     
