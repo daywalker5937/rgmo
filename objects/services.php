@@ -42,9 +42,6 @@ class Services {
 
     public function idGetType() {
 
-        // Service id
-        $this->getServiceId();
-
         $query = "SELECT * FROM tbl_type_of_service WHERE service_id = ? ";
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(1, $this->service_id);
