@@ -26,6 +26,13 @@ function service_type($db) {
     return json_encode($SERVICES->idGetType());
 }
 
+function service_info($db) {
+    $SERVICES = new Services($db);
+    $SERVICES->type_id = $_POST['type_id'];
+    $SERVICES->getServiceInfo();
+    return json_encode($SERVICES);
+}
+
 switch($_POST['case']) {
 
     // Get All Services
@@ -36,6 +43,11 @@ switch($_POST['case']) {
     // Get Type of Service depends on service_id
     case 'fetch type':
         echo service_type($db);
+    break;
+
+    // Get Info of Type
+    case 'service info':
+        echo service_info($db);
     break;
 
 }// switch

@@ -15,7 +15,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Service Type</title>
+    <title>Service Info</title>
     <?php require_once __DIR__ . '/../components/link.html'; ?>
 </head>
 
@@ -47,7 +47,10 @@
             <!-- Main content -->
             <section class="content">
                 <div class="container-fluid">
-                    <div class="card border border-dark rounded p-4"></div>
+                    <div class="row">
+                        <div class="col-6"></div>
+                        <div class="col-6"></div>
+                    </div>
                 </div><!-- /.container-fluid -->
             </section>
             <!-- /.content -->
@@ -79,35 +82,34 @@
         let user_id = "<?php echo $SES->id; ?>";
         let role = "<?php echo $SES->role_name; ?>";
         let service_name = GetURLParameter('s');
+        let type_id =GetURLParameter('type_id');
 
         displaySidebar(role, 'Services');
-        $('h1').text('Services/' + service_name);
+        $('h1').text('Services/' + service_name + '/Information');
 
-        // List of Services Available
+        // Service Info
         $.ajax({
             url: '../controller/ServicesController.php',
             type: 'POST',
-            data: {case: 'fetch type', service_name: service_name},
+            data: {case: 'service info', type_id: type_id},
             success: function(data) {
 
-                let row = $("<div class='row'></div>");
+                let image_col = $($('.col-6')[0]);
+                let info_col = $($('.col-6')[1]);
+
+                let image = $("<img src='../includes/images/"+data.service_image+"' alt='service info image' width='100%'>");
+                let details = 
+                    $(
+                        "<div class='row justify-content-center'><h3>DETAILS</h3></div>" +
+                        "<div class='row justify-content-center'><p>"+ data.description +"</p></div>" +
+                        "<div class='row pl-5'><p><b>Price: </b>"+ data.price +"</p></div>" +
+                        "<div class='row pl-5'><p><b>Location: </b>"+ data.location +"</p></div>"
+                    );
+
+                image_col.append(image);
+                info_col.append(details);
                 
-                data.forEach(element => {
-                    
-                    let div_col = $("<div class='col-sm-6'></div>");
-                    let img = $("<img src='../includes/images/"+element.service_image+"' alt='service image' class='border border-dark' height='200' width='50%'>")
-                        .css('cursor', 'pointer')
-                        .on('click', () => { window.location.href = 'service_info.php?s=' + service_name + '&type_id=' + element.type_id });
-                    let p_name = $("<p class='mb-0'>"+ element.type_name +"</p>");
-                    let p_availability = $("<p> Available: "+ element.availability_status +"</p>");
-
-                    div_col.append(img).append(p_name).append(p_availability);
-                    row.append(div_col);
-
-                });
-
-                // Display Images to card
-                $('.card').append(row);
+                console.log("data", data);
 
             }
         });
