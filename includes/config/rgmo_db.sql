@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 02, 2023 at 03:26 PM
+-- Generation Time: Sep 02, 2023 at 04:42 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -125,15 +125,15 @@ INSERT INTO `tbl_type_of_service` (`type_name`, `location`, `price`, `descriptio
 ('Isabela Farm', 'Isabela', 500000, 'Fruit Farm', 'yes', 'farm1.jpg', 1),
 ('Cagayan Farm', 'Cagayan', 2000000, 'Vegetable Farm', 'yes', 'farm2.jpg', 1),
 ('Ilocos Farm', 'Ilocos Norte', 1200000, 'Seed Farm', 'yes', 'farm3.jpg', 1),
-('Camella Housing', 'Cavite', 300000, '2 story building, 2 rooms with dining area', 'yes', '', 2),
-('Ondoy Housing', 'Antipolo', 400000, 'Bungalo House with full of appliances', 'yes', '', 2),
-('Cherry Housing', 'Teresa', 100000, '3 story house with jacuzzi', 'yes', '', 2),
-('Abuyod Housing', 'Teresa', 800000, '2 story house with 2 room size veranda', 'yes', '', 2),
-('Coffee Stall', 'Manila', 5000, 'Coffee Stall that can accommodate 10 seats', 'yes', '', 3),
-('Pizza Stall', 'Makati', 4000, 'Pizza Stall with Family Size Tables', 'yes', '', 3),
-('Isabela Rice Field', 'Isabela', 800000, 'Good field with water irrigation', 'yes', '', 4),
-('Cagayan Rice Field', 'Cagayan', 900000, 'Good field with water irrigation', 'yes', '', 4),
-('Transylvania Room', 'Cubao', 500000, 'Room with jacuzzi and veranda', 'yes', '', 5);
+('Camella Housing', 'Cavite', 300000, '2 story building, 2 rooms with dining area', 'yes', 'housing1.jpg', 2),
+('Ondoy Housing', 'Antipolo', 400000, 'Bungalo House with full of appliances', 'yes', 'housing2.jpg', 2),
+('Cherry Housing', 'Teresa', 100000, '3 story house with jacuzzi', 'yes', 'housing3.jpg', 2),
+('Abuyod Housing', 'Teresa', 800000, '2 story house with 2 room size veranda', 'yes', 'housing4.jpg', 2),
+('Coffee Stall', 'Manila', 5000, 'Coffee Stall that can accommodate 10 seats', 'yes', 'stall1.jpg', 3),
+('Pizza Stall', 'Makati', 4000, 'Pizza Stall with Family Size Tables', 'yes', 'stall2.jpg', 3),
+('Isabela Rice Field', 'Isabela', 800000, 'Good field with water irrigation', 'yes', 'palay1.jpg', 4),
+('Cagayan Rice Field', 'Cagayan', 900000, 'Good field with water irrigation', 'yes', 'palay2.jpg', 4),
+('Transylvania Room', 'Cubao', 500000, 'Room with jacuzzi and veranda', 'yes', 'luxury1.jpg', 5);
 
 -- --------------------------------------------------------
 
