@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 29, 2023 at 03:44 PM
+-- Generation Time: Sep 02, 2023 at 03:26 PM
 -- Server version: 10.4.28-MariaDB
--- PHP Version: 8.1.17
+-- PHP Version: 8.2.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -33,6 +33,28 @@ CREATE TABLE `tbl_client_form` (
   `status` varchar(100) NOT NULL,
   `service_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_list_of_service`
+--
+
+CREATE TABLE `tbl_list_of_service` (
+  `service_id` int(11) NOT NULL,
+  `service_name` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `tbl_list_of_service`
+--
+
+INSERT INTO `tbl_list_of_service` (`service_id`, `service_name`) VALUES
+(1, 'Farm Lands'),
+(2, 'Staff Housing'),
+(3, 'Stalls and Slots for Canteen/Cafeteria'),
+(4, 'Skim of Palay'),
+(5, 'Biazon Hostel');
 
 -- --------------------------------------------------------
 
@@ -86,24 +108,32 @@ INSERT INTO `tbl_sidebar` (`id`, `element_class`, `element_uri`, `element_text`)
 --
 
 CREATE TABLE `tbl_type_of_service` (
-  `service_id` int(11) NOT NULL,
-  `service_name` varchar(255) NOT NULL,
+  `type_name` varchar(255) NOT NULL,
   `location` varchar(255) NOT NULL,
   `price` int(255) NOT NULL,
   `description` varchar(255) NOT NULL,
-  `availability_status` varchar(50) NOT NULL
+  `availability_status` varchar(50) NOT NULL,
+  `service_image` varchar(255) NOT NULL,
+  `service_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `tbl_type_of_service`
 --
 
-INSERT INTO `tbl_type_of_service` (`service_id`, `service_name`, `location`, `price`, `description`, `availability_status`) VALUES
-(1, 'Farm Lands', '', 0, '', 'Yes'),
-(2, 'Staff Housing', '', 0, '', 'Yes'),
-(3, 'Stalls and slots for canteen/cafeteria', '', 0, '', 'Yes'),
-(4, 'Skim of palay', '', 0, '', 'Yes'),
-(5, 'Biazon Hostel', '', 0, '', 'Yes');
+INSERT INTO `tbl_type_of_service` (`type_name`, `location`, `price`, `description`, `availability_status`, `service_image`, `service_id`) VALUES
+('Isabela Farm', 'Isabela', 500000, 'Fruit Farm', 'yes', 'farm1.jpg', 1),
+('Cagayan Farm', 'Cagayan', 2000000, 'Vegetable Farm', 'yes', 'farm2.jpg', 1),
+('Ilocos Farm', 'Ilocos Norte', 1200000, 'Seed Farm', 'yes', 'farm3.jpg', 1),
+('Camella Housing', 'Cavite', 300000, '2 story building, 2 rooms with dining area', 'yes', '', 2),
+('Ondoy Housing', 'Antipolo', 400000, 'Bungalo House with full of appliances', 'yes', '', 2),
+('Cherry Housing', 'Teresa', 100000, '3 story house with jacuzzi', 'yes', '', 2),
+('Abuyod Housing', 'Teresa', 800000, '2 story house with 2 room size veranda', 'yes', '', 2),
+('Coffee Stall', 'Manila', 5000, 'Coffee Stall that can accommodate 10 seats', 'yes', '', 3),
+('Pizza Stall', 'Makati', 4000, 'Pizza Stall with Family Size Tables', 'yes', '', 3),
+('Isabela Rice Field', 'Isabela', 800000, 'Good field with water irrigation', 'yes', '', 4),
+('Cagayan Rice Field', 'Cagayan', 900000, 'Good field with water irrigation', 'yes', '', 4),
+('Transylvania Room', 'Cubao', 500000, 'Room with jacuzzi and veranda', 'yes', '', 5);
 
 -- --------------------------------------------------------
 
@@ -178,6 +208,12 @@ ALTER TABLE `tbl_client_form`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `tbl_list_of_service`
+--
+ALTER TABLE `tbl_list_of_service`
+  ADD PRIMARY KEY (`service_id`);
+
+--
 -- Indexes for table `tbl_role`
 --
 ALTER TABLE `tbl_role`
@@ -188,12 +224,6 @@ ALTER TABLE `tbl_role`
 --
 ALTER TABLE `tbl_sidebar`
   ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `tbl_type_of_service`
---
-ALTER TABLE `tbl_type_of_service`
-  ADD PRIMARY KEY (`service_id`);
 
 --
 -- Indexes for table `tbl_user_info`
@@ -212,6 +242,12 @@ ALTER TABLE `tbl_client_form`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `tbl_list_of_service`
+--
+ALTER TABLE `tbl_list_of_service`
+  MODIFY `service_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
 -- AUTO_INCREMENT for table `tbl_role`
 --
 ALTER TABLE `tbl_role`
@@ -222,12 +258,6 @@ ALTER TABLE `tbl_role`
 --
 ALTER TABLE `tbl_sidebar`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
-
---
--- AUTO_INCREMENT for table `tbl_type_of_service`
---
-ALTER TABLE `tbl_type_of_service`
-  MODIFY `service_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `tbl_user_info`
