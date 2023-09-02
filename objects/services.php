@@ -28,7 +28,22 @@ class Services {
 
     }// get_services
 
-    public function id_get_type() {
+    // Get Service Id using service name
+    public function getServiceId() {
+
+        $query = "SELECT service_id FROM tbl_list_of_service WHERE service_name = ? ";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(1, $this->service_name);
+        $stmt->closeCursor();
+        $stmt->execute();
+        $this->service_id = $stmt->fetch(PDO::FETCH_ASSOC)['service_id'];
+
+    }// get service id
+
+    public function idGetType() {
+
+        // Service id
+        $this->getServiceId();
 
         $query = "SELECT * FROM tbl_type_of_service WHERE service_id = ? ";
         $stmt = $this->conn->prepare($query);
