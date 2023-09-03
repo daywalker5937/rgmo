@@ -46,11 +46,12 @@
 
             <!-- Main content -->
             <section class="content">
-                <div class="container-fluid">
+                <div class="container-fluid main-content">
                     <div class="row">
                         <div class="col-6"></div>
                         <div class="col-6"></div>
                     </div>
+                    <div class="row w-100 m-2"></div>
                 </div><!-- /.container-fluid -->
             </section>
             <!-- /.content -->
@@ -82,7 +83,7 @@
         let user_id = "<?php echo $SES->id; ?>";
         let role = "<?php echo $SES->role_name; ?>";
         let service_name = GetURLParameter('s');
-        let type_id =GetURLParameter('type_id');
+        let type_id = GetURLParameter('type_id');
 
         displaySidebar(role, 'Services');
         $('h1').text('Services/' + service_name + '/Information');
@@ -94,9 +95,11 @@
             data: {case: 'service info', type_id: type_id},
             success: function(data) {
 
+                // Variables
                 let image_col = $($('.col-6')[0]);
                 let info_col = $($('.col-6')[1]);
-
+                let btn_row = $($('.main-content .row')[1]);
+                let book_btn = $("<div class='col-10'></div><div class='col-2'><button class='btn btn-primary'>I Choose This</button></div>");
                 let image = $("<img src='../includes/images/"+data.service_image+"' alt='service info image' width='100%'>");
                 let details = 
                     $(
@@ -106,10 +109,13 @@
                         "<div class='row pl-5'><p><b>Location: </b>"+ data.location +"</p></div>"
                     );
 
+                // Display Data
                 image_col.append(image);
                 info_col.append(details);
-                
-                console.log("data", data);
+
+                // Button
+                book_btn.on('click', () => { window.location.href = 'client_form.php?type_id=' + data.type_id });
+                btn_row.append(book_btn);
 
             }
         });
