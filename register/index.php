@@ -68,14 +68,23 @@
 					</div>
 					<!-- /.row -->
 
-					<div class="input-group mb-3">
-						<input type="text" name="address" class="form-control" placeholder="Address">
-						<div class="input-group-append">
-							<div class="input-group-text">
-								<span class="fas fa-address-card"></span>
+					<div class="row">
+
+						<div class="input-group mb-3 col-8">
+							<input type="text" name="address" class="form-control" placeholder="Address">
+							<div class="input-group-append">
+								<div class="input-group-text">
+									<span class="fas fa-address-card"></span>
+								</div>
 							</div>
 						</div>
+
+						<div class="input-group mb-3 col-4">
+							<select name="civil_status"><option value=""></option></select>
+						</div>
+
 					</div>
+					<!-- /.row -->
 
 					<div class="row">
 
@@ -186,30 +195,37 @@
 	$(document).ready(function() {
 
 		// Select2 Initializations
-		let selectSex = $($('#register-user select')[0]);
-		let selectRole = $($('#register-user select')[1]);
+		let selectCivilStatus = $($('#register-user select')[0]);
+		let selectSex = $($('#register-user select')[1]);
+		let selectRole = $($('#register-user select')[2]);
+
+		// console.log("selections", $('#register-user select'));
 
 		// Selections
+		let civil_selection = [
+			{"id": 'Single', "text": 'Single'}, 
+			{"id": 'Married', "text": 'Married'},
+			{"id": 'Divorced', "text": 'Divorced'},
+			{"id": 'Widowed', "text": 'Widowed'}
+		];
 		let sex_selection = [{"id": 'Male', "text": 'Male'}, {"id": 'Female', "text": 'Female'}];
 		let role_selection = [{"id": '1', "text": 'Admin'}, {"id": '2', "text": 'Client'}];
 
+		selectCivilStatus.select2({
+			width: '100%',
+			theme: 'bootstrap4',
+			placeholder: 'Select Civil Status',
+			allowClear: true,
+			data:civil_selection
+		}).on('change', function() {($(this).val() == "") ? $(this).addClass('is-invalid') : $(this).removeClass('is-invalid') });
+			
 		selectSex.select2({
 			width: '100%',
 			theme: 'bootstrap4',
 			placeholder: 'Select Sex',
 			allowClear: true,
 			data:sex_selection
-		}).on('change', function() {
-			
-			// If has value
-			if($(this).val() != " ") {
-				$(this).removeClass('is-invalid');
-			}
-			else {
-				$(this).addClass('is-invalid');
-			}
-
-		});// select2 sex
+		}).on('change', function() {($(this).val() == "") ? $(this).addClass('is-invalid') : $(this).removeClass('is-invalid') });
 
 		selectRole.select2({
 			width: '100%',
@@ -217,18 +233,9 @@
 			placeholder: 'Select Role',
 			allowClear: true,
 			data:role_selection
-		}).on('change', function() {
-			
-			// If has value
-			if($(this).val() != " ") {
-				$(this).removeClass('is-invalid');
-			}
-			else {
-				$(this).addClass('is-invalid');
-			}
+		}).on('change', function() {($(this).val() == "") ? $(this).addClass('is-invalid') : $(this).removeClass('is-invalid') });
 
-		});// select2 role
-
+		// Upload Event
 		$('#upload-id').on('change', function() {
 
 			let file = $('#upload-id').val().split(".");
@@ -257,6 +264,7 @@
 				fname: {required: true},
 				mname: {required: true},
 				address: {required: true},
+				civil_status: {required: true},
 				sex: {required: true},
 				role: {required: true},
 				contact_number: {required: true, maxlength: 11, minlength: 11},

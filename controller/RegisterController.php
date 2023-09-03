@@ -17,6 +17,7 @@ try {
     $first_name = $_POST['fname'];
     $middle_name = $_POST['mname'];
     $address = $_POST['address'];
+    $civil_status = $_POST['civil_status'];
     $sex = $_POST['sex'];
     $contact_number = $_POST['contact_number'];
     $email_address = $_POST['email'];
@@ -56,8 +57,8 @@ try {
                 
                 // Insert to user_info table
                 $info_query = "INSERT INTO tbl_user_info 
-                    (first_name, last_name, middle_name, address, contact_number, sex, user_image)
-                    VALUES (?,?,?,?,?,?,?)
+                    (first_name, last_name, middle_name, address, contact_number, sex, user_image, civil_status)
+                    VALUES (?,?,?,?,?,?,?,?)
                 ";
 
                 $stmt_info = $DATABASE->connection->prepare($info_query);
@@ -68,6 +69,7 @@ try {
                 $stmt_info->bindParam(5, $contact_number);
                 $stmt_info->bindParam(6, $sex);
                 $stmt_info->bindParam(7, $file_name);
+                $stmt_info->bindParam(8, $civil_status);
                 $stmt_info->closeCursor();
                 $stmt_info->execute();
 
