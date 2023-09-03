@@ -49,7 +49,7 @@
                     
                     <div class="row">
 
-                        <div class="card col-12">
+                        <div class="card col-12 border border-dark">
 
                             <div class="card-header row">
                                 <div class="col-6"></div>
