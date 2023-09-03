@@ -7,7 +7,7 @@
     if($SES->id == null) {
         header("location: ../login/");
     }
-    else if(isset($SES->id)) {
+    else if(isset($SES->id) && $SES->role_name == 'client') {
 
 ?>
 <!DOCTYPE html>
@@ -58,53 +58,57 @@
 
                             <div class="row mb-2"><h4>Client Information:</h4></div>
 
-                            <div class="row">
+                                <div class="row">
 
-                                <div class="form-group col-4">
-                                    <label>Last Name</label>
-                                    <div class="form-control disabled-bg-color"></div>
+                                    <div class="form-group col-4">
+                                        <label>Last Name</label>
+                                        <div class="form-control disabled-bg-color"></div>
+                                    </div>
+                                    <div class="form-group col-4">
+                                        <label>First Name</label>
+                                        <div class="form-control disabled-bg-color"></div>
+                                    </div>
+
+                                    <div class="form-group col-4">
+                                        <label>Middle Name</label>
+                                        <div class="form-control disabled-bg-color"></div>
+                                    </div>
+
                                 </div>
-                                <div class="form-group col-4">
-                                    <label>First Name</label>
-                                    <div class="form-control disabled-bg-color"></div>
+                                <!-- /.row -->
+
+                                <div class="row">
+
+                                    <div class="form-group col-8">
+                                        <label>Address</label>
+                                        <div class="form-control disabled-bg-color"></div>
+                                    </div>
+                                    <div class="form-group col-4">
+                                        <label>Civil Status</label>
+                                        <div class="form-control disabled-bg-color"></div>
+                                    </div>
+
                                 </div>
+                                <!-- /.row -->
 
-                                <div class="form-group col-4">
-                                    <label>Middle Name</label>
-                                    <div class="form-control disabled-bg-color"></div>
+                                <div class="row">
+
+                                    <div class="form-group col-6">
+                                        <label>Email Address</label>
+                                        <div class="form-control disabled-bg-color"></div>
+                                    </div>
+
+                                    <div class="form-group col-6">
+                                        <label>Contact Number</label>
+                                        <div class="form-control disabled-bg-color"></div>
+                                    </div>
+
                                 </div>
+                                <!-- /.row -->
 
-                            </div>
-                            <!-- /.row -->
-
-                            <div class="row">
-
-                                <div class="form-group col-8">
-                                    <label>Address</label>
-                                    <div class="form-control disabled-bg-color"></div>
+                                <div class="float-right">
+                                    <button type="button" class="btn btn-primary">Submit</button>
                                 </div>
-                                <div class="form-group col-4">
-                                    <label>Civil Status</label>
-                                    <div class="form-control disabled-bg-color"></div>
-                                </div>
-
-                            </div>
-                            <!-- /.row -->
-
-                            <div class="row">
-
-                                <div class="form-group col-6">
-                                    <label>Email Address</label>
-                                    <div class="form-control disabled-bg-color"></div>
-                                </div>
-
-                                <div class="form-group col-6">
-                                    <label>Contact Number</label>
-                                    <div class="form-control disabled-bg-color"></div>
-                                </div>
-
-                            </div>
-                            <!-- /.row -->
 
                         </div>
                         <!-- /.card-body -->
@@ -171,6 +175,45 @@
 
             }
         });
+
+        // Submit Service for Rental
+        $('button').on('click', function(e) {
+
+            e.preventDefault();
+
+            Swal.fire({
+                position: 'top',
+                title: 'Are you sure!',
+                text: 'You want to Submit this Reservation?',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Register',
+            }).then((result) => { 
+
+                if(result.isConfirmed) {
+
+                    $.ajax({
+                        url: '../controller/ServicesController.php',
+                        type: 'POST',
+                        data: {
+                            case: 'submit service', 
+                            type_id: type_id,
+                            user_id: user_id
+                        },
+                        success: function(response) {
+
+                            console.log("response", response);
+
+                        }
+                    });
+
+                }// if
+
+            });// swal
+
+        });// on submit
+
 
     });// document
 
