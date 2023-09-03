@@ -51,7 +51,6 @@
                         <div class="col-6"></div>
                         <div class="col-6"></div>
                     </div>
-                    <div class="row w-100 m-2"></div>
                 </div><!-- /.container-fluid -->
             </section>
             <!-- /.content -->
@@ -98,8 +97,7 @@
                 // Variables
                 let image_col = $($('.col-6')[0]);
                 let info_col = $($('.col-6')[1]);
-                let btn_row = $($('.main-content .row')[1]);
-                let book_btn = $("<div class='col-10'></div><div class='col-2'><button class='btn btn-primary'>I Choose This</button></div>");
+                let book_btn = $("<div class='float-right'><button class='btn btn-primary'>I Choose This</button></div>");
                 let image = $("<img src='../includes/images/"+data.service_image+"' alt='service info image' width='100%'>");
                 let details = 
                     $(
@@ -115,7 +113,7 @@
 
                 // Button
                 book_btn.on('click', () => { window.location.href = 'client_form.php?type_id=' + data.type_id });
-                btn_row.append(book_btn);
+                $('.main-content').append(book_btn);
 
             }
         });
