@@ -47,7 +47,7 @@
             <section class="content">
                 <div class="container-fluid">
 
-                    <div class="card">
+                    <div class="card border border-dark">
 
                         <div class="card-header">
                             <h3>Hi Client!</h3>
