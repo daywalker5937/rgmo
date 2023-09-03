@@ -7,7 +7,7 @@
     if($SES->id == null) {
         header("location: ../login/");
     }
-    else if(isset($SES->id)) {
+    else if(isset($SES->id) && $SES->role_name == 'client') {
 
 ?>
 <!DOCTYPE html>
