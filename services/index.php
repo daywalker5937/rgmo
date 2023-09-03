@@ -31,40 +31,17 @@
         <!-- Content Wrapper. Contains page content -->
         <div class="content-wrapper">
 
-            <!-- Content Header (Page header) -->
-            <div class="content-header">
-                <div class="container-fluid">
-                    <div class="row mb-2">
-                        <div class="col-sm-6">
-                            <h1 class="m-0">List of Services Available</h1>
-                        </div><!-- /.col -->
-                    </div><!-- /.row -->
-                </div><!-- /.container-fluid -->
-            </div>
-            <!-- /.content-header -->
+            <?php 
+            
+                switch($SES->role_name) {
 
-            <!-- Main content -->
-            <section class="content">
-                <div class="container-fluid">
+                    case 'client':
+                        require_once __DIR__ . '/client_index.html';
+                    break;
 
-                    <div class="card border border-dark">
-
-                        <div class="card-header">
-                            <h3>Hi Client!</h3>
-                        </div>
-                        <!-- /.card-header -->
-
-                        <div class="card-body" >
-                            <div class="row" id="services-row-id"></div>
-                        </div>
-                        <!-- /.card-body -->
-
-                    </div>
-                    <!-- /.card -->
-                    
-                </div><!-- /.container-fluid -->
-            </section>
-            <!-- /.content -->
+                }// switch
+            
+            ?>
 
         </div>
         <!-- /.content-wrapper -->
@@ -94,31 +71,39 @@
         let role = "<?php echo $SES->role_name; ?>";
         displaySidebar(role, 'Services');
 
-        // List of Services Available
-        $.ajax({
-            url: '../controller/ServicesController.php',
-            type: 'POST',
-            data: {case: 'services'},
-            success: function(data) {
-                
-                data.forEach(element => {
+        switch(role) {
 
-                    let div_col = $("<div class='col-lg-3 col-6'></div>");
-                    let small_box = $("<div class='small-box bg-info'></div>");
-                    let inner = $("<div class='inner'></div>");
+            case 'client':
 
-                    inner.append("<p>"+element.service_name+"</p>");
-                    small_box.append(inner).css('cursor', 'pointer').on('click', () => {
-                        window.location.href = 'service_type.php?s=' + element.service_name;
-                    });
-                    
-                    div_col.append(small_box);
-                    $('#services-row-id').append(div_col);
-                    
+                // List of Services Available
+                $.ajax({
+                    url: '../controller/ServicesController.php',
+                    type: 'POST',
+                    data: {case: 'services'},
+                    success: function(data) {
+                        
+                        data.forEach(element => {
+
+                            let div_col = $("<div class='col-lg-3 col-6'></div>");
+                            let small_box = $("<div class='small-box bg-info'></div>");
+                            let inner = $("<div class='inner'></div>");
+
+                            inner.append("<p>"+element.service_name+"</p>");
+                            small_box.append(inner).css('cursor', 'pointer').on('click', () => {
+                                window.location.href = 'service_type.php?s=' + element.service_name;
+                            });
+                            
+                            div_col.append(small_box);
+                            $('#services-row-id').append(div_col);
+                            
+                        });
+
+                    }
                 });
 
-            }
-        });
+            break;
+
+        }// switch
 
     });// document
 
