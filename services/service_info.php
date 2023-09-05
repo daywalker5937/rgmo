@@ -101,14 +101,29 @@
                 let image = $("<img src='../includes/images/"+data.service_image+"' alt='service info image' width='100%'>");
                 let details = 
                     $(
-                        "<div class='row justify-content-center'><h3>DETAILS</h3></div>" +
-                        "<div class='row justify-content-center'><p>"+ data.description +"</p></div>" +
-                        "<div class='row pl-5'><p><b>Price: </b>"+ data.price +"</p></div>" +
-                        "<div class='row pl-5'><p><b>Location: </b>"+ data.location +"</p></div>"
+                        "<div class='row justify-content-center'> <h3>DETAILS</h3></div>" +
+                        "<div class='row justify-content-center'>" +
+                            "<div style='width: 80%'>" +
+                                "<div class='row'>"+ data.description +"</div>" +
+                            "</div>" +
+                            "<div style='width: 80%'>" +
+                                "<div class='row mt-2'> <b class='mr-1'>Price:</b> " + data.price + "</div>" +
+                            "</div>" +
+                            "<div style='width: 80%'>" +
+                                "<div class='row mt-2'> <b class='mr-1'>Location:</b> " + data.location + "</div>" +
+                            "</div>" +
+                        "</div>"
                     );
+                
 
-                // Display Data
+                // let price = $("<div class='row'> <div><b>Price:</b>"+ data.price +"</div> </div>");
+                // let location = $("<div class='row'> <div><b>Location:</b>"+ data.location +"</div> </div>");
+
+                // Image
+                image.addClass('shadow-lg p-3 mb-5 bg-white rounded');
                 image_col.append(image);
+
+                // Description
                 info_col.append(details);
 
                 // Button
