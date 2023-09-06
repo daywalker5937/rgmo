@@ -97,7 +97,6 @@
                 // Variables
                 let image_col = $($('.col-6')[0]);
                 let info_col = $($('.col-6')[1]);
-                // let book_btn = $("<div class='float-right'><button class='btn btn-primary'>I Choose This</button></div>");
                 let image = $("<img src='../includes/images/"+data.service_image+"' alt='service info image' width='100%'>");
                 let details = 
                     $(
@@ -113,7 +112,7 @@
                                 "<div class='row mt-2'> <b class='mr-1'>Location:</b> " + data.location + "</div>" +
                             "</div>" +
                             "<div style='width: 80%'>" +
-                                "<div class='row mt-2 float-right'> <button class='btn btn-primary'>I Choose This</button> </div>" +
+                                "<div class='row mt-2 float-right'> <a href='client_form.php?type_id='"+ data.type_id +"' class='btn btn-primary'>I Choose This</a> </div>" +
                             "</div>" +
                         "</div>"
                     );
@@ -124,9 +123,6 @@
 
                 // Description
                 info_col.append(details);
-
-                // Button
-                // book_btn.on('click', () => { window.location.href = 'client_form.php?type_id=' + data.type_id });
 
             }
         });
