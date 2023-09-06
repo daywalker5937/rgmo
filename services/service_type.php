@@ -38,7 +38,7 @@
                         <div class="col-sm-1"> 
                             <a href="#" onclick="history.back()"><i class="fas fa-arrow-left" style="color: black;"></i></a> 
                         </div>
-                        <div class="col-sm-10"> <h1 class="m-0"></h1> </div>
+                        <div class="col-sm-10"> <h4 class="m-0"></h4> </div>
                     </div><!-- /.row -->
                 </div><!-- /.container-fluid -->
             </div>
@@ -81,7 +81,7 @@
         let service_name = GetURLParameter('s');
 
         displaySidebar(role, 'Services');
-        $('h1').text('Services/' + service_name);
+        $('h4').text('Services/' + service_name);
 
         // List of Services Available
         $.ajax({

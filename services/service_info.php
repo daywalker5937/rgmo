@@ -38,7 +38,7 @@
                         <div class="col-sm-1"> 
                             <a href="#" onclick="history.back()"><i class="fas fa-arrow-left" style="color: black;"></i></a> 
                         </div>
-                        <div class="col-sm-10"> <h1 class="m-0"></h1> </div>
+                        <div class="col-sm-10"> <h4 class="m-0"></h4> </div>
                     </div><!-- /.row -->
                 </div><!-- /.container-fluid -->
             </div>
@@ -46,7 +46,7 @@
 
             <!-- Main content -->
             <section class="content">
-                <div class="container-fluid main-content">
+                <div class="container-fluid">
                     <div class="row">
                         <div class="col-6"></div>
                         <div class="col-6"></div>
@@ -85,7 +85,7 @@
         let type_id = GetURLParameter('type_id');
 
         displaySidebar(role, 'Services');
-        $('h1').text('Services/' + service_name + '/Information');
+        $('h4').text('Services/' + service_name + '/Information');
 
         // Service Info
         $.ajax({
@@ -97,7 +97,7 @@
                 // Variables
                 let image_col = $($('.col-6')[0]);
                 let info_col = $($('.col-6')[1]);
-                let book_btn = $("<div class='float-right'><button class='btn btn-primary'>I Choose This</button></div>");
+                // let book_btn = $("<div class='float-right'><button class='btn btn-primary'>I Choose This</button></div>");
                 let image = $("<img src='../includes/images/"+data.service_image+"' alt='service info image' width='100%'>");
                 let details = 
                     $(
@@ -112,6 +112,9 @@
                             "<div style='width: 80%'>" +
                                 "<div class='row mt-2'> <b class='mr-1'>Location:</b> " + data.location + "</div>" +
                             "</div>" +
+                            "<div style='width: 80%'>" +
+                                "<div class='row mt-2 float-right'> <button class='btn btn-primary'>I Choose This</button> </div>" +
+                            "</div>" +
                         "</div>"
                     );
 
@@ -123,8 +126,7 @@
                 info_col.append(details);
 
                 // Button
-                book_btn.on('click', () => { window.location.href = 'client_form.php?type_id=' + data.type_id });
-                $('.main-content').append(book_btn);
+                // book_btn.on('click', () => { window.location.href = 'client_form.php?type_id=' + data.type_id });
 
             }
         });
