@@ -38,7 +38,7 @@
                         <div class="col-sm-1"> 
                             <a href="#" onclick="history.back()"><i class="fas fa-arrow-left" style="color: black;"></i></a> 
                         </div>
-                        <div class="col-sm-10"> <h1 class="m-0">Services</h1> </div>
+                        <div class="col-sm-10"> <h4 class="m-0">Services</h4> </div>
                     </div><!-- /.row -->
                 </div><!-- /.container-fluid -->
             </div>
