@@ -114,10 +114,6 @@
                             "</div>" +
                         "</div>"
                     );
-                
-
-                // let price = $("<div class='row'> <div><b>Price:</b>"+ data.price +"</div> </div>");
-                // let location = $("<div class='row'> <div><b>Location:</b>"+ data.location +"</div> </div>");
 
                 // Image
                 image.addClass('shadow-lg p-3 mb-5 bg-white rounded');
