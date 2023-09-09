@@ -131,8 +131,6 @@
 				data: formData,
 				success: function(response) {
 
-					console.log("res", response);
-
 					// If Login is Successful
 					if(response) {
 
