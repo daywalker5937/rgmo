@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 10, 2023 at 07:17 AM
+-- Generation Time: Sep 10, 2023 at 03:59 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -154,17 +154,6 @@ CREATE TABLE `tbl_user_info` (
   `civil_status` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `tbl_user_info`
---
-
-INSERT INTO `tbl_user_info` (`user_id`, `first_name`, `last_name`, `middle_name`, `address`, `contact_number`, `sex`, `user_image`, `civil_status`) VALUES
-(1, 'John Edward', 'Rosas', 'Sarabia', 'Antipolo City', '48628948562', 'Male', 'me.jpg', 'Single'),
-(2, 'Mary Grace', 'Ortega', 'Wañia', 'Isabela', '63985725684', 'Female', '302253-Nezuko-Cute-Kimetsu-no-Yaiba-4K.jpg', 'Single'),
-(3, 'Rasmus', 'Lerdorf', 'Php', 'Canada', '2147483647', 'Male', 'control.jpg', 'Married'),
-(4, 'Mary Grace', 'Ortega', 'Wañia', 'Isabela', '85628425687', 'Female', 'Igloo_outside.jpg', 'Single'),
-(5, 'Admin', 'LN', 'MN', 'address', '2147483647', 'Male', 'sample 2.png', 'Single');
-
 -- --------------------------------------------------------
 
 --
@@ -177,17 +166,6 @@ CREATE TABLE `tbl_user_login` (
   `user_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `tbl_user_login`
---
-
-INSERT INTO `tbl_user_login` (`email`, `password`, `user_id`) VALUES
-('john@gmail.com', '$2y$10$yyklLdMmVgvbR9ULYvMLm.KnbraeadNspT3bqIZATFkTHpAmteCbC', 1),
-('marygrace@gmail.com', '$2y$10$cmIGZkITB0VYLi0nrSBgv.uBxvyP7hs5Z.Cw4jjVCxRXnSsqgwlTO', 2),
-('rasmus@gmail.com', '$2y$10$OhJBvRHplj39Z0aD.3peieklpqgMHyznOE2Wx51YbIDvhm1ScEkJe', 3),
-('marygrace23@gmail.com', '$2y$10$gsMYbBfSZrst0Nr/vbPM3ukdHJZhhiLbkmB/G1qxr0Mv2Gxus7pVW', 4),
-('admin@gmail.com', '$2y$10$E9NPTH4cnGaN7XzMFEPTbeUSDnXLLWedRCIC.AS9oTrF8.2ZesB7i', 5);
-
 -- --------------------------------------------------------
 
 --
@@ -198,17 +176,6 @@ CREATE TABLE `tbl_user_role` (
   `user_id` int(11) NOT NULL,
   `role_id` int(2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `tbl_user_role`
---
-
-INSERT INTO `tbl_user_role` (`user_id`, `role_id`) VALUES
-(1, 2),
-(2, 2),
-(3, 1),
-(4, 2),
-(5, 1);
 
 --
 -- Indexes for dumped tables
@@ -288,7 +255,7 @@ ALTER TABLE `tbl_type_of_service`
 -- AUTO_INCREMENT for table `tbl_user_info`
 --
 ALTER TABLE `tbl_user_info`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
