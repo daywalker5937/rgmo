@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 03, 2023 at 09:10 AM
+-- Generation Time: Sep 10, 2023 at 07:17 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -95,7 +95,7 @@ CREATE TABLE `tbl_sidebar` (
 INSERT INTO `tbl_sidebar` (`id`, `element_class`, `element_uri`, `element_text`) VALUES
 (1, 'fas fa-tachometer-alt', '../dashboard/', 'Dashboard'),
 (2, 'fas fa-map-marker', '../location/', 'Location'),
-(3, 'fas fa-user', '../leaseholder/', 'Leaseholder'),
+(3, 'fas fa-user', '../tenants/', 'Tenants'),
 (4, 'fas fa-user', '../profile/', 'Profile'),
 (5, 'fas fa-bolt', '../services/', 'Services'),
 (6, 'fas fa-chart-bar', '../reports/', 'Reports'),
@@ -148,7 +148,7 @@ CREATE TABLE `tbl_user_info` (
   `last_name` varchar(100) NOT NULL,
   `middle_name` varchar(100) NOT NULL,
   `address` varchar(255) NOT NULL,
-  `contact_number` int(11) NOT NULL,
+  `contact_number` varchar(11) NOT NULL,
   `sex` varchar(6) NOT NULL,
   `user_image` varchar(255) NOT NULL,
   `civil_status` varchar(50) NOT NULL
@@ -159,8 +159,11 @@ CREATE TABLE `tbl_user_info` (
 --
 
 INSERT INTO `tbl_user_info` (`user_id`, `first_name`, `last_name`, `middle_name`, `address`, `contact_number`, `sex`, `user_image`, `civil_status`) VALUES
-(1, 'John Edward', 'Rosas', 'Sarabia', 'Antipolo City', 2147483647, 'Male', 'me.jpg', 'Single'),
-(2, 'Mary Grace', 'Ortega', 'Wañia', 'Isabela', 2147483647, 'Female', '302253-Nezuko-Cute-Kimetsu-no-Yaiba-4K.jpg', 'Single');
+(1, 'John Edward', 'Rosas', 'Sarabia', 'Antipolo City', '48628948562', 'Male', 'me.jpg', 'Single'),
+(2, 'Mary Grace', 'Ortega', 'Wañia', 'Isabela', '63985725684', 'Female', '302253-Nezuko-Cute-Kimetsu-no-Yaiba-4K.jpg', 'Single'),
+(3, 'Rasmus', 'Lerdorf', 'Php', 'Canada', '2147483647', 'Male', 'control.jpg', 'Married'),
+(4, 'Mary Grace', 'Ortega', 'Wañia', 'Isabela', '85628425687', 'Female', 'Igloo_outside.jpg', 'Single'),
+(5, 'Admin', 'LN', 'MN', 'address', '2147483647', 'Male', 'sample 2.png', 'Single');
 
 -- --------------------------------------------------------
 
@@ -180,7 +183,10 @@ CREATE TABLE `tbl_user_login` (
 
 INSERT INTO `tbl_user_login` (`email`, `password`, `user_id`) VALUES
 ('john@gmail.com', '$2y$10$yyklLdMmVgvbR9ULYvMLm.KnbraeadNspT3bqIZATFkTHpAmteCbC', 1),
-('marygrace@gmail.com', '$2y$10$cmIGZkITB0VYLi0nrSBgv.uBxvyP7hs5Z.Cw4jjVCxRXnSsqgwlTO', 2);
+('marygrace@gmail.com', '$2y$10$cmIGZkITB0VYLi0nrSBgv.uBxvyP7hs5Z.Cw4jjVCxRXnSsqgwlTO', 2),
+('rasmus@gmail.com', '$2y$10$OhJBvRHplj39Z0aD.3peieklpqgMHyznOE2Wx51YbIDvhm1ScEkJe', 3),
+('marygrace23@gmail.com', '$2y$10$gsMYbBfSZrst0Nr/vbPM3ukdHJZhhiLbkmB/G1qxr0Mv2Gxus7pVW', 4),
+('admin@gmail.com', '$2y$10$E9NPTH4cnGaN7XzMFEPTbeUSDnXLLWedRCIC.AS9oTrF8.2ZesB7i', 5);
 
 -- --------------------------------------------------------
 
@@ -199,7 +205,10 @@ CREATE TABLE `tbl_user_role` (
 
 INSERT INTO `tbl_user_role` (`user_id`, `role_id`) VALUES
 (1, 2),
-(2, 2);
+(2, 2),
+(3, 1),
+(4, 2),
+(5, 1);
 
 --
 -- Indexes for dumped tables
@@ -279,7 +288,7 @@ ALTER TABLE `tbl_type_of_service`
 -- AUTO_INCREMENT for table `tbl_user_info`
 --
 ALTER TABLE `tbl_user_info`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
