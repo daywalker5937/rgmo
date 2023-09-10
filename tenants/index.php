@@ -126,7 +126,7 @@
                 let action_buttons = 
                 $(
                     "<div>" +
-                        "<button class='btn btn-success mr-2'>Edit</button>" +
+                        "<button class='btn btn-success mr-2'>Update</button>" +
                         "<button class='btn btn-danger'>Delete</button>" +
                     "</div>"
                 );
