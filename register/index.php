@@ -308,8 +308,6 @@
 							data:formData,
 							success: function(response) {
 
-								console.log("d", response);
-
 								if(response.status == true) {
 
 									Swal.fire({
