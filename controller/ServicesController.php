@@ -33,6 +33,15 @@ function service_info($db) {
     return json_encode($SERVICES);
 }
 
+function allServiceType($db) {
+    $SERVICES = new Services($db);
+    return json_encode($SERVICES->getAllType());
+}
+
+function submit_process($db) {
+    $SERVICES = new Services($db);
+}
+
 switch($_POST['case']) {
 
     // Get All Services
@@ -48,6 +57,11 @@ switch($_POST['case']) {
     // Get Info of Type
     case 'service info':
         echo service_info($db);
+    break;
+
+    // Get All Type of Services
+    case 'all types':
+        echo allServiceType($db);
     break;
 
 }// switch

@@ -87,6 +87,30 @@ class Services {
 
     }// service info
 
+    public function getAllType() {
+
+        $query = "SELECT * FROM tbl_type_of_service";
+        $stmt = $this->conn->prepare($query);
+        $stmt->closeCursor();
+        $stmt->execute();
+        $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        foreach($data as $k => $v) {
+
+            $q = "SELECT service_name FROM tbl_list_of_service WHERE service_id = ? ";
+            $s = $this->conn->prepare($q);
+            $s->bindParam(1, $v['service_id']);
+            $s->closeCursor();
+            $s->execute();
+
+            $data[$k]['service_id'] = $s->fetch(PDO::FETCH_ASSOC)['service_name'];
+
+        }
+
+        return $data;
+
+    }// get all type of services
+
 }// class
 
 ?>
