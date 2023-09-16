@@ -26,6 +26,14 @@
   <link rel="stylesheet" href="../dist/css/adminlte.min.css">
   <!-- SweetAlert2 -->
   <link rel="stylesheet" href="../plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css">
+
+  <style>
+	#caps-pass {
+		display: none;
+		color: red;
+		font-weight: bold;
+	}
+  </style>
 </head>
 
 <body class="hold-transition login-page">
@@ -55,13 +63,14 @@
 							</div>
 						</div>
 						<div class="input-group mb-3">
-							<input type="password" name="_pass" class="form-control" placeholder="Password">
+							<input type="password" id="_pass" name="_pass" class="form-control" placeholder="Password">
 							<div class="input-group-append">
 								<div class="input-group-text">
-									<span class="fas fa-lock"></span>
+								<i class="fas fa-eye" id="togglePass" style="cursor: pointer;"></i>
 								</div>
 							</div>
 						</div>
+						<p id="caps-pass">Caps Lock is ON</p>
 
 						<div class="row">
 
@@ -113,6 +122,8 @@
 <script src="../dist/js/adminlte.min.js"></script>
 <!-- Sweet Alert-->
 <script src="../plugins/sweetalert2/sweetalert2.min.js"></script>
+<!-- Password Show or Hide -->
+<script src="../components/pass-show-hide.js"></script>
 
 <script>
 
