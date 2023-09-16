@@ -50,12 +50,11 @@
   </div>
   <!-- /.card -->
 
-  <div class="row justify-content-center"><h3>Welcome to</h3></div>
-  <div class="row justify-content-center"><h4>Resource Generation Management Office <i>(RGMO)</i></h4></div>
-  <div class="row justify-content-center"><h4>Rental Services Monitoring System</h4></div>
+  <div class="row justify-content-center"><h2>Resource Generation Management Office <i>(RGMO)</i></h2></div>
+  <div class="row justify-content-center"><h2>Rental Services Monitoring System</h2></div>
 
   <div class="row justify-content-center">
-    <div id="carousel-main-div" class="carousel slide border border-dark" style="height: 300px; width: 400px;" data-ride="carousel">
+    <div id="carousel-main-div" class="carousel slide border border-dark mt-5" style="height: 300px; width: 400px;" data-ride="carousel">
       <ol class="carousel-indicators"></ol>
       <div class="carousel-inner"></div>
       <a class="carousel-control-prev" href="#carousel-main-div" role="button" data-slide="prev">
@@ -69,7 +68,7 @@
     </div>
   </div>
 
-  <div class="row justify-content-center mt-5"><h3><u>Available Services</u></h3></div>
+  <div class="row justify-content-center mt-5"><h5>Available Services</h5></div>
   <div class="row w-100 justify-content-center" id="services-display-div"></div>
 
 <!-- REQUIRED SCRIPTS -->
