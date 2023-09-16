@@ -21,6 +21,14 @@
   <link rel="stylesheet" href="../plugins/select2/css/select2.min.css">
   <link rel="stylesheet" href="../plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
 
+  <style>
+	#caps-pass, #caps-confirm {
+		display: none;
+		color: red;
+		font-weight: bold;
+	}
+  </style>
+
 </head>
 
 <body class="hold-transition register-page">
@@ -123,22 +131,23 @@
 					<!-- /.row -->
 
 					<div class="input-group mb-3">
-						<input type="password" id="pass" name="password" class="form-control" placeholder="Password">
+						<input type="password" id="_pass" name="password" class="form-control" placeholder="Password">
 						<div class="input-group-append">
 							<div class="input-group-text">
-								<span class="fas fa-lock"></span>
+								<i class="fas fa-eye" id="togglePass" style="cursor: pointer;"></i>
 							</div>
 						</div>
 					</div>
+					<p id="caps-pass">Caps Lock is ON</p>
 					<div class="input-group mb-3">
-						<input type="password" name="confirm_password" class="form-control" placeholder="Confirm Password">
+						<input type="password" id="_confirm-pass" name="confirm_password" class="form-control" placeholder="Confirm Password">
 						<div class="input-group-append">
 							<div class="input-group-text">
-								<span class="fas fa-lock"></span>
+								<i class="fas fa-eye" id="toggleConfirm" style="cursor: pointer;"></i>
 							</div>
 						</div>
 					</div>
-
+					<p id="caps-confirm">Caps Lock is ON</p>
 					<div class="row">
 						<div class="form-group col-12">
 							<label>Upload a Picture: </label>
@@ -179,16 +188,15 @@
 <script src="../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <!-- AdminLTE App -->
 <script src="../dist/js/adminlte.min.js"></script>
-
 <!-- Sweet Alert-->
 <script src="../plugins/sweetalert2/sweetalert2.min.js"></script>
-
 <!-- jquery-validation -->
 <script src="../plugins/jquery-validation/jquery.validate.min.js"></script>
 <script src="../plugins/jquery-validation/additional-methods.min.js"></script>
-
 <!-- Select2 -->
 <script src="../plugins/select2/js/select2.full.min.js"></script>
+<!-- Passsword Show or Hide -->
+<script src="../components/pass-show-hide.js"></script>
 
 <script>
 
@@ -270,7 +278,7 @@
 				contact_number: {required: true, maxlength: 11, minlength: 11},
 				email: {required: true},
 				password: {required: true, minlength: 8},
-				confirm_password: {equalTo: "#pass"},
+				confirm_password: {equalTo: "#_pass"},
 				upload_pic: {required: true}
 			},
 			messages: {
