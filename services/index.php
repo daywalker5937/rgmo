@@ -4,10 +4,7 @@
 
     $SES = Session::getInstance();
 
-    if($SES->id == null) {
-        header("location: ../login/");
-    }
-    else if(isset($SES->id)) {
+    if(isset($SES->id)) {
 
 ?>
 <!DOCTYPE html>
@@ -110,7 +107,10 @@
 </script>
 
 <?php
-    }else {
+    }else if(isset($_GET['direct_service'])){
+        require_once __DIR__ . '/direct_service.php';
+    }
+    else {
         header("location: ../objects/logout.php");
     }
 ?>

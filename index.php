@@ -127,7 +127,7 @@
 
         data.forEach(element => {
           
-          let col = $("<div class='col-2'></div>");
+          let col = $("<div class='col-2' style='cursor: pointer;'></div>");
           let small_box = $("<div class='small-box bg-success'></div>");
           let inner_box = $("<div class='inner'>" +
             "<small>"+element.service_name+"</small>" +
@@ -137,7 +137,9 @@
           "</div>");
 
           small_box.append(inner_box);
-          col.append(small_box);
+          col.append(small_box).on('click', function() {
+            window.location.href = 'services/?direct_service=' + element.service_name;
+          });
           $('#services-display-div').append(col);
 
         });// foreach
