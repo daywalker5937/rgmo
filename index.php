@@ -51,9 +51,8 @@
   <!-- /.card -->
 
   <div class="row justify-content-center"><h3>Welcome to</h3></div>
-  <div class="row justify-content-center"><h4>Resource Generation Management</h4></div>
-  <div class="row justify-content-center"><h4>Office <i>(RGMO) Rental Services</i></h4></div>
-  <div class="row justify-content-center"><h4>Monitoring System</h4></div>
+  <div class="row justify-content-center"><h4>Resource Generation Management Office <i>(RGMO)</i></h4></div>
+  <div class="row justify-content-center"><h4>Rental Services Monitoring System</h4></div>
 
   <div class="row justify-content-center">
     <div id="carousel-main-div" class="carousel slide border border-dark" style="height: 300px; width: 400px;" data-ride="carousel">
@@ -71,7 +70,7 @@
   </div>
 
   <div class="row justify-content-center mt-5"><h3><u>Available Services</u></h3></div>
-  <div class="row w-100" id="services-display-div"></div>
+  <div class="row w-100 justify-content-center" id="services-display-div"></div>
 
 <!-- REQUIRED SCRIPTS -->
 
@@ -120,6 +119,32 @@
       }
     });
 
+    // Get List of Services
+    $.ajax({
+      url: 'controller/ServicesController.php',
+      type: 'POST',
+      data: {case: 'services'},
+      success: function(data) {
+
+        data.forEach(element => {
+          
+          let col = $("<div class='col-2'></div>");
+          let small_box = $("<div class='small-box bg-success'></div>");
+          let inner_box = $("<div class='inner'>" +
+            "<small>"+element.service_name+"</small>" +
+            "<div class='icon'>" +
+              "<i class='ion ion-bag'></i>" +
+            "</div>" +
+          "</div>");
+
+          small_box.append(inner_box);
+          col.append(small_box);
+          $('#services-display-div').append(col);
+
+        });// foreach
+
+      }
+    });
 
   });//ready
 
