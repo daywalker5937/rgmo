@@ -53,49 +53,31 @@
                         <div class="row justify-content-center">
 
                             <div class="col-lg-3 col-4">
-                                <!-- small box -->
                                 <div class="small-box bg-info">
-                                <div class="inner">
-                                    <h3>150</h3>
-
-                                    <p>New Orders</p>
-                                </div>
-                                <div class="icon">
-                                    <i class="ion ion-bag"></i>
-                                </div>
-                                <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                                    <div class="inner">
+                                        <h3>5</h3>
+                                        <p>Total Number of Tenants</p>
+                                    </div>
                                 </div>
                             </div>
                             <!-- ./col -->
 
                             <div class="col-lg-3 col-4">
-                                <!-- small box -->
                                 <div class="small-box bg-info">
-                                <div class="inner">
-                                    <h3>150</h3>
-
-                                    <p>New Orders</p>
-                                </div>
-                                <div class="icon">
-                                    <i class="ion ion-bag"></i>
-                                </div>
-                                <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                                    <div class="inner">
+                                        <h3>5</h3>
+                                        <p>Total Number of Rental Service Available</p>
+                                    </div>
                                 </div>
                             </div>
                             <!-- ./col -->
 
                             <div class="col-lg-3 col-4">
-                                <!-- small box -->
                                 <div class="small-box bg-info">
-                                <div class="inner">
-                                    <h3>150</h3>
-
-                                    <p>New Orders</p>
-                                </div>
-                                <div class="icon">
-                                    <i class="ion ion-bag"></i>
-                                </div>
-                                <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                                    <div class="inner">
+                                        <h3>5</h3>
+                                        <p>Total Number of Person's Paid</p>
+                                    </div>
                                 </div>
                             </div>
                             <!-- ./col -->
@@ -105,38 +87,44 @@
 
                         <div class="row justify-content-center">
 
-                            <div class="col-lg-3 col-4">
-                                <!-- small box -->
+                        <div class="col-lg-3 col-4">
                                 <div class="small-box bg-info">
-                                <div class="inner">
-                                    <h3>150</h3>
-
-                                    <p>New Orders</p>
-                                </div>
-                                <div class="icon">
-                                    <i class="ion ion-bag"></i>
-                                </div>
-                                <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                                    <div class="inner">
+                                        <h3>5</h3>
+                                        <p>Total Number of Occupied Slots</p>
+                                    </div>
                                 </div>
                             </div>
                             <!-- ./col -->
 
                             <div class="col-lg-3 col-4">
-                                <!-- small box -->
                                 <div class="small-box bg-info">
-                                <div class="inner">
-                                    <h3>150</h3>
-
-                                    <p>New Orders</p>
-                                </div>
-                                <div class="icon">
-                                    <i class="ion ion-bag"></i>
-                                </div>
-                                <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                                    <div class="inner">
+                                        <h3>5</h3>
+                                        <p>Pending Request</p>
+                                    </div>
                                 </div>
                             </div>
                             <!-- ./col -->
 
+                        </div>
+                        <!-- /.row -->
+
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h4>List of Payments</h4>
+                                    </div>
+                                    <!-- /.card-header -->
+                                    <div class="card-body">
+                                        <table class="table table-bordered table-striped"></table>
+                                    </div>
+                                    <!-- /.card-body -->
+                                </div>
+                                <!-- /.card -->
+                            </div>
+                            <!-- /.col-12 -->
                         </div>
                         <!-- /.row -->
 
