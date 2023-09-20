@@ -207,8 +207,6 @@
 		let selectSex = $($('#register-user select')[1]);
 		let selectRole = $($('#register-user select')[2]);
 
-		// console.log("selections", $('#register-user select'));
-
 		// Selections
 		let civil_selection = [
 			{"id": 'Single', "text": 'Single'}, 
@@ -307,6 +305,7 @@
 					if(result.isConfirmed) {
 						
 						let formData = new FormData(form);
+						formData.append('case', 'register');
 
 						$.ajax({
 							url: '../controller/RegisterController.php',
