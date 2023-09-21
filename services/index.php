@@ -82,7 +82,7 @@
                         data.forEach(element => {
 
                             let div_col = $("<div class='col-lg-3 col-6'></div>");
-                            let small_box = $("<div class='small-box bg-info'></div>");
+                            let small_box = $("<div class='small-box bg-success'></div>");
                             let inner = $("<div class='inner'></div>");
 
                             inner.append("<p>"+element.service_name+"</p>");
