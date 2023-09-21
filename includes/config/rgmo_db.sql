@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 10, 2023 at 03:59 PM
+-- Generation Time: Sep 21, 2023 at 03:43 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -34,6 +34,16 @@ CREATE TABLE `tbl_client_form` (
   `service_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `tbl_client_form`
+--
+
+INSERT INTO `tbl_client_form` (`id`, `client_id`, `status`, `service_id`) VALUES
+(1, 12, 'Pending', 2),
+(2, 13, 'Pending', 12),
+(3, 10, 'Pending', 10),
+(4, 10, 'Pending', 12);
+
 -- --------------------------------------------------------
 
 --
@@ -55,6 +65,32 @@ INSERT INTO `tbl_list_of_service` (`service_id`, `service_name`) VALUES
 (3, 'Stalls and Slots for Canteen/Cafeteria'),
 (4, 'Skim of Palay'),
 (5, 'Biazon Hostel');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_payments`
+--
+
+CREATE TABLE `tbl_payments` (
+  `payment_id` int(11) NOT NULL,
+  `service_price` int(255) NOT NULL,
+  `total_paid` int(255) NOT NULL,
+  `due_date` date NOT NULL,
+  `form_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_payment_logs`
+--
+
+CREATE TABLE `tbl_payment_logs` (
+  `client_id` int(11) NOT NULL,
+  `payment` int(255) NOT NULL,
+  `payment_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -154,6 +190,16 @@ CREATE TABLE `tbl_user_info` (
   `civil_status` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `tbl_user_info`
+--
+
+INSERT INTO `tbl_user_info` (`user_id`, `first_name`, `last_name`, `middle_name`, `address`, `contact_number`, `sex`, `user_image`, `civil_status`) VALUES
+(10, 'Mary Grace', 'Ortega', 'Waiñu', 'Isabela', '09898484684', 'Female', '302253-Nezuko-Cute-Kimetsu-no-Yaiba-4K.jpg', 'Single'),
+(11, 'Admin', 'LN', 'MN', 'admin address', '09849848978', 'Male', 'hello friend.jpg', 'Divorced'),
+(12, 'Lalisa', 'Manoban', 'Lei', 'South Korea', '58949849878', '', '', 'Single'),
+(13, 'Jenny', 'Kim', 'Klein', 'South Korea', '68489498494', '', '', 'Single');
+
 -- --------------------------------------------------------
 
 --
@@ -166,6 +212,16 @@ CREATE TABLE `tbl_user_login` (
   `user_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `tbl_user_login`
+--
+
+INSERT INTO `tbl_user_login` (`email`, `password`, `user_id`) VALUES
+('marygrace@gmail.com', '$2y$10$QMMTVXNn1SdEs4UMnj.Z9O.B3pu3NNeRMrwh5rE7wvqa/uxGARzKa', 10),
+('admin@gmail.com', '$2y$10$nAZBj2CQyzPbzp2NI.8Icu7UDI72GgTO.vF7rFoB2F7iooBLl6HuC', 11),
+('lisa@gmail.com', '', 12),
+('jenny@gmail.com', '', 13);
+
 -- --------------------------------------------------------
 
 --
@@ -176,6 +232,14 @@ CREATE TABLE `tbl_user_role` (
   `user_id` int(11) NOT NULL,
   `role_id` int(2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `tbl_user_role`
+--
+
+INSERT INTO `tbl_user_role` (`user_id`, `role_id`) VALUES
+(10, 2),
+(11, 1);
 
 --
 -- Indexes for dumped tables
@@ -192,6 +256,12 @@ ALTER TABLE `tbl_client_form`
 --
 ALTER TABLE `tbl_list_of_service`
   ADD PRIMARY KEY (`service_id`);
+
+--
+-- Indexes for table `tbl_payments`
+--
+ALTER TABLE `tbl_payments`
+  ADD PRIMARY KEY (`payment_id`);
 
 --
 -- Indexes for table `tbl_role`
@@ -225,13 +295,19 @@ ALTER TABLE `tbl_user_info`
 -- AUTO_INCREMENT for table `tbl_client_form`
 --
 ALTER TABLE `tbl_client_form`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `tbl_list_of_service`
 --
 ALTER TABLE `tbl_list_of_service`
   MODIFY `service_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT for table `tbl_payments`
+--
+ALTER TABLE `tbl_payments`
+  MODIFY `payment_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `tbl_role`
@@ -255,7 +331,7 @@ ALTER TABLE `tbl_type_of_service`
 -- AUTO_INCREMENT for table `tbl_user_info`
 --
 ALTER TABLE `tbl_user_info`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
