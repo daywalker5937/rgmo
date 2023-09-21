@@ -111,7 +111,6 @@ class Services {
 
     }// get all type of services
 
-
     public function getPendingRequest() {
         
         $status = "Pending";
@@ -123,6 +122,26 @@ class Services {
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     }// get pending requests
+
+    public function submitRequest() {
+
+        try {
+
+            $query = "INSERT INTO tbl_client_form (client_id, status, service_id) VALUES (?,?,?)";
+            $stmt = $this->conn->prepare($query);
+            $stmt->bindParam(1, $_POST['user_id']);
+            $stmt->bindParam(2, $_POST['status']);
+            $stmt->bindParam(3, $_POST['type_id']);
+            $stmt->closeCursor();
+            $stmt->execute();
+
+            return ['status' => true];
+
+        }catch(Exception $e) {
+            return ['status' => false, 'message' => $e->getMessage()];
+        }
+
+    }// submit 
 
 }// class
 

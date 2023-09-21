@@ -188,7 +188,7 @@
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
                 cancelButtonColor: '#d33',
-                confirmButtonText: 'Register',
+                confirmButtonText: 'Submit',
             }).then((result) => { 
 
                 if(result.isConfirmed) {
@@ -197,13 +197,30 @@
                         url: '../controller/ServicesController.php',
                         type: 'POST',
                         data: {
-                            case: 'submit service', 
-                            type_id: type_id,
-                            user_id: user_id
+                            case: 'client request', type_id: type_id,
+                            user_id: user_id, status: 'Pending'
                         },
                         success: function(response) {
 
-                            console.log("response", response);
+                            if(response.status == true) {
+                                Swal.fire({
+                                    position: 'top',
+                                    icon: 'success',
+                                    title: 'Your Request has been Processed!',
+                                    showConfirmButton: false,
+                                    timer: 1000
+                                }).then(function() {
+                                    window.location.href = '../dashboard/';
+                                });
+                            }
+                            else {
+                                Swal.fire({
+                                    position: 'top',
+                                    icon: 'warning',
+                                    title: response.message,
+                                    showConfirmButton: true
+                                });
+                            }// else
 
                         }
                     });

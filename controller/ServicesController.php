@@ -47,6 +47,11 @@ function pending_request($db) {
     return json_encode($SERVICES->getPendingRequest());
 }
 
+function client_request($db) {
+    $SERVICES = new Services($db);
+    return json_encode($SERVICES->submitRequest());
+}
+
 switch($_POST['case']) {
 
     // Get All Services
@@ -72,6 +77,11 @@ switch($_POST['case']) {
     // Get All Pending Request
     case 'pending request':
         echo pending_request($db);
+    break;
+
+    // Logged in Client Submit Request
+    case 'client request':
+        echo client_request($db);
     break;
 
 }// switch
