@@ -112,7 +112,7 @@
                                 "<div class='row mt-2'> <b class='mr-1'>Location:</b> " + data.location + "</div>" +
                             "</div>" +
                             "<div style='width: 80%'>" +
-                                "<div class='row mt-2 float-right'> <a href='client_form.php?type_id='"+ data.type_id +"' class='btn btn-primary'>I Choose This</a> </div>" +
+                                "<div class='row mt-2 float-right'> <a href='client_form.php?type_id="+ data.type_id +"' class='btn btn-primary'>I Choose This</a> </div>" +
                             "</div>" +
                         "</div>"
                     );
