@@ -138,7 +138,7 @@
 
           small_box.append(inner_box);
           col.append(small_box).on('click', function() {
-            window.location.href = 'services/direct_service.php?service_name=' + element.service_name;
+            window.location.href = 'services/direct_service.php?service_name=' + element.service_name + '&type_id=0&client=0';
           });
           $('#services-display-div').append(col);
 
