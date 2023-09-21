@@ -111,6 +111,19 @@ class Services {
 
     }// get all type of services
 
+
+    public function getPendingRequest() {
+        
+        $status = "Pending";
+        $query = "SELECT * FROM tbl_client_form WHERE status = ? ";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(1, $status);
+        $stmt->closeCursor();
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    }// get pending requests
+
 }// class
 
 ?>

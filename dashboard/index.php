@@ -53,7 +53,7 @@
                         <div class="row justify-content-center">
 
                             <div class="col-lg-3 col-4">
-                                <div class="small-box bg-info">
+                                <div class="small-box bg-success">
                                     <div class="inner">
                                         <h3>5</h3>
                                         <p>Total Number of Tenants</p>
@@ -63,7 +63,7 @@
                             <!-- ./col -->
 
                             <div class="col-lg-3 col-4">
-                                <div class="small-box bg-info">
+                                <div class="small-box bg-success">
                                     <div class="inner">
                                         <h3>5</h3>
                                         <p>Total Number of Rental Service Available</p>
@@ -73,7 +73,7 @@
                             <!-- ./col -->
 
                             <div class="col-lg-3 col-4">
-                                <div class="small-box bg-info">
+                                <div class="small-box bg-success">
                                     <div class="inner">
                                         <h3>5</h3>
                                         <p>Total Number of Person's Paid</p>
@@ -88,7 +88,7 @@
                         <div class="row justify-content-center">
 
                         <div class="col-lg-3 col-4">
-                                <div class="small-box bg-info">
+                                <div class="small-box bg-success">
                                     <div class="inner">
                                         <h3>5</h3>
                                         <p>Total Number of Occupied Slots</p>
@@ -98,9 +98,9 @@
                             <!-- ./col -->
 
                             <div class="col-lg-3 col-4">
-                                <div class="small-box bg-info">
-                                    <div class="inner">
-                                        <h3>5</h3>
+                                <div class="small-box bg-success">
+                                    <div class="inner" id="pending-box-id">
+                                        <h3></h3>
                                         <p>Pending Request</p>
                                     </div>
                                 </div>
@@ -212,6 +212,7 @@
         let role = "<?php echo $SES->role_name;  ?>"
         displaySidebar(role, 'Dashboard');
 
+        // Client Dashboard
         $.ajax({
             url: '../controller/ServicesController.php',
             type: 'POST',
@@ -240,6 +241,16 @@
                     $('#card-services-id').append(outer_div);
 
                 });
+            }
+        });// ajax
+
+        // Get Pending Requests
+        $.ajax({
+            url: '../controller/ServicesController.php',
+            type: 'POST',
+            data: {case: 'pending request'},
+            success: function(data) {
+                $('#pending-box-id h3').text(data.length);
             }
         });
 

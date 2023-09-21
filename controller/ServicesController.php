@@ -42,6 +42,11 @@ function submit_process($db) {
     $SERVICES = new Services($db);
 }
 
+function pending_request($db) {
+    $SERVICES = new Services($db);
+    return json_encode($SERVICES->getPendingRequest());
+}
+
 switch($_POST['case']) {
 
     // Get All Services
@@ -62,6 +67,11 @@ switch($_POST['case']) {
     // Get All Type of Services
     case 'all types':
         echo allServiceType($db);
+    break;
+
+    // Get All Pending Request
+    case 'pending request':
+        echo pending_request($db);
     break;
 
 }// switch
