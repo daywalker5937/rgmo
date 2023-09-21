@@ -1,5 +1,5 @@
 <!-- Main Sidebar Container -->
-<aside class="main-sidebar sidebar-dark-primary elevation-4">
+<aside class="main-sidebar sidebar-dark-light sidebar-bg-color elevation-4">
 
     <!-- Brand Logo -->
     <div class="brand-link">
