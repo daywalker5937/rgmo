@@ -45,7 +45,6 @@
 				<form id="register-user" autocomplete="off" enctype="multipart/form-data">
 					
 					<div class="row">
-						
 						<div class="input-group mb-3 col-4">
 							<input type="text" name="lname" class="form-control" placeholder="Last Name">
 							<div class="input-group-append">
@@ -54,7 +53,6 @@
 								</div>
 							</div>
 						</div>
-
 						<div class="input-group mb-3 col-4">
 							<input type="text" name="fname" class="form-control" placeholder="First Name">
 							<div class="input-group-append">
@@ -63,7 +61,6 @@
 								</div>
 							</div>
 						</div>
-
 						<div class="input-group mb-3 col-4">
 							<input type="text" name="mname" class="form-control" placeholder="Middle Name">
 							<div class="input-group-append">
@@ -72,13 +69,11 @@
 								</div>
 							</div>
 						</div>
-
 					</div>
 					<!-- /.row -->
 
 					<div class="row">
-
-						<div class="input-group mb-3 col-8">
+						<div class="input-group mb-3 col-12">
 							<input type="text" name="address" class="form-control" placeholder="Address">
 							<div class="input-group-append">
 								<div class="input-group-text">
@@ -86,16 +81,13 @@
 								</div>
 							</div>
 						</div>
-
-						<div class="input-group mb-3 col-4">
-							<select name="civil_status"><option value=""></option></select>
-						</div>
-
 					</div>
 					<!-- /.row -->
 
 					<div class="row">
-
+						<div class="input-group mb-3 col-6">
+							<select name="civil_status"><option value=""></option></select>
+						</div>
 						<div class="input-group mb-3 col-6">
 							<input type="number" name="contact_number" class="form-control" placeholder="Contact Number">
 							<div class="input-group-append">
@@ -104,7 +96,13 @@
 								</div>
 							</div>
 						</div>
+					</div>
+					<!-- /.row -->
 
+					<div class="row">
+						<div class="input-group mb-3 col-6">
+							<select name="sex"><option value=""></option></select>
+						</div>
 						<div class="input-group mb-3 col-6">
 							<input type="email" name="email" class="form-control" placeholder="Email">
 							<div class="input-group-append">
@@ -113,20 +111,6 @@
 								</div>
 							</div>
 						</div>
-
-					</div>
-					<!-- /.row -->
-
-					<div class="row">
-
-						<div class="input-group mb-3 col-6">
-							<select name="sex"><option value=""></option></select>
-						</div>
-
-						<div class="input-group mb-3 col-6">
-							<select name="role"><option value=""></option></select>
-						</div>
-
 					</div>
 					<!-- /.row -->
 
@@ -205,7 +189,6 @@
 		// Select2 Initializations
 		let selectCivilStatus = $($('#register-user select')[0]);
 		let selectSex = $($('#register-user select')[1]);
-		let selectRole = $($('#register-user select')[2]);
 
 		// Selections
 		let civil_selection = [
@@ -215,7 +198,6 @@
 			{"id": 'Widowed', "text": 'Widowed'}
 		];
 		let sex_selection = [{"id": 'Male', "text": 'Male'}, {"id": 'Female', "text": 'Female'}];
-		let role_selection = [{"id": '1', "text": 'Admin'}, {"id": '2', "text": 'Client'}];
 
 		selectCivilStatus.select2({
 			width: '100%',
@@ -231,14 +213,6 @@
 			placeholder: 'Select Sex',
 			allowClear: true,
 			data:sex_selection
-		}).on('change', function() {($(this).val() == "") ? $(this).addClass('is-invalid') : $(this).removeClass('is-invalid') });
-
-		selectRole.select2({
-			width: '100%',
-			theme: 'bootstrap4',
-			placeholder: 'Select Role',
-			allowClear: true,
-			data:role_selection
 		}).on('change', function() {($(this).val() == "") ? $(this).addClass('is-invalid') : $(this).removeClass('is-invalid') });
 
 		// Upload Event
@@ -320,9 +294,9 @@
 									Swal.fire({
 										position: 'top',
 										icon: 'success',
-										title: 'Registered!',
-										showConfirmButton: false,
-										timer: 1000
+										title: 'Registration Submitted!',
+										text: 'Wait for the Admin Approval',
+										showConfirmButton: true
 									}).then(function() {
 										window.location.href = '../login/';
 									});

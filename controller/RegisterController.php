@@ -56,7 +56,7 @@ function register_account() {
                     /** Create User Account **/
     
                     // hash password
-                    $hashed_password = password_hash($pass, PASSWORD_DEFAULT);  
+                    $hashed_password = password_hash($pass, PASSWORD_DEFAULT);
                     
                     // Insert to user_info table
                     $info_query = "INSERT INTO tbl_user_info 
@@ -89,7 +89,7 @@ function register_account() {
                     $stmt_login->execute();
     
                     // Insert to a Client Role to tbl_user_role
-                    $role_id = $_POST['role'];
+                    $role_id = 3;
                     $role_query = "INSERT INTO tbl_user_role (user_id, role_id) VALUES (?,?)";
                     $stmt_role = $DATABASE->connection->prepare($role_query);
                     $stmt_role->bindParam(1, $user_id);
