@@ -143,7 +143,7 @@
 				success: function(response) {
 
 					// If Login is Successful
-					if(response) {
+					if(response.status) {
 
 						Swal.mixin({
 							toast: true, position: 'top-end', showConfirmButton: false
@@ -159,15 +159,14 @@
 					// If not
 					else {
 
-						Swal.mixin({
-							toast: true, position: 'top-end', showConfirmButton: false, timer: 3000
-						}).fire({ 
-							icon: 'error', title: 'Username or Password do not match! Please Try Again!'
-						});
+						let error = response.message.split("-");
+
+						Swal.mixin({ toast: true, position: 'top-end', showConfirmButton: false, timer: 3000 })
+							.fire({ icon: error[1], title: error[0] });
 
 					}
 				}
-			});
+			});// ajax
 
 		});// submit
 
