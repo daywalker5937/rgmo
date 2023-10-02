@@ -34,9 +34,9 @@ function getAllClients($db) {
 
     $data = [];
 
-    $q = "SELECT user_id FROM tbl_user_role WHERE role_id = ? ";
+    $q = "SELECT user_id, role_id FROM tbl_user_role WHERE role_id <> ? ";
 
-    $r_id = 2;
+    $r_id = 1;
     $st = $db->prepare($q);
     $st->bindParam(1, $r_id);
     $st->closeCursor();
@@ -57,6 +57,20 @@ function getAllClients($db) {
         $stmt->execute();
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
+        // Status
+        switch($id['role_id']) {
+            case 2: 
+                $row['status_id'] = $id['role_id'];
+                $row['status'] = 'Client';
+                $row['status_class'] = "bg-success"; 
+            break;
+            case 3:
+                $row['status_id'] = $id['role_id'];
+                $row['status'] = 'Pending Registration';
+                $row['status_class'] = "bg-danger"; 
+            break;
+        }// switch
+
         // location
         $row['location'] = 'location';
 
@@ -71,6 +85,46 @@ function getAllClients($db) {
 
 }// get all client
 
+function updateClientRegistration($db) {
+
+    try {
+
+        switch($_POST['button']) {
+    
+            case 'approve':
+                $role_id = 2;
+                $query = "UPDATE tbl_user_role SET role_id = ? WHERE user_id = ?";
+                $stmt = $db->prepare($query);
+                $stmt->bindParam(1, $role_id);
+                $stmt->bindParam(2, $_POST['user_id']);
+                $stmt->closeCursor();
+                $stmt->execute();
+            break;
+    
+            case 'disapprove':
+                deleteRow($db, 'tbl_user_info', $_POST['user_id']);
+                deleteRow($db, 'tbl_user_login', $_POST['user_id']);
+                deleteRow($db, 'tbl_user_role', $_POST['user_id']);
+            break;
+    
+        }// switch
+
+        echo json_encode(['status' => true]);
+
+    }catch(Exception $e) {
+        echo json_encode(['status' => false, 'message' => $e->getMessage()]);
+    }
+
+}// update client registration
+
+function deleteRow($db, $table, $id) {
+    $query = "DELETE FROM $table WHERE user_id = ? ";
+    $stmt = $db->prepare($query);
+    $stmt->bindParam(1, $id);
+    $stmt->closeCursor();
+    $stmt->execute();
+}// delete row
+
 switch($_POST['case']) {
 
     case 'get_info':
@@ -79,6 +133,10 @@ switch($_POST['case']) {
 
     case 'get all clients':
         echo getAllClients($db);
+    break;
+
+    case 'update client registration':
+        echo updateClientRegistration($db);
     break;
 
 }// switch

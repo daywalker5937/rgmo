@@ -101,6 +101,7 @@
             "responsive": true,
             "autoWidth": false,
             "lengthChange": false,
+            "order": [[6, 'desc']],
             ajax: {
                 url: '../controller/ProfileController.php',
                 type: 'POST',
@@ -114,26 +115,137 @@
                 {title: 'Email', 'data': 'email', targets: [3]},
                 {title: 'Phone Number', 'data': 'contact_number', targets: [4]},
                 {title: 'Location', 'data': 'location', targets: [5]},
-                {title: 'Action', 'data': 'action', targets: [6]},
+                {title: 'Status', 'data': 'status_id', targets: [6]},
+                {title: 'Action', 'data': 'action', targets: [7]},
 
             ],
             createdRow: function(row, data, index) {
-
+                
+                // Action Buttons
+                let btn_approve = $("<button type='button' class='btn btn-success mr-2'> Approve </button>");
+                let btn_disapprove = $("<button type='button' class='btn btn-danger'> Disapprove </button>");
+                let btn_update = $("<button type='button' class='btn btn-success mr-2'> Update </button>");
+                let btn_delete = $("<button type='button' class='btn btn-danger'> Delete </button>");
+                
                 // Location Button
                 $('td', row).eq(5).text('').append("<button class='btn btn-primary'>View</button>");
+                
+                // Status bg color
+                $('td', row).eq(6).text('').append(data.status).addClass(data.status_class);
 
-                // Action Button
-                let action_buttons = 
-                $(
-                    "<div>" +
-                        "<button class='btn btn-success mr-2'>Update</button>" +
-                        "<button class='btn btn-danger'>Delete</button>" +
-                    "</div>"
-                );
-                $('td', row).eq(6).text('').append(action_buttons);
+                // Action Dropdown Menus
+                switch(data.status) {
+
+                    case 'Client':
+                        $('td', row).eq(7).text('').append(btn_update).append(btn_delete);
+                    break;
+
+                    case 'Pending Registration':
+
+                        $('td', row).eq(7).text('').append(btn_approve).append(btn_disapprove);
+
+                        btn_approve.on('click', function(e) {
+
+                            e.preventDefault();
+
+                            Swal.fire({
+                                position: 'top',
+                                title: 'Approve this User?',
+                                showCancelButton: true,
+                                confirmButtonColor: '#3085d6',
+                                cancelButtonColor: '#d33',
+                                confirmButtonText: 'Yes'
+                            }).then((result) => { 
+                                if(result.isConfirmed) {
+                                    $.ajax({
+                                        url: '../controller/ProfileController.php',
+                                        type: 'POST',
+                                        data: {
+                                            case: 'update client registration',
+                                            button: 'approve',
+                                            user_id: data.user_id
+                                        },
+                                        success: function(response) {
+                                            if(response.status) {
+                                                Swal.fire({
+                                                    position: 'top',
+                                                    icon: 'success',
+                                                    title: 'Client Registration Approved!',
+                                                    showConfirmButton: false,
+                                                    timer: 1500
+                                                }).then(function() {
+                                                    location.reload();
+                                                });
+                                            }
+                                            else {
+                                                Swal.fire({
+                                                    position: 'top',
+                                                    icon: 'warning',
+                                                    title: response.message,
+                                                    showConfirmButton: true
+                                                });
+                                            }
+                                        }
+                                    });
+                                }// if
+                            });// swal
+
+                        });// approve on click
+
+                        btn_disapprove.on('click', function(e) { 
+
+                            e.preventDefault();
+
+                            Swal.fire({
+                                position: 'top',
+                                title: 'Disapprove this User?',
+                                showCancelButton: true,
+                                confirmButtonColor: '#3085d6',
+                                cancelButtonColor: '#d33',
+                                confirmButtonText: 'Yes'
+                            }).then((result) => { 
+                                if(result.isConfirmed) {
+                                    $.ajax({
+                                        url: '../controller/ProfileController.php',
+                                        type: 'POST',
+                                        data: {
+                                            case: 'update client registration',
+                                            button: 'disapprove',
+                                            user_id: data.user_id
+                                        },
+                                        success: function(response) {
+                                            if(response.status) {
+                                                Swal.fire({
+                                                    position: 'top',
+                                                    icon: 'success',
+                                                    title: 'Client Registration Disapproved!',
+                                                    showConfirmButton: false,
+                                                    timer: 1500
+                                                }).then(function() {
+                                                    location.reload();
+                                                });
+                                            }
+                                            else {
+                                                Swal.fire({
+                                                    position: 'top',
+                                                    icon: 'warning',
+                                                    title: response.message,
+                                                    showConfirmButton: true
+                                                });
+                                            }
+                                        }
+                                    });
+                                }// if
+                            });// swal
+
+                        });// disapprove on click
+
+                    break;
+
+                }// switch
 
             }
-        });
+        });// DataTable
 
     });// document
 
