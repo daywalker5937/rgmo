@@ -26,6 +26,7 @@
         <?php
             require_once __DIR__ . '/../components/navbar.php';
             require_once __DIR__ . '/../components/sidebar.php';
+            require_once __DIR__ . '/../components/modals.html';
         ?>
 
         <!-- Content Wrapper. Contains page content -->
@@ -53,9 +54,10 @@
                         <div class="row justify-content-center">
 
                             <div class="col-lg-3 col-4">
-                                <div class="small-box bg-success">
+                                <div class="small-box bg-success" id="tenants-box-id" style="cursor: pointer;"
+                                    data-toggle="modal" data-target="#modal-tenant-id">
                                     <div class="inner">
-                                        <h3>5</h3>
+                                        <h3></h3>
                                         <p>Total Number of Tenants</p>
                                     </div>
                                 </div>
@@ -63,9 +65,9 @@
                             <!-- ./col -->
 
                             <div class="col-lg-3 col-4">
-                                <div class="small-box bg-success">
+                                <div class="small-box bg-success" id="available-box-id" style="cursor: pointer;">
                                     <div class="inner">
-                                        <h3>5</h3>
+                                        <h3></h3>
                                         <p>Total Number of Rental Service Available</p>
                                     </div>
                                 </div>
@@ -73,9 +75,9 @@
                             <!-- ./col -->
 
                             <div class="col-lg-3 col-4">
-                                <div class="small-box bg-success">
+                                <div class="small-box bg-success" style="cursor: pointer;">
                                     <div class="inner">
-                                        <h3>5</h3>
+                                        <h3>0</h3>
                                         <p>Total Number of Person's Paid</p>
                                     </div>
                                 </div>
@@ -88,9 +90,9 @@
                         <div class="row justify-content-center">
 
                         <div class="col-lg-3 col-4">
-                                <div class="small-box bg-success">
+                                <div class="small-box bg-success" style="cursor: pointer;">
                                     <div class="inner">
-                                        <h3>5</h3>
+                                        <h3>0</h3>
                                         <p>Total Number of Occupied Slots</p>
                                     </div>
                                 </div>
@@ -98,8 +100,9 @@
                             <!-- ./col -->
 
                             <div class="col-lg-3 col-4">
-                                <div class="small-box bg-success">
-                                    <div class="inner" id="pending-box-id">
+                                <div class="small-box bg-success" id="pending-box-id" style="cursor: pointer;"
+                                    data-toggle="modal" data-target="#modal-pending-id">
+                                    <div class="inner">
                                         <h3></h3>
                                         <p>Pending Request</p>
                                     </div>
@@ -200,63 +203,66 @@
     <!-- ./wrapper -->
 
     <?php require_once __DIR__ . '/../components/script.html'; ?>
+    <script src="dashboard.js"></script>
+
+    <script>
+
+        $(document).ready(function() {
+
+            // Assign PHP variable to js variable
+            let role = "<?php echo $SES->role_name;  ?>"
+            displaySidebar(role, 'Dashboard');
+
+            // Client Dashboard
+            $.ajax({
+                url: '../controller/ServicesController.php',
+                type: 'POST',
+                data: {case: 'services'},
+                success: function(data) {
+
+                    // Icon Total Number of Services
+                    $('#number-icon-id').addClass("bi bi-"+data.length+"-circle fa-lg");
+                    
+                    // List of Services
+                    data.forEach(element => {
+                        
+                        let outer_div = $("<div class='row justify-content-center mb-2'></div>");
+                        let inner_div = $("<div class='col-11'></div>");
+                        let data_a = $("<a href='#'></a>");
+                        let data_div = $("<div class='form-control border border-dark'></div>");
+
+                        data_div.text(element.service_name).on('mouseover', () => { 
+                            $(data_div).css('background-color', '#A9A9A9').css('color', '#fff');
+                        }).on('mouseleave', () => { 
+                            $(data_div).css('background-color', '#fff').css('color', '#000000');
+                        });
+                        data_a.append(data_div)
+                        inner_div.append(data_a);
+                        outer_div.append(inner_div);
+                        $('#card-services-id').append(outer_div);
+
+                    });
+                }
+            });// ajax
+
+            // Get Available Services
+            $.ajax({
+                url: '../controller/ServicesController.php',
+                type: 'POST',
+                data: {case: 'available service', status: 'yes'},
+                success: function(data) {
+                    $('#available-box-id h3').text(data.length);
+                }
+            });
+
+        });
+
+    </script>
 
 </body>
 </html>
 
-<script>
 
-    $(document).ready(function() {
-
-        // Assign PHP variable to js variable
-        let role = "<?php echo $SES->role_name;  ?>"
-        displaySidebar(role, 'Dashboard');
-
-        // Client Dashboard
-        $.ajax({
-            url: '../controller/ServicesController.php',
-            type: 'POST',
-            data: {case: 'services'},
-            success: function(data) {
-
-                // Icon Total Number of Services
-                $('#number-icon-id').addClass("bi bi-"+data.length+"-circle fa-lg");
-                
-                // List of Services
-                data.forEach(element => {
-                    
-                    let outer_div = $("<div class='row justify-content-center mb-2'></div>");
-                    let inner_div = $("<div class='col-11'></div>");
-                    let data_a = $("<a href='#'></a>");
-                    let data_div = $("<div class='form-control border border-dark'></div>");
-
-                    data_div.text(element.service_name).on('mouseover', () => { 
-                        $(data_div).css('background-color', '#A9A9A9').css('color', '#fff');
-                    }).on('mouseleave', () => { 
-                        $(data_div).css('background-color', '#fff').css('color', '#000000');
-                    });
-                    data_a.append(data_div)
-                    inner_div.append(data_a);
-                    outer_div.append(inner_div);
-                    $('#card-services-id').append(outer_div);
-
-                });
-            }
-        });// ajax
-
-        // Get Pending Requests
-        $.ajax({
-            url: '../controller/ServicesController.php',
-            type: 'POST',
-            data: {case: 'pending request'},
-            success: function(data) {
-                $('#pending-box-id h3').text(data.length);
-            }
-        });
-
-    });
-
-</script>
 
 <?php
     }else {

@@ -71,6 +71,9 @@ function getAllClients($db) {
             break;
         }// switch
 
+        // full name
+        $row['name'] = $row['first_name'] . " " . $row['last_name'];
+
         // location
         $row['location'] = 'location';
 
@@ -125,6 +128,23 @@ function deleteRow($db, $table, $id) {
     $stmt->execute();
 }// delete row
 
+function getRegisteredClients($list) {
+    
+    $data = [];
+    $list = json_decode($list);
+
+    foreach($list->data as $key => $value) {
+
+        if($value->status_id == 2) {
+            $data[] = $value;
+        }
+
+    }// foreach
+
+    return json_encode($data);
+
+}// tenant count
+
 switch($_POST['case']) {
 
     case 'get_info':
@@ -137,6 +157,10 @@ switch($_POST['case']) {
 
     case 'update client registration':
         echo updateClientRegistration($db);
+    break;
+
+    case 'get registered clients':
+        echo getRegisteredClients(getAllClients($db));
     break;
 
 }// switch

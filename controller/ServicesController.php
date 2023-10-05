@@ -9,6 +9,7 @@ header('Content-Type: application/json; charset=utf-8');
 
 include_once  __DIR__ . '/../includes/config/database.php';
 include_once __DIR__ . '/../objects/services.php';
+include_once __DIR__ . '/../objects/profile.php';
 
 $DATABASE = new Database();
 $db = $DATABASE->getConnection();
@@ -43,8 +44,35 @@ function submit_process($db) {
 }
 
 function pending_request($db) {
+
     $SERVICES = new Services($db);
-    return json_encode($SERVICES->getPendingRequest());
+    $pending_request = $SERVICES->getPendingRequest();
+
+    // Get Client Info
+    foreach($pending_request as $key => $value) {
+
+        // Get Client Id Data
+        $PROFILE = new Profile($db, $value['client_id']);
+        $pending_request[$key]['client_name'] = $PROFILE->firstname . " " . $PROFILE->lastname;
+        
+        // Get Service Id Datad
+        $SERVICES->type_id = $value['service_id'];
+        $SERVICES->getServiceInfo();
+        $pending_request[$key]['service_name'] = $SERVICES->type_name;
+
+        // Action
+        $pending_request[$key]['action'] = 'buttons';
+
+    }// foreach
+
+    return json_encode($pending_request);
+
+}// pending request
+
+function getServiceAvailability($db) {
+    $SERVICES = new Services($db);
+    $SERVICES->availability_status = $_POST['status'];
+    return json_encode($SERVICES->getServiceAvailability());
 }
 
 function client_request($db) {
@@ -82,6 +110,11 @@ switch($_POST['case']) {
     // Logged in Client Submit Request
     case 'client request':
         echo client_request($db);
+    break;
+
+    // Get All Available Services
+    case 'available service':
+        echo getServiceAvailability($db);
     break;
 
 }// switch
