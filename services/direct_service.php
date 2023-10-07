@@ -165,8 +165,6 @@
                                 "</div>" +
                             "</div>"
 
-                            // window.location.href = 'direct_service.php?service_name=' + service_name + '&type_id=' + element.type_id 
-
                         );
 
                     // Image
