@@ -11,9 +11,6 @@ $.ajax({
         // Total Number of Tenants Display Count
         $('#tenants-box-id h3').text(data.length);
 
-        // Total Number of Tenants Display Header
-        $('#modal-tenant-id h4').text('Total Number of Tenants - ' + data.length);
-
         // Tenants Box On Click
         $('#tenants-box-id').on('click', function() {
 
@@ -41,6 +38,46 @@ $.ajax({
 
     }
 });// ajax number of tenants
+
+// Get Total Number of Rental Service Available
+$.ajax({
+    url: '../controller/ServicesController.php',
+    type: 'POST',
+    data: {case: 'available service', status: 'yes'},
+    success: function(data) {
+
+        let click_count = 0;
+
+        console.table(data);
+
+        // Total Rental Service
+        $('#available-box-id h3').text(data.length);
+
+        // Total Rental Box
+        $('#available-box-id').on('click', function() {
+
+            if(click_count == 0) {
+                
+                $('#modal-rental-id table').DataTable({
+                    "pageLength": 10,
+                    "responsive": true,
+                    "autoWidth": false,
+                    "lengthChange": false,
+                    "data": data,
+                    columns: [
+                        {data: 'type_name'}, {data: 'location'},
+                        {data: 'price'}, {data: 'description'}
+                    ]
+                });
+
+            }// if
+
+            click_count++;
+
+        });// rental box on click
+
+    }
+});
 
 // Get Pending Requests
 $.ajax({

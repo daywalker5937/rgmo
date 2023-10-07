@@ -65,7 +65,8 @@
                             <!-- ./col -->
 
                             <div class="col-lg-3 col-4">
-                                <div class="small-box bg-success" id="available-box-id" style="cursor: pointer;">
+                                <div class="small-box bg-success" id="available-box-id" style="cursor: pointer;"
+                                    data-toggle="modal" data-target="#modal-rental-id">
                                     <div class="inner">
                                         <h3></h3>
                                         <p>Total Number of Rental Service Available</p>
@@ -244,16 +245,6 @@
                     });
                 }
             });// ajax
-
-            // Get Available Services
-            $.ajax({
-                url: '../controller/ServicesController.php',
-                type: 'POST',
-                data: {case: 'available service', status: 'yes'},
-                success: function(data) {
-                    $('#available-box-id h3').text(data.length);
-                }
-            });
 
         });
 
