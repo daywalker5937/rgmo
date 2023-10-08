@@ -216,38 +216,6 @@
             let role = "<?php echo $SES->role_name;  ?>"
             displaySidebar(role, 'Dashboard');
 
-            // Client Dashboard
-            $.ajax({
-                url: '../controller/ServicesController.php',
-                type: 'POST',
-                data: {case: 'services'},
-                success: function(data) {
-
-                    // Icon Total Number of Services
-                    $('#number-icon-id').addClass("bi bi-"+data.length+"-circle fa-lg");
-                    
-                    // List of Services
-                    data.forEach(element => {
-                        
-                        let outer_div = $("<div class='row justify-content-center mb-2'></div>");
-                        let inner_div = $("<div class='col-11'></div>");
-                        let data_a = $("<a href='#'></a>");
-                        let data_div = $("<div class='form-control border border-dark'></div>");
-
-                        data_div.text(element.service_name).on('mouseover', () => { 
-                            $(data_div).css('background-color', '#A9A9A9').css('color', '#fff');
-                        }).on('mouseleave', () => { 
-                            $(data_div).css('background-color', '#fff').css('color', '#000000');
-                        });
-                        data_a.append(data_div)
-                        inner_div.append(data_a);
-                        outer_div.append(inner_div);
-                        $('#card-services-id').append(outer_div);
-
-                    });
-                }
-            });// ajax
-
         });
 
     </script>

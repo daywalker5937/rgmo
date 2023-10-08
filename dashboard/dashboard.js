@@ -1,4 +1,36 @@
 
+// Client Dashboard
+$.ajax({
+    url: '../controller/ServicesController.php',
+    type: 'POST',
+    data: {case: 'services'},
+    success: function(data) {
+
+        // Icon Total Number of Services
+        $('#number-icon-id').addClass("bi bi-"+data.length+"-circle fa-lg");
+        
+        // List of Services
+        data.forEach(element => {
+            
+            let outer_div = $("<div class='row justify-content-center mb-2'></div>");
+            let inner_div = $("<div class='col-11'></div>");
+            let data_a = $("<a href='#'></a>");
+            let data_div = $("<div class='form-control border border-dark'></div>");
+
+            data_div.text(element.service_name).on('mouseover', () => { 
+                $(data_div).css('background-color', '#A9A9A9').css('color', '#fff');
+            }).on('mouseleave', () => { 
+                $(data_div).css('background-color', '#fff').css('color', '#000000');
+            });
+            data_a.append(data_div)
+            inner_div.append(data_a);
+            outer_div.append(inner_div);
+            $('#card-services-id').append(outer_div);
+
+        });
+    }
+});// ajaxs
+
 // Get Number of Tenants
 $.ajax({
     url: '../controller/ProfileController.php',
@@ -86,10 +118,10 @@ $.ajax({
 
         let click_count = 0;
 
-        // Total Number of Tenants Display Count
+        // Total Number of Persons Paid Display Count
         $('#paid-box-id h3').text(data.length);
 
-        // Tenants Box On Click
+        // Paid Box On Click
         $('#paid-box-id').on('click', function() {
 
             if(click_count == 0) {
@@ -128,10 +160,10 @@ $.ajax({
 
         let click_count = 0;
 
-        // Total Number of Tenants Display Count
+        // Total Number of Occupied Display Count
         $('#occupied-box-id h3').text(data.length);
 
-        // Tenants Box On Click
+        // Occupied Box On Click
         $('#occupied-box-id').on('click', function() {
 
             if(click_count == 0) {
