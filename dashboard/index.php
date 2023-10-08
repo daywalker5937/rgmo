@@ -76,9 +76,10 @@
                             <!-- ./col -->
 
                             <div class="col-lg-3 col-4">
-                                <div class="small-box bg-success" style="cursor: pointer;">
+                                <div class="small-box bg-success" id="paid-box-id" style="cursor: pointer;"
+                                data-toggle="modal" data-target="#modal-paid-id">
                                     <div class="inner">
-                                        <h3>0</h3>
+                                        <h3></h3>
                                         <p>Total Number of Person's Paid</p>
                                     </div>
                                 </div>

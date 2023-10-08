@@ -77,11 +77,55 @@ $.ajax({
     }
 });
 
+// GET Total Number of Persons Paid
+$.ajax({
+    url: '../controller/ServicesController.php',
+    type: 'POST',
+    data: {case: 'persons paid'},
+    success: function(data) {
+
+        console.table(data);
+
+        let click_count = 0;
+
+        // Total Number of Tenants Display Count
+        $('#paid-box-id h3').text(data.length);
+
+        // Tenants Box On Click
+        $('#paid-box-id').on('click', function() {
+
+            if(click_count == 0) {
+    
+                // Modal Table
+                $('#modal-paid-id table').DataTable({
+                    "pageLength": 10,
+                    "responsive": true,
+                    "autoWidth": false,
+                    "lengthChange": false,
+                    "data": data,
+                    columns: [
+                        {data: 'client_name'}, 
+                        {data: 'service_name'}, 
+                        {data: 'location'},
+                        {data: 'service_price'},
+                        {data: 'total_paid'}
+                    ]
+                });    
+    
+            }// if
+
+            click_count++;
+
+        });// on click tenants box
+
+    }
+});
+
 // GET Total Number of Occupied Slots
 $.ajax({
     url: '../controller/ServicesController.php',
     type: 'POST',
-    data: {case: 'occupied slots'},
+    data: {case: 'occupied slots', availability: 'no'},
     success: function(data) {
 
         let click_count = 0;

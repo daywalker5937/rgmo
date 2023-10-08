@@ -86,7 +86,8 @@ function client_request($db) {
 
 function occupiedSlots($db) {
     $SERVICES = new Services($db);
-    return json_encode($SERVICES->getOccupiedSlots());
+    $SERVICES->availability_status = $_POST['availability'];
+    return json_encode($SERVICES->getServiceAvailability());
 }
 
 function submitPayment($db) {
@@ -135,6 +136,32 @@ function submitPayment($db) {
 
 }// submit payment
 
+function paidClient($db) {
+
+    $SERVICES = new Services($db);
+    $payments_data = $SERVICES->getAllPaymentData();
+
+    foreach($payments_data as $key => $value) {
+
+        $SERVICES->form_id = $value['form_id'];
+        $client_form = $SERVICES->getClientFormData();
+
+        // Get Name of Client
+        $PROFILE = new Profile($db, $client_form['client_id']);
+        $payments_data[$key]['client_name'] = $PROFILE->firstname . " " . $PROFILE->lastname;
+
+        // Get Service Name
+        $SERVICES->type_id = $client_form['service_id'];
+        $SERVICES->getServiceInfo();
+        $payments_data[$key]['service_name'] = $SERVICES->type_name;
+        $payments_data[$key]['location'] = $SERVICES->location;
+
+    }// foreach
+
+    return json_encode($payments_data);
+
+}// paid client
+
 switch($_POST['case']) {
 
     // Get All Services
@@ -180,6 +207,11 @@ switch($_POST['case']) {
     // Get Occupied Slots
     case 'occupied slots':
         echo occupiedSlots($db);
+    break;
+
+    // Get All Payment Data
+    case 'persons paid':
+        echo paidClient($db);
     break;
 
 }// switch

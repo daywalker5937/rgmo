@@ -110,18 +110,6 @@ class Services {
 
     }// get all type of services
 
-    public function getOccupiedSlots() {
-
-        $status = "no";
-        $query = "SELECT * FROM tbl_type_of_service WHERE availability_status = ? ";
-        $stmt = $this->conn->prepare($query);
-        $stmt->bindParam(1, $status);
-        $stmt->closeCursor();
-        $stmt->execute();
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-    }// occupied slots
-
     public function getPendingRequest() {
         
         $status = "Pending";
@@ -187,6 +175,27 @@ class Services {
         }
 
     }// submit
+
+    public function getClientFormData() {
+
+        $query = "SELECT * FROM tbl_client_form WHERE id = ? ";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(1, $this->form_id);
+        $stmt->closeCursor();
+        $stmt->execute();
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+
+    }// get client form data
+
+    public function getAllPaymentData() {
+
+        $query = "SELECT * FROM tbl_payments";
+        $stmt = $this->conn->prepare($query);
+        $stmt->closeCursor();
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    }// all payment data
 
     public function getPaymentData() {
 
