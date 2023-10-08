@@ -84,8 +84,6 @@ $.ajax({
     data: {case: 'persons paid'},
     success: function(data) {
 
-        console.table(data);
-
         let click_count = 0;
 
         // Total Number of Tenants Display Count
