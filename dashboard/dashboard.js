@@ -77,6 +77,44 @@ $.ajax({
     }
 });
 
+// GET Total Number of Occupied Slots
+$.ajax({
+    url: '../controller/ServicesController.php',
+    type: 'POST',
+    data: {case: 'occupied slots'},
+    success: function(data) {
+
+        let click_count = 0;
+
+        // Total Number of Tenants Display Count
+        $('#occupied-box-id h3').text(data.length);
+
+        // Tenants Box On Click
+        $('#occupied-box-id').on('click', function() {
+
+            if(click_count == 0) {
+    
+                // Modal Table
+                $('#modal-occupied-id table').DataTable({
+                    "pageLength": 10,
+                    "responsive": true,
+                    "autoWidth": false,
+                    "lengthChange": false,
+                    "data": data,
+                    columns: [
+                        {data: 'type_name'}, {data: 'location'}, {data: 'price'}
+                    ]
+                });    
+    
+            }// if
+
+            click_count++;
+
+        });// on click tenants box
+
+    }
+});
+
 // Get Pending Requests
 $.ajax({
     url: '../controller/ServicesController.php',

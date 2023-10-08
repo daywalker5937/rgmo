@@ -91,9 +91,10 @@
                         <div class="row justify-content-center">
 
                         <div class="col-lg-3 col-4">
-                                <div class="small-box bg-success" style="cursor: pointer;">
+                                <div class="small-box bg-success" id="occupied-box-id" style="cursor: pointer;"
+                                data-toggle="modal" data-target="#modal-occupied-id">
                                     <div class="inner">
-                                        <h3>0</h3>
+                                        <h3></h3>
                                         <p>Total Number of Occupied Slots</p>
                                     </div>
                                 </div>

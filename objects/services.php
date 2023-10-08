@@ -110,6 +110,18 @@ class Services {
 
     }// get all type of services
 
+    public function getOccupiedSlots() {
+
+        $status = "no";
+        $query = "SELECT * FROM tbl_type_of_service WHERE availability_status = ? ";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(1, $status);
+        $stmt->closeCursor();
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    }// occupied slots
+
     public function getPendingRequest() {
         
         $status = "Pending";

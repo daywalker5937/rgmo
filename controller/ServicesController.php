@@ -84,6 +84,11 @@ function client_request($db) {
     return json_encode($SERVICES->submitRequest());
 }
 
+function occupiedSlots($db) {
+    $SERVICES = new Services($db);
+    return json_encode($SERVICES->getOccupiedSlots());
+}
+
 function submitPayment($db) {
 
     // Services Instance
@@ -170,6 +175,11 @@ switch($_POST['case']) {
     // Submit Client Payment
     case 'submit client payment':
         echo submitPayment($db);
+    break;
+
+    // Get Occupied Slots
+    case 'occupied slots':
+        echo occupiedSlots($db);
     break;
 
 }// switch
