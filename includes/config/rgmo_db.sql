@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 08, 2023 at 04:02 PM
+-- Generation Time: Oct 09, 2023 at 01:00 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -41,7 +41,9 @@ CREATE TABLE `tbl_client_form` (
 INSERT INTO `tbl_client_form` (`id`, `client_id`, `status`, `service_id`) VALUES
 (3, 10, 'Pending', 10),
 (4, 10, 'Client Payment', 12),
-(5, 17, 'Client Payment', 5);
+(5, 17, 'Client Payment', 5),
+(6, 10, 'Pending', 11),
+(7, 20, 'Client Payment', 4);
 
 -- --------------------------------------------------------
 
@@ -85,7 +87,8 @@ CREATE TABLE `tbl_payments` (
 
 INSERT INTO `tbl_payments` (`payment_id`, `service_price`, `total_paid`, `due_date`, `form_id`) VALUES
 (1, 400000, 123131, '0000-00-00', 5),
-(2, 500000, 3000, '0000-00-00', 4);
+(2, 500000, 3000, '0000-00-00', 4),
+(3, 300000, 200000, '0000-00-00', 7);
 
 -- --------------------------------------------------------
 
@@ -105,7 +108,8 @@ CREATE TABLE `tbl_payment_logs` (
 
 INSERT INTO `tbl_payment_logs` (`client_id`, `payment`, `payment_id`) VALUES
 (17, 123131, 1),
-(10, 3000, 2);
+(10, 3000, 2),
+(20, 200000, 3);
 
 -- --------------------------------------------------------
 
@@ -178,7 +182,7 @@ INSERT INTO `tbl_type_of_service` (`type_id`, `type_name`, `location`, `price`, 
 (1, 'Isabela Farm', 'Isabela', 500000, 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry/\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has s', 'yes', 'farm1.jpg', 1),
 (2, 'Cagayan Farm', 'Cagayan', 2000000, 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry/\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has s', 'yes', 'farm2.jpg', 1),
 (3, 'Ilocos Farm', 'Ilocos Norte', 1200000, 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry/\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has s', 'yes', 'farm3.jpg', 1),
-(4, 'Camella Housing', 'Cavite', 300000, 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry/\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has s', 'yes', 'housing1.jpg', 2),
+(4, 'Camella Housing', 'Cavite', 300000, 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry/\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has s', 'no', 'housing1.jpg', 2),
 (5, 'Ondoy Housing', 'Antipolo', 400000, 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry/\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has s', 'no', 'housing2.jpg', 2),
 (6, 'Cherry Housing', 'Teresa', 100000, 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry/\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has s', 'yes', 'housing3.jpg', 2),
 (7, 'Abuyod Housing', 'Teresa', 800000, 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry/\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has s', 'yes', 'housing4.jpg', 2),
@@ -214,7 +218,9 @@ INSERT INTO `tbl_user_info` (`user_id`, `first_name`, `last_name`, `middle_name`
 (10, 'Mary Grace', 'Ortega', 'Waiñu', 'Isabela', '09898484684', 'Female', '302253-Nezuko-Cute-Kimetsu-no-Yaiba-4K.jpg', 'Single'),
 (15, 'Jenny', 'Kim', 'Klein', 'South Korea', '09849849878', 'Female', '309932978_1112414036315316_7836836705751840661_n.jpg', 'Single'),
 (16, 'Admin', 'Account', 'User', 'Isabela', '09589684526', 'Male', '', 'Single'),
-(17, 'Lisa', 'Manoban', 'La', 'South Korea', '09846489448', '', '', 'Single');
+(17, 'Lisa', 'Manoban', 'La', 'South Korea', '09846489448', '', '', 'Single'),
+(18, 'Jose', 'Rizal', 'Protacio', 'Cavite', '09848998648', 'Male', 'Igloo_outside.jpg', 'Divorced'),
+(20, 'Juan', 'Dela Cruz', 'De', 'Manila', '09549848488', 'Male', 'sample 1.png', 'Single');
 
 -- --------------------------------------------------------
 
@@ -236,7 +242,9 @@ INSERT INTO `tbl_user_login` (`email`, `password`, `user_id`) VALUES
 ('marygrace@gmail.com', '$2y$10$QMMTVXNn1SdEs4UMnj.Z9O.B3pu3NNeRMrwh5rE7wvqa/uxGARzKa', 10),
 ('jenny@gmail.com', '$2y$10$xhH4l8MxAdoXbkdbKH/luOt1gy.OSkASfwpC0a3iBRcQwSdFtA2u6', 15),
 ('admin@gmail.com', '$2y$10$KmLrgQ6MHq5shnzDlsqWduZI7P2vTDhXIoCh0igZVH8FwL9fJJXeO', 16),
-('lisa@gmail.com', '', 17);
+('lisa@gmail.com', '', 17),
+('jose@gmail.com', '$2y$10$LSfjCXU8gwTD0w2xv8x7I.veZ1ItxV/Yvu9u0zgFlXUSeZ.Lv/7Gy', 18),
+('juan@gmail.com', '$2y$10$k7SbwSVvLiPIJ4OuMMh20uSZ5WEC84qktE/CYleqkSqhuCrHgWME.', 20);
 
 -- --------------------------------------------------------
 
@@ -256,7 +264,9 @@ CREATE TABLE `tbl_user_role` (
 INSERT INTO `tbl_user_role` (`user_id`, `role_id`) VALUES
 (10, 2),
 (15, 2),
-(16, 1);
+(16, 1),
+(18, 3),
+(20, 2);
 
 --
 -- Indexes for dumped tables
@@ -312,7 +322,7 @@ ALTER TABLE `tbl_user_info`
 -- AUTO_INCREMENT for table `tbl_client_form`
 --
 ALTER TABLE `tbl_client_form`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `tbl_list_of_service`
@@ -324,7 +334,7 @@ ALTER TABLE `tbl_list_of_service`
 -- AUTO_INCREMENT for table `tbl_payments`
 --
 ALTER TABLE `tbl_payments`
-  MODIFY `payment_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `payment_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `tbl_role`
@@ -348,7 +358,7 @@ ALTER TABLE `tbl_type_of_service`
 -- AUTO_INCREMENT for table `tbl_user_info`
 --
 ALTER TABLE `tbl_user_info`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
