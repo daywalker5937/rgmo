@@ -8,7 +8,6 @@ header("Access-Control-Allow-Methods: POST");
 header('Content-Type: application/json; charset=utf-8');
 
 include_once __DIR__ .  '/../includes/config/database.php';
-include_once __DIR__ .  '/EmailController.php';
 
 // Register Admin or Client
 function register_account() {
@@ -160,7 +159,6 @@ function request_account() {
         $stmt->execute();
 
         // Send Email to Admin For Notification
-
 
         return json_encode(['status' => true]);
 
