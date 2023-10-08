@@ -48,8 +48,6 @@ $.ajax({
 
         let click_count = 0;
 
-        console.table(data);
-
         // Total Rental Service
         $('#available-box-id h3').text(data.length);
 
@@ -91,32 +89,105 @@ $.ajax({
         // Pending Request Count Display
         $('#pending-box-id h3').text(data.length);
 
-        // Pending Request On Click
+        // Pending Request Box On Click
         $('#pending-box-id').on('click', function() {
 
             if(click_count == 0) {
 
                 // Modal Table
-                $('#modal-pending-id table').DataTable({
+                let pending_table = $('#modal-pending-id table').DataTable({
                     "pageLength": 10,
                     "responsive": true,
                     "autoWidth": false,
                     "lengthChange": false,
+                    select: true,
                     "data": data,
                     columns: [
-                        {data: 'client_name'}, {data: 'service_name'},
-                        {data: 'status'}, {data: 'action'}
-                    ],
-                    createdRow: function(row, data, index) {
+                        {data: 'client_name'}, 
+                        {data: 'service_name'}, 
+                        {data: 'service_price'}, 
+                        {data: 'status'}
+                    ]
+                });// table end
 
-                        let btn_approve = $("<button type='button' class='btn btn-success mr-2'> Approve </button>");
-                        let btn_disapprove = $("<button type='button' class='btn btn-danger'> Disapprove </button>");
+                // Table Select Event
+                pending_table.on('select', function(e, dt, type, indexes) {
+
+                    let selected_row = pending_table.row('.selected').data();
+
+                    console.log("selected", selected_row);
+
+                    Swal.fire({
+                        title: 'Client Payment',
+                        html: `<input type="number" id="payment" class="swal2-input" placeholder="Enter Payment">`,
+                        confirmButtonText: 'Submit',
+                        showCancelButton: true,
+                        focusConfirm: false,
+                        preConfirm: () => {
+
+                            const payment = Swal.getPopup().querySelector('#payment').value
+                            const client_id = selected_row.client_id;
+                            const form_id = selected_row.id;
+                            const service_id = selected_row.service_id;
+                            const service_price = selected_row.service_price;
+                            const status = selected_row.status;
+
+                            // If Empty
+                            if (!payment) {
+                                Swal.showValidationMessage(`Please Enter Payment!`)
+                            }
+                            
+                            return {
+                                payment: payment, client_id: client_id,
+                                form_id: form_id, service_id: service_id, 
+                                service_price: service_price, status: status
+                            }
+
+                        }
+                    }).then((result) => {
+
+                        // Submit to Payments
+                        $.ajax({
+                            url: '../controller/ServicesController.php',
+                            type: 'POST',
+                            data: {
+                                case: 'submit client payment',
+                                client_id: result.value.client_id,
+                                form_id: result.value.form_id,
+                                service_id: result.value.service_id,
+                                payment: result.value.payment,
+                                service_price: result.value.service_price,
+                                status: result.value.status
+                            },
+                            success: function(response) {
+
+                                if(response.status) {
+
+                                    Swal.fire({
+										position: 'top',
+										icon: 'success',
+										title: 'Payment Successful!',
+									}).then(function() {
+										location.reload();
+									});
+
+                                }
+                                else {
+                                    Swal.fire({
+										position: 'top',
+										icon: 'warning',
+										title: response.message,
+										showConfirmButton: true
+									});
+                                }
+
+                            }
+                        });
                         
-                        // Approval or Request
-                        $('td', row).eq(3).text('').append(btn_approve).append(btn_disapprove);
 
-                    }
-                });
+                    }); // sweet alert end
+
+                });// pending table select
 
             }// if
             

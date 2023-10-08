@@ -59,6 +59,7 @@ function pending_request($db) {
         $SERVICES->type_id = $value['service_id'];
         $SERVICES->getServiceInfo();
         $pending_request[$key]['service_name'] = $SERVICES->type_name;
+        $pending_request[$key]['service_price'] = $SERVICES->price;
 
         // Action
         $pending_request[$key]['action'] = 'buttons';
@@ -77,8 +78,57 @@ function getServiceAvailability($db) {
 
 function client_request($db) {
     $SERVICES = new Services($db);
+    $SERVICES->client_id = $_POST['user_id'];
+    $SERVICES->status = $_POST['status'];
+    $SERVICES->type_id = $_POST['type_id'];
     return json_encode($SERVICES->submitRequest());
 }
+
+function submitPayment($db) {
+
+    // Services Instance
+    $SERVICES = new Services($db);
+
+    // Service Price
+    $_POST['service_price'] = str_replace(',','', $_POST['service_price']);
+    
+    try {
+
+        // Check Payment Status
+        switch($_POST['status']) {
+
+            // Insert new data in tbl_payments
+            case 'Pending':
+
+                    // Payment must not exceed more than service price
+                    if($_POST['payment'] <= $_POST['service_price']) {
+
+                        $SERVICES->price = $_POST['service_price'];
+                        $SERVICES->total_paid = $_POST['payment'];
+                        $SERVICES->due_date = '';
+                        $SERVICES->form_id = $_POST['form_id'];
+                        $SERVICES->client_id = $_POST['client_id'];
+                        $SERVICES->payment = $_POST['payment'];
+                        $SERVICES->type_id = $_POST['service_id'];
+                        $SERVICES->availability_status = 'no';
+                        $SERVICES->insertClientPayment();
+
+                    }
+                    else {
+                        throw new Exception("Payment Inserted is more than Service Price");
+                    }
+                
+            break;
+
+        }// switch
+
+        return json_encode(['status' => true]);
+
+    }catch(Exception $e) {
+        return json_encode(['status' => false, 'message' => $e->getMessage()]);
+    }
+
+}// submit payment
 
 switch($_POST['case']) {
 
@@ -115,6 +165,11 @@ switch($_POST['case']) {
     // Get All Available Services
     case 'available service':
         echo getServiceAvailability($db);
+    break;
+
+    // Submit Client Payment
+    case 'submit client payment':
+        echo submitPayment($db);
     break;
 
 }// switch
