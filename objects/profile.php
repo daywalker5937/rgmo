@@ -5,6 +5,7 @@ class Profile {
     public $fullname;
     public $lastname, $firstname, $middlename;
     public $address, $contact_number, $sex;
+    public $email;
     public $conn;
 
     public function __construct($db, $id) {
@@ -27,6 +28,14 @@ class Profile {
             $this->address = $row['address'];
             $this->contact_number = $row['contact_number'];
             $this->sex = $row['sex'];
+
+            // Get User Email
+            $email_query = "SELECT email FROM tbl_user_login WHERE user_id = ? ";
+            $email_stmt = $this->conn->prepare($email_query);
+            $email_stmt->bindParam(1, $id);
+            $email_stmt->closeCursor();
+            $email_stmt->execute();
+            $this->email = $email_stmt->fetch(PDO::FETCH_ASSOC)['email'];
 
         }
 

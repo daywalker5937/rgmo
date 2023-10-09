@@ -149,12 +149,15 @@ function paidClient($db) {
         // Get Name of Client
         $PROFILE = new Profile($db, $client_form['client_id']);
         $payments_data[$key]['client_name'] = $PROFILE->firstname . " " . $PROFILE->lastname;
+        $payments_data[$key]['client_email'] = $PROFILE->email;
+        $payments_data[$key]['contact_number'] = $PROFILE->contact_number;
 
         // Get Service Name
         $SERVICES->type_id = $client_form['service_id'];
         $SERVICES->getServiceInfo();
         $payments_data[$key]['service_name'] = $SERVICES->type_name;
         $payments_data[$key]['location'] = $SERVICES->location;
+        $payments_data[$key]['remaining_balance'] = $value['service_price'] - $value['total_paid'];
 
     }// foreach
 
@@ -212,6 +215,11 @@ switch($_POST['case']) {
     // Get All Payment Data
     case 'persons paid':
         echo paidClient($db);
+    break;
+
+    // Reports Table
+    case 'admin reports':
+        echo json_encode(['data' => json_decode(paidClient($db))]);
     break;
 
 }// switch
