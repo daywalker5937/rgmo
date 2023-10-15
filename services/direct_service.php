@@ -107,7 +107,20 @@
                         let img = $("<img src='../includes/images/"+element.service_image+"' alt='service image' class='border border-dark' height='200' width='50%'>")
                             .css('cursor', 'pointer')
                             .on('click', () => { 
-                                window.location.href = 'direct_service.php?service_name=' + service_name + '&type_id=' + element.type_id + '&client=0' 
+
+                                // Check if service is available
+                                if(element.availability_status == 'yes') {
+                                    window.location.href = 'direct_service.php?service_name=' + service_name + '&type_id=' + element.type_id + '&client=0' 
+                                }
+                                else {
+                                    Swal.fire({
+                                        position: 'top',
+                                        icon: 'warning',
+                                        title: 'This Service is not Available!',
+                                        text: 'Please Pick Other Service.'
+                                    });
+                                }
+
                             });
                         let p_name = $("<p class='mb-0'>"+ element.type_name +"</p>");
                         let p_availability = $("<p> Available: "+ element.availability_status +"</p>");

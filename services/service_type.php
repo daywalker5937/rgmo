@@ -104,14 +104,12 @@
                                 window.location.href = 'service_info.php?s=' + service_name + '&type_id=' + element.type_id;
                             }
                             else {
-                                
                                 Swal.fire({
                                     position: 'top',
                                     icon: 'warning',
                                     title: 'This Service is not Available!',
                                     text: 'Please Pick Other Service.'
                                 });
-
                             }
 
                         });// on click
