@@ -165,6 +165,38 @@ function paidClient($db) {
 
 }// paid client
 
+function getPaymentHistory($db) {
+
+    $SERVICES = new Services($db);
+    $SERVICES->client_id = $_POST['client_id'];
+    
+    $data = $SERVICES->getPaymentLogs();
+
+    foreach($data as $key => $value) {
+        
+        // Get Name of Id
+        $PROFILE = new Profile($db, $SERVICES->client_id);
+        $data[$key]['client_name'] = $PROFILE->firstname . " " . $PROFILE->lastname;
+
+        // Get Service Name
+        $SERVICE_DATA = new Services($db);
+        $SERVICE_DATA->form_id = $value['form_id'];
+        $SERVICE_DATA->type_id = $SERVICE_DATA->getClientFormData()['service_id'];
+        $SERVICE_DATA->getServiceInfo();
+        $data[$key]['type_name'] = $SERVICE_DATA->type_name;
+        $data[$key]['location'] = $SERVICE_DATA->location;
+        $data[$key]['price'] = $SERVICE_DATA->price;
+        $data[$key]['description'] = $SERVICE_DATA->description;
+        $data[$key]['availability_status'] = $SERVICE_DATA->availability_status;
+        $data[$key]['service_id'] = $SERVICE_DATA->service_id;
+        $data[$key]['balance'] = $value['service_price'] - $value['total_paid'];
+
+    }// foreach
+
+    return json_encode(['data' => $data]);
+
+}// get payment history
+
 switch($_POST['case']) {
 
     // Get All Services
@@ -217,9 +249,14 @@ switch($_POST['case']) {
         echo paidClient($db);
     break;
 
-    // Reports Table
+    // Reports Table Admin
     case 'admin reports':
         echo json_encode(['data' => json_decode(paidClient($db))]);
+    break;
+
+    // Reports Table Client
+    case 'client reports':
+        echo getPaymentHistory($db);
     break;
 
 }// switch

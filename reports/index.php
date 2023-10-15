@@ -75,6 +75,23 @@
                     <!-- Client Dashboard View -->
                     <?php if($SES->role_name == 'client') { ?>
 
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h4>Payments Reports</h4>
+                                    </div>
+                                    <!-- /.card-header -->
+                                    <div class="card-body">
+                                        <table class="table table-bordered table-striped" id="client-reports-table"></table>
+                                    </div>
+                                    <!-- /.card-body -->
+                                </div>
+                                <!-- /.card -->
+                            </div>
+                            <!-- /.col-12 -->
+                        </div>
+                        <!-- /.row -->
 
                     <?php } ?>
                     <!-- Client Dashboard View End -->
@@ -104,7 +121,8 @@
         $(document).ready(function() {
 
             // Assign PHP variable to js variable
-            let role = "<?php echo $SES->role_name;  ?>"
+            let role = "<?php echo $SES->role_name;  ?>";
+            let user_id = "<?php echo $SES->id; ?>";
             displaySidebar(role, 'Reports');
 
             switch(role) {
@@ -129,6 +147,29 @@
                             {title: 'Services', 'data': 'service_name', targets: [3]},
                             {title: 'Location', 'data': 'location', targets: [4]},
                             {title: 'Amounts Payable', 'data': 'remaining_balance', targets: [5]}
+                        ]
+                    });
+
+                break;
+
+                // If Client
+                case 'client':
+                    
+                    $('#client-reports-table').DataTable({
+                        "responsive": true,
+                        "autoWidth": false,
+                        "lengthChange": false,
+                        ajax: {
+                            url: '../controller/ServicesController.php',
+                            type: 'POST',
+                            data: {case: 'client reports', client_id: user_id}
+                        },
+                        columns: [
+                            {title: 'Service', 'data': 'type_name', targets: [0]},
+                            {title: 'Price', 'data': 'service_price', targets: [1]},
+                            {title: 'Total Paid', 'data': 'total_paid', targets: [2]},
+                            {title: 'Paid in Transaction', 'data': 'payment', targets: [3]},
+                            {title: 'Balance', 'data': 'balance', targets: [4]}
                         ]
                     });
 

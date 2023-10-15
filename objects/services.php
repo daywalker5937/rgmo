@@ -243,6 +243,23 @@ class Services {
 
     }// submit client payment
 
+    // Get from payment_logs
+    public function getPaymentLogs() {
+
+        $query = "SELECT A.*, B.* FROM tbl_payment_logs as A
+            LEFT JOIN tbl_payments as B
+            ON A.payment_id = B.payment_id
+            WHERE A.client_id = ? ORDER BY A.payment_id DESC
+        ";
+
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(1, $this->client_id);
+        $stmt->closeCursor();
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    }// get payment logs
+
 }// class
 
 ?>
