@@ -8,6 +8,7 @@ header("Access-Control-Allow-Methods: POST");
 header('Content-Type: application/json; charset=utf-8');
 
 include_once __DIR__ . '/../includes/config/database.php';
+include_once __DIR__ . '/EmailController.php';
 
 $DATABASE = new Database();
 $db = $DATABASE->getConnection();
@@ -92,9 +93,14 @@ function updateClientRegistration($db) {
 
     try {
 
+        // Get this client email
+        $client = json_decode(getInfo($_POST['user_id'], $db));
+
         switch($_POST['button']) {
     
             case 'approve':
+
+                // Update Database
                 $role_id = 2;
                 $query = "UPDATE tbl_user_role SET role_id = ? WHERE user_id = ?";
                 $stmt = $db->prepare($query);
@@ -102,12 +108,32 @@ function updateClientRegistration($db) {
                 $stmt->bindParam(2, $_POST['user_id']);
                 $stmt->closeCursor();
                 $stmt->execute();
+
+                // Send Email
+                $subject = "Client Pending Registration";
+                $message = "Dear Client! 
+                    It is our pleasure to inform you that your account has been <b>Approved!</b> 
+                    Now that you are registered in, you may use our rental services. Thank you.";
+
+                // Send
+                sendEmail($client->email, $subject, $message);
+
             break;
     
             case 'disapprove':
+
+                // Delete User Info
                 deleteRow($db, 'tbl_user_info', $_POST['user_id']);
                 deleteRow($db, 'tbl_user_login', $_POST['user_id']);
                 deleteRow($db, 'tbl_user_role', $_POST['user_id']);
+
+                // Send Email
+                $subject = "Client Pending Registration";
+                $message = "Dear Customer You have been <b>rejected</b> access to your account, which we regret! Thank you";
+
+                // Send
+                sendEmail($client->email, $subject, $message);
+
             break;
     
         }// switch
@@ -119,6 +145,10 @@ function updateClientRegistration($db) {
     }
 
 }// update client registration
+
+function callSendEmail($email, $subject, $message) {
+    return sendEmail($email, $subject, $message);
+}
 
 function deleteRow($db, $table, $id) {
     $query = "DELETE FROM $table WHERE user_id = ? ";

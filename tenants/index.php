@@ -157,6 +157,14 @@
                                 confirmButtonText: 'Yes'
                             }).then((result) => { 
                                 if(result.isConfirmed) {
+
+                                    Swal.fire({
+                                        title: 'Processing..',
+                                        didOpen: () => {
+                                            Swal.showLoading()
+                                        }
+                                    });
+
                                     $.ajax({
                                         url: '../controller/ProfileController.php',
                                         type: 'POST',
@@ -166,6 +174,7 @@
                                             user_id: data.user_id
                                         },
                                         success: function(response) {
+
                                             if(response.status) {
                                                 Swal.fire({
                                                     position: 'top',
