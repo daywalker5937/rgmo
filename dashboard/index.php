@@ -124,7 +124,7 @@
                                     </div>
                                     <!-- /.card-header -->
                                     <div class="card-body">
-                                        <table class="table table-bordered table-striped"></table>
+                                        <table class="table table-bordered table-striped" id="admin-payment-list"></table>
                                     </div>
                                     <!-- /.card-body -->
                                 </div>
@@ -213,7 +213,7 @@
         $(document).ready(function() {
 
             // Assign PHP variable to js variable
-            let role = "<?php echo $SES->role_name;  ?>"
+            let role = "<?php echo $SES->role_name;  ?>";
             displaySidebar(role, 'Dashboard');
 
         });

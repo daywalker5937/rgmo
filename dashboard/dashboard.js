@@ -309,3 +309,23 @@ $.ajax({
 
     }
 });// ajax pending request
+
+// Get List of Payments
+$('#admin-payment-list').DataTable({
+    "responsive": true,
+    "autoWidth": false,
+    "lengthChange": false,
+    ajax: {
+        url: '../controller/ServicesController.php',
+        type: 'POST',
+        data: {case: 'get client payments'}
+    },
+    columns: [
+        {title: 'Client Name', 'data': 'client_name', targets: [0]},
+        {title: 'Service', 'data': 'type_name', targets: [1]},
+        {title: 'Price', 'data': 'service_price', targets: [2]},
+        {title: 'Total Paid', 'data': 'total_paid', targets: [3]},
+        {title: 'Paid in Transaction', 'data': 'payment', targets: [4]},
+        {title: 'Balance', 'data': 'balance', targets: [5]}
+    ]
+});
