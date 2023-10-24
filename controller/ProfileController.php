@@ -175,6 +175,68 @@ function getRegisteredClients($list) {
 
 }// tenant count
 
+function genderSelection() {
+    return [
+        ["id" => "Male", "text" => "Male"],
+        ["id" => "Female", "text" => "Female"]
+    ];
+}
+
+function civilStatusSelection() {
+    return [
+        ["id" => "Single", "text" => "Single"],
+        ["id" => "Married", "text" => "Married"],
+        ["id" => "Divorced", "text" => "Divorced"],
+        ["id" => "Widowed", "text" => "Widowed"]
+    ]; 
+}
+
+function updateDisplay($data) {
+
+    $gender = genderSelection();
+    $civil = civilStatusSelection();
+
+    // Add Selected Gender
+    foreach($gender as $key => $value) {
+        if($value['id'] == $data->sex) {
+            $gender[$key]['selected'] = true;
+        }
+    }
+
+    // Add Selected Civil Status
+    foreach($civil as $key => $value) {
+        if($value['id'] == $data->civil_status) {
+            $civil[$key]['selected'] = true;
+        }
+    }
+
+    $data->sex = $gender;
+    $data->civil_status = $civil;
+
+    echo json_encode($data);
+
+}// update display
+
+function updateClientInfo($db) {
+
+    $p = json_decode(getInfo($_POST['id'], $db));
+
+    // Check first if User Changed something
+    $present_data = [
+        $p->last_name, $p->first_name, $p->middle_name, 
+        $p->address, $p->contact_number, $p->sex, $p->civil_status, $p->email
+    ];
+
+    $post_data = [
+        $_POST['lname'], $_POST['fname'], $_POST['mname'], 
+        $_POST['address'], $_POST['contact_number'], $_POST['sex'], 
+        $_POST['civil_status'], $_POST['email']
+    ];
+
+    return json_encode($_POST);
+
+}// update client info
+
 switch($_POST['case']) {
 
     case 'get_info':
@@ -191,6 +253,14 @@ switch($_POST['case']) {
 
     case 'get registered clients':
         echo getRegisteredClients(getAllClients($db));
+    break;
+
+    case 'get for update':
+        echo updateDisplay(json_decode(getInfo($_POST['id'], $db)));
+    break;
+
+    case 'update client info':
+        echo updateClientInfo($db);
     break;
 
 }// switch

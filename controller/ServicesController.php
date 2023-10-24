@@ -10,6 +10,7 @@ header('Content-Type: application/json; charset=utf-8');
 include_once  __DIR__ . '/../includes/config/database.php';
 include_once __DIR__ . '/../objects/services.php';
 include_once __DIR__ . '/../objects/profile.php';
+include_once __DIR__ . '/EmailController.php';
 
 $DATABASE = new Database();
 $db = $DATABASE->getConnection();

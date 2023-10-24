@@ -137,11 +137,20 @@
                 switch(data.status) {
 
                     case 'Client':
+
+                        // Append Buttons
                         $('td', row).eq(7).text('').append(btn_update).append(btn_delete);
+
+                        btn_update.on('click', function(e) {
+                            e.preventDefault();
+                            window.location.href = 'update.php?id=' + data.user_id;
+                        });// button update
+
                     break;
 
                     case 'Pending Registration':
 
+                        // Append Buttons
                         $('td', row).eq(7).text('').append(btn_approve).append(btn_disapprove);
 
                         btn_approve.on('click', function(e) {
