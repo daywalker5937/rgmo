@@ -266,7 +266,23 @@
                                 data: formData,
                                 success: function(response) {
 
-                                    console.log("response", response);
+                                    if(response.status == true) {
+                                        Swal.fire({
+                                            position: 'top',
+                                            icon: 'success',
+                                            title: 'Updated!',
+                                            showConfirmButton: false,
+                                            timer: 1000
+                                        });
+                                    }
+                                    else {
+                                        Swal.fire({
+                                            position: 'top',
+                                            icon: 'warning',
+                                            title: response.message,
+                                            showConfirmButton: true
+                                        });
+                                    }
                                     
                                 }
                             });

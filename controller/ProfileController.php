@@ -221,19 +221,61 @@ function updateClientInfo($db) {
 
     $p = json_decode(getInfo($_POST['id'], $db));
 
-    // Check first if User Changed something
-    $present_data = [
-        $p->last_name, $p->first_name, $p->middle_name, 
-        $p->address, $p->contact_number, $p->sex, $p->civil_status, $p->email
-    ];
+    try {
 
-    $post_data = [
-        $_POST['lname'], $_POST['fname'], $_POST['mname'], 
-        $_POST['address'], $_POST['contact_number'], $_POST['sex'], 
-        $_POST['civil_status'], $_POST['email']
-    ];
+        // Check first if User Changed something
+        $present_data = [
+            $p->last_name, $p->first_name, $p->middle_name, 
+            $p->address, $p->contact_number, $p->sex, $p->civil_status, $p->email
+        ];
+    
+        $post_data = [
+            $_POST['lname'], $_POST['fname'], $_POST['mname'], 
+            $_POST['address'], $_POST['contact_number'], $_POST['sex'], 
+            $_POST['civil_status'], $_POST['email']
+        ];
+    
+        // Check if Same present and post data
+        if($present_data == $post_data) {
+            throw new Exception('Nothing Changed!');
+        }
+        else {
 
-    return json_encode($_POST);
+            // Update User Info
+            $query_ui = "UPDATE tbl_user_info 
+                SET first_name = ?, last_name = ?, middle_name = ?,
+                address = ?, contact_number = ?, sex = ?, civil_status = ?
+                WHERE user_id = ?
+            ";
+
+            // Update
+            $stmt_ui = $db->prepare($query_ui);
+            $stmt_ui->bindParam(1, $_POST['fname']);
+            $stmt_ui->bindParam(2, $_POST['lname']);
+            $stmt_ui->bindParam(3, $_POST['mname']);
+            $stmt_ui->bindParam(4, $_POST['address']);
+            $stmt_ui->bindParam(5, $_POST['contact_number']);
+            $stmt_ui->bindParam(6, $_POST['sex']);
+            $stmt_ui->bindParam(7, $_POST['civil_status']);
+            $stmt_ui->bindParam(8, $_POST['id']);
+            $stmt_ui->closeCursor();
+            $stmt_ui->execute();
+
+            // Update Email
+            $query_ul = "UPDATE tbl_user_login SET email = ? WHERE user_id = ?";
+            $query_ul = $db->prepare($query_ul);
+            $query_ul->bindParam(1, $_POST["email"]);
+            $query_ul->bindParam(2, $_POST["id"]);
+            $query_ul->closeCursor();
+            $query_ul->execute();
+
+            return json_encode(["status"=> true]);
+
+        }
+
+    }catch(Exception $e) { 
+        return json_encode(['status' => false, 'message'=> $e->getMessage()]);
+    }
 
 }// update client info
 
