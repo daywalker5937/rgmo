@@ -26,6 +26,7 @@
         <?php
             require_once __DIR__ . '/../components/navbar.php';
             require_once __DIR__ . '/../components/sidebar.php';
+            require_once __DIR__ . '/../components/modals.html';
         ?>
 
         <!-- Content Wrapper. Contains page content -->
@@ -50,7 +51,9 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
-                                <button class="btn btn-primary"><i class="fas fa-plus"> Add New</i></button>
+                                <button class="btn btn-primary" data-toggle="modal" data-target="#modal-add-new">
+                                    <i class="fas fa-plus"> Add New</i>
+                                </button>
                             </div>
                             <!-- /.card-header -->
                             <div class="card-body">
