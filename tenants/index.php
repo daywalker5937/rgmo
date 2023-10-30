@@ -158,6 +158,55 @@
                             window.location.href = 'update.php?id=' + data.user_id;
                         });// button update
 
+                        btn_delete.on('click', function(e) {
+                            e.preventDefault();
+
+                            Swal.fire({
+                                position: 'top',
+                                icon: 'warning',
+                                title: 'Are you sure?',
+                                text: 'You want to delete this user?',
+                                showCancelButton: true,
+                                confirmButtonColor: '#3085d6',
+                                cancelButtonColor: '#d33',
+                                confirmButtonText: 'Yes'
+                            }).then((result) => {
+                                if(result.isConfirmed) {
+                                    
+                                    $.ajax({
+                                        url: '../controller/ProfileController.php',
+                                        type: 'POST',
+                                        data: {case: 'delete user', user_id: data.user_id},
+                                        success: function(response) {
+
+                                            if(response.status) {
+                                                Swal.fire({
+                                                    position: 'top',
+                                                    icon: 'success',
+                                                    title: 'Client Account Deleted!',
+                                                    showConfirmButton: false,
+                                                    timer: 1500
+                                                }).then(function() {
+                                                    location.reload();
+                                                });
+                                            }
+                                            else {
+                                                Swal.fire({
+                                                    position: 'top',
+                                                    icon: 'warning',
+                                                    title: response.message,
+                                                    showConfirmButton: true
+                                                });
+                                            }
+
+                                        }
+                                    });
+
+                                }
+                            });
+
+                        });
+
                     break;
 
                     case 'Pending Registration':

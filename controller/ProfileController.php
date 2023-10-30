@@ -279,6 +279,24 @@ function updateClientInfo($db) {
 
 }// update client info
 
+function deleteUser($db) {
+
+    try {
+
+        // Delete User Info
+        deleteRow($db, 'tbl_user_info', $_POST['user_id']);
+        deleteRow($db, 'tbl_user_login', $_POST['user_id']);
+        deleteRow($db, 'tbl_user_role', $_POST['user_id']);
+
+        return json_encode(['status'=> true]);
+
+    }
+    catch(Exception $e) { 
+        return json_encode(['status'=> false,'message'=> $e->getMessage()]);
+    }
+
+}// delete user
+
 switch($_POST['case']) {
 
     case 'get_info':
@@ -303,6 +321,10 @@ switch($_POST['case']) {
 
     case 'update client info':
         echo updateClientInfo($db);
+    break;
+
+    case 'delete user':
+        echo deleteUser($db);
     break;
 
 }// switch
