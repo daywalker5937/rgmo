@@ -17,6 +17,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Tenants</title>
     <?php require_once __DIR__ . '/../components/link.html'; ?>
+
+    <style>
+        #caps-pass, #caps-confirm {
+            display: none;
+            color: red;
+            font-weight: bold;
+        }
+    </style>
 </head>
 
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -87,6 +95,7 @@
     <!-- ./wrapper -->
 
     <?php require_once __DIR__ . '/../components/script.html'; ?>
+    <script src="../components/pass-show-hide.js"></script>
 
 </body>
 </html>
@@ -267,6 +276,118 @@
 
             }
         });// DataTable
+
+        // Add New Functions
+        let selectCivilStatus = $($('#add-new-id select')[0]);
+		let selectSex = $($('#add-new-id select')[1]);
+
+        // Selections
+		let civil_selection = [
+			{"id": 'Single', "text": 'Single'}, {"id": 'Married', "text": 'Married'},
+			{"id": 'Divorced', "text": 'Divorced'}, {"id": 'Widowed', "text": 'Widowed'}
+		];
+		let sex_selection = [{"id": 'Male', "text": 'Male'}, {"id": 'Female', "text": 'Female'}];
+        
+        selectCivilStatus.select2({
+			width: '100%',
+			theme: 'bootstrap4',
+			placeholder: 'Select Civil Status',
+			allowClear: true,
+			data:civil_selection
+		}).on('change', function() {($(this).val() == "") ? $(this).addClass('is-invalid') : $(this).removeClass('is-invalid') });
+			
+		selectSex.select2({
+			width: '100%',
+			theme: 'bootstrap4',
+			placeholder: 'Select Sex',
+			allowClear: true,
+			data:sex_selection
+		}).on('change', function() {($(this).val() == "") ? $(this).addClass('is-invalid') : $(this).removeClass('is-invalid') });
+
+        $('#add-new-id').validate({
+			rules: {
+				lname: {required: true},
+				fname: {required: true},
+				mname: {required: true},
+				address: {required: true},
+				civil_status: {required: true},
+				sex: {required: true},
+				role: {required: true},
+				contact_number: {required: true, maxlength: 11, minlength: 11},
+				email: {required: true},
+				password: {required: true, minlength: 8},
+				confirm_password: {equalTo: "#_pass"},
+				upload_pic: {required: true}
+			},
+			messages: {
+				confirm_password: "Must be same value with Password"
+			},
+			errorElement: 'span',
+			errorPlacement: function(error, element) {
+				error.addClass('invalid-feedback');
+				element.closest('.input-group').append(error);
+				element.closest('.form-group').append(error);
+			},
+			highlight: function(element, errorClass, validClass) { $(element).addClass('is-invalid'); },
+			unhighlight: function(element, errorClass, validClass) { $(element).removeClass('is-invalid'); },
+			submitHandler: function(form) {
+			
+				Swal.fire({
+					position: 'top',
+					title: 'Are you sure!',
+					text: 'You want to Add this User?',
+					showCancelButton: true,
+					confirmButtonColor: '#3085d6',
+					cancelButtonColor: '#d33',
+					confirmButtonText: 'Yes',
+				}).then((result) => {
+
+					if(result.isConfirmed) {
+						
+						let formData = new FormData(form);
+						formData.append('case', 'register');
+                        formData.append('role_id', 2);
+
+						$.ajax({
+							url: '../controller/RegisterController.php',
+							type: 'POST',
+							processData: false,
+							contentType: false,
+							data:formData,
+							success: function(response) {
+
+								if(response.status == true) {
+
+									Swal.fire({
+										position: 'top',
+										icon: 'success',
+										title: 'New Client Added!',
+										showConfirmButton: true
+									}).then(function() {
+                                        location.reload();
+                                    });
+
+								}
+								else {
+
+									Swal.fire({
+										position: 'top',
+										icon: 'warning',
+										title: response.message,
+										showConfirmButton: true
+									});
+
+								}
+
+							}
+						});
+						
+					}
+					
+				});
+			
+			}// submit handler
+		});// validate
 
     });// document
 

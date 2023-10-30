@@ -177,12 +177,119 @@
             <div class="modal-header">
                 <h4 class="modal-title">Add New</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
+                    <span aria-hidden="true">&times;</span>
                 </button>
             </div>
 
             <div class="modal-body">
                 
+                <form id="add-new-id" autocomplete="off" enctype="multipart/form-data">
+					
+					<div class="row">
+						<div class="input-group mb-3 col-4">
+							<input type="text" name="lname" class="form-control" placeholder="Last Name">
+							<div class="input-group-append">
+								<div class="input-group-text">
+									<span class="fas fa-user"></span>
+								</div>
+							</div>
+						</div>
+						<div class="input-group mb-3 col-4">
+							<input type="text" name="fname" class="form-control" placeholder="First Name">
+							<div class="input-group-append">
+								<div class="input-group-text">
+									<span class="fas fa-user"></span>
+								</div>
+							</div>
+						</div>
+						<div class="input-group mb-3 col-4">
+							<input type="text" name="mname" class="form-control" placeholder="Middle Name">
+							<div class="input-group-append">
+								<div class="input-group-text">
+									<span class="fas fa-user"></span>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- /.row -->
+
+					<div class="row">
+						<div class="input-group mb-3 col-12">
+							<input type="text" name="address" class="form-control" placeholder="Address">
+							<div class="input-group-append">
+								<div class="input-group-text">
+									<span class="fas fa-address-card"></span>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- /.row -->
+
+					<div class="row">
+						<div class="input-group mb-3 col-6">
+							<select name="civil_status"><option value=""></option></select>
+						</div>
+						<div class="input-group mb-3 col-6">
+							<input type="number" name="contact_number" class="form-control" placeholder="Contact Number">
+							<div class="input-group-append">
+								<div class="input-group-text">
+									<span class="fas fa-phone"></span>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- /.row -->
+
+					<div class="row">
+						<div class="input-group mb-3 col-6">
+							<select name="sex"><option value=""></option></select>
+						</div>
+						<div class="input-group mb-3 col-6">
+							<input type="email" name="email" class="form-control" placeholder="Email">
+							<div class="input-group-append">
+								<div class="input-group-text">
+									<span class="fas fa-envelope"></span>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- /.row -->
+
+					<div class="input-group mb-3">
+						<input type="password" id="_pass" name="password" class="form-control" placeholder="Password">
+						<div class="input-group-append">
+							<div class="input-group-text">
+								<i class="fas fa-eye" id="togglePass" style="cursor: pointer;"></i>
+							</div>
+						</div>
+					</div>
+					<p id="caps-pass">Caps Lock is ON</p>
+					<div class="input-group mb-3">
+						<input type="password" id="_confirm-pass" name="confirm_password" class="form-control" placeholder="Confirm Password">
+						<div class="input-group-append">
+							<div class="input-group-text">
+								<i class="fas fa-eye" id="toggleConfirm" style="cursor: pointer;"></i>
+							</div>
+						</div>
+					</div>
+					<p id="caps-confirm">Caps Lock is ON</p>
+					<div class="row">
+						<div class="form-group col-12">
+							<label>Upload a Picture: </label>
+							<input type="file" id="upload-id" name="upload_pic">
+						</div>
+					</div>
+					<!-- /.row -->
+
+					<div class="col-12">
+						<div class="float-right">
+							<button type="submit" class="btn btn-primary btn-block">Add User</button>
+						</div>
+					</div>
+					<!-- /.row -->
+
+				</form>
+
             </div>
             <!-- /. modal-body -->
 

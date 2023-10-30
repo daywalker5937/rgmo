@@ -280,6 +280,7 @@
 						
 						let formData = new FormData(form);
 						formData.append('case', 'register');
+						formData.append('role_id', 3);
 
 						$.ajax({
 							url: '../controller/RegisterController.php',

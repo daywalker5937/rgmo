@@ -89,11 +89,10 @@ function register_account() {
                     $stmt_login->execute();
     
                     // Insert to a Client Role to tbl_user_role
-                    $role_id = 3;
                     $role_query = "INSERT INTO tbl_user_role (user_id, role_id) VALUES (?,?)";
                     $stmt_role = $DATABASE->connection->prepare($role_query);
                     $stmt_role->bindParam(1, $user_id);
-                    $stmt_role->bindParam(2, $role_id);
+                    $stmt_role->bindParam(2, $_POST['role_id']);
                     $stmt_role->closeCursor();
                     $stmt_role->execute();
     
