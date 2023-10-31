@@ -135,6 +135,7 @@
                         "responsive": true,
                         "autoWidth": false,
                         "lengthChange": false,
+                        "aaSorting": [],
                         ajax: {
                             url: '../controller/ServicesController.php',
                             type: 'POST',
