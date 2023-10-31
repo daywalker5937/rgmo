@@ -265,7 +265,7 @@ class Services {
         $query = "SELECT A.*, B.* FROM tbl_payment_logs as A
             LEFT JOIN tbl_payments as B
             ON A.payment_id = B.payment_id
-            ORDER BY A.payment_id DESC
+            ORDER BY A.logs_id DESC
         ";
 
         $stmt = $this->conn->prepare($query);
