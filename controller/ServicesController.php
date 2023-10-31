@@ -149,16 +149,19 @@ function paidClient($db) {
 
         // Get Name of Client
         $PROFILE = new Profile($db, $client_form['client_id']);
+        $payments_data[$key]['client_id'] = $client_form['client_id'];
         $payments_data[$key]['client_name'] = $PROFILE->firstname . " " . $PROFILE->lastname;
         $payments_data[$key]['client_email'] = $PROFILE->email;
         $payments_data[$key]['contact_number'] = $PROFILE->contact_number;
 
-        // Get Service Name
+        // Get Service Data
         $SERVICES->type_id = $client_form['service_id'];
         $SERVICES->getServiceInfo();
+        $payments_data[$key]['service_id'] = $client_form['service_id'];
         $payments_data[$key]['service_name'] = $SERVICES->type_name;
         $payments_data[$key]['location'] = $SERVICES->location;
         $payments_data[$key]['remaining_balance'] = $value['service_price'] - $value['total_paid'];
+        $payments_data[$key]['status'] = $client_form['status'];
 
     }// foreach
 
@@ -228,72 +231,67 @@ function getClientPayments($db) {
 
 }// get payment history
 
+function updateClientPayment($db) {
+
+    $SERVICES = new Services($db);
+    $SERVICES->client_id = $_POST['client_id'];
+    $SERVICES->payment = $_POST['payment'];
+    $SERVICES->payment_id = $_POST['payment_id'];
+    $SERVICES->total_paid = $_POST['total_paid'] + $SERVICES->payment;
+    $result = $SERVICES->updatePayment();
+
+    try {
+
+        // Update Status if Payment is Successful
+        if($result['status'] == true) {
+    
+            // Check if Rental is Fully Paid
+            if($SERVICES->total_paid == $_POST['service_price']) {
+                $SERVICES->status = 'Paid';
+                $SERVICES->form_id = $_POST['form_id'];
+                $SERVICES->updateStatus();
+            }
+    
+        }// if successful payment
+
+        return json_encode(['status' => true]);
+
+    }catch(Exception $e) {
+        return json_encode(['status' => false,'message'=> $e->getMessage()]);
+    }
+
+}// update payment
+
 switch($_POST['case']) {
 
     // Get All Services
-    case 'services':
-        echo services($db);
-    break;
-
+    case 'services': echo services($db); break;
     // Get Type of Service depends on service_id
-    case 'fetch type':
-        echo service_type($db);
-    break;
-
+    case 'fetch type': echo service_type($db); break;
     // Get Info of Type
-    case 'service info':
-        echo service_info($db);
-    break;
-
+    case 'service info': echo service_info($db); break;
     // Get All Type of Services
-    case 'all types':
-        echo allServiceType($db);
-    break;
-
+    case 'all types': echo allServiceType($db); break;
     // Get All Pending Request
-    case 'pending request':
-        echo pending_request($db);
-    break;
-
+    case 'pending request': echo pending_request($db); break;
     // Logged in Client Submit Request
-    case 'client request':
-        echo client_request($db);
-    break;
-
+    case 'client request': echo client_request($db); break;
     // Get All Available Services
-    case 'available service':
-        echo getServiceAvailability($db);
-    break;
-
+    case 'available service': echo getServiceAvailability($db); break;
     // Submit Client Payment
-    case 'submit client payment':
-        echo submitPayment($db);
-    break;
-
+    case 'submit client payment': echo submitPayment($db); break;
     // Get Occupied Slots
-    case 'occupied slots':
-        echo occupiedSlots($db);
-    break;
-
+    case 'occupied slots': echo occupiedSlots($db); break;
     // Get All Payment Data
-    case 'persons paid':
-        echo paidClient($db);
-    break;
-
+    case 'persons paid': echo paidClient($db); break;
     // Reports Table Admin
-    case 'admin reports':
-        echo json_encode(['data' => json_decode(paidClient($db))]);
-    break;
-
+    case 'admin reports': echo json_encode(['data' => json_decode(paidClient($db))]); break;
     // Reports Table Client
-    case 'client reports':
-        echo getPaymentHistory($db);
-    break;
-
+    case 'client reports': echo getPaymentHistory($db); break;
     // Get All Client Payments
-    case 'get client payments':
-        echo getClientPayments($db);
-    break;
+    case 'get client payments': echo getClientPayments($db); break;
+    // Update Client Payment
+    case 'update client payment': echo updateClientPayment($db); break;
 
 }// switch
 

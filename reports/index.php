@@ -55,7 +55,7 @@
                             <div class="col-12">
                                 <div class="card">
                                     <div class="card-header">
-                                        <h4>Payments Reports</h4>
+                                        <h4>Payments Report</h4>
                                     </div>
                                     <!-- /.card-header -->
                                     <div class="card-body">
@@ -138,15 +138,15 @@
                         ajax: {
                             url: '../controller/ServicesController.php',
                             type: 'POST',
-                            data: {case: 'admin reports'}
+                            data: {case: 'get client payments'}
                         },
                         columns: [
                             {title: 'Client Name', 'data': 'client_name', targets: [0]},
-                            {title: 'Email', 'data': 'client_email', targets: [1]},
-                            {title: 'Phone Number', 'data': 'contact_number', targets: [2]},
-                            {title: 'Services', 'data': 'service_name', targets: [3]},
-                            {title: 'Location', 'data': 'location', targets: [4]},
-                            {title: 'Amounts Payable', 'data': 'remaining_balance', targets: [5]}
+                            {title: 'Service', 'data': 'type_name', targets: [1]},
+                            {title: 'Price', 'data': 'service_price', targets: [2]},
+                            {title: 'Total Paid', 'data': 'total_paid', targets: [3]},
+                            {title: 'Paid in Transaction', 'data': 'payment', targets: [4]},
+                            {title: 'Balance', 'data': 'balance', targets: [5]}
                         ]
                     });
 

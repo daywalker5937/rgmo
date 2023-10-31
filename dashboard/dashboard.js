@@ -227,8 +227,6 @@ $.ajax({
 
                     let selected_row = pending_table.row('.selected').data();
 
-                    console.log("selected", selected_row);
-
                     Swal.fire({
                         title: 'Client Payment',
                         html: `<input type="number" id="payment" class="swal2-input" placeholder="Enter Payment">`,
@@ -237,7 +235,7 @@ $.ajax({
                         focusConfirm: false,
                         preConfirm: () => {
 
-                            const payment = Swal.getPopup().querySelector('#payment').value
+                            const payment = Swal.getPopup().querySelector('#payment').value;
                             const client_id = selected_row.client_id;
                             const form_id = selected_row.id;
                             const service_id = selected_row.service_id;
@@ -247,6 +245,11 @@ $.ajax({
                             // If Empty
                             if (!payment) {
                                 Swal.showValidationMessage(`Please Enter Payment!`)
+                            }
+
+                            // If Entered Payment is more than Price
+                            if(payment > service_price) {
+                                Swal.showValidationMessage(`Payment Inserted is more than the Service Price`);
                             }
                             
                             return {
@@ -311,21 +314,129 @@ $.ajax({
 });// ajax pending request
 
 // Get List of Payments
-$('#admin-payment-list').DataTable({
+let payments_table = $('#admin-payment-list').DataTable({
     "responsive": true,
     "autoWidth": false,
     "lengthChange": false,
+    select: true,
     ajax: {
         url: '../controller/ServicesController.php',
         type: 'POST',
-        data: {case: 'get client payments'}
+        data: {case: 'admin reports'}
     },
     columns: [
         {title: 'Client Name', 'data': 'client_name', targets: [0]},
-        {title: 'Service', 'data': 'type_name', targets: [1]},
-        {title: 'Price', 'data': 'service_price', targets: [2]},
-        {title: 'Total Paid', 'data': 'total_paid', targets: [3]},
-        {title: 'Paid in Transaction', 'data': 'payment', targets: [4]},
-        {title: 'Balance', 'data': 'balance', targets: [5]}
+        {title: 'Email', 'data': 'client_email', targets: [1]},
+        {title: 'Phone Number', 'data': 'contact_number', targets: [2]},
+        {title: 'Service', 'data': 'service_name', targets: [3]},
+        {title: 'Service Price', 'data': 'service_price', targets: [4]},
+        {title: 'Balance', 'data': 'remaining_balance', targets: [5]}
     ]
 });
+
+// On Select for Payments Table
+payments_table.on('select', function(e, dt, type, indexes) {
+
+    let selected_row = payments_table.row('.selected').data();
+
+    console.log("selected payment", selected_row);
+
+    if(selected_row.remaining_balance !== 0) {
+
+        Swal.fire({
+            position: 'top',
+            title: 'Pay Balance?',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            confirmButtonText: 'Yes',
+            cancelButtonColor: '#d33'
+        }).then((result) => {
+    
+            if(result.isConfirmed) {
+    
+                // Payment Form
+                Swal.fire({
+                    title: 'New Payment',
+                    html: `<input type="number" id="new-payment" class="swal2-input" placeholder="Enter Payment">`,
+                    confirmButtonText: 'Submit',
+                    showCancelButton: true,
+                    focusConfirm: false,
+                    preConfirm: () => {
+    
+                        const payment = Swal.getPopup().querySelector('#new-payment').value;
+                        const client_id = selected_row.client_id;
+                        const payment_id = selected_row.payment_id;
+                        const form_id = selected_row.id;
+                        const service_id = selected_row.service_id;
+                        const service_price = selected_row.service_price;
+                        const remaining_balance = selected_row.remaining_balance;
+                        const total_paid = selected_row.total_paid;
+    
+                        // If Empty
+                        if(!payment) {
+                            Swal.showValidationMessage(`Please Enter Payment`);
+                        }
+    
+                        // If Entered Payment is more than Remaining Balance
+                        if(payment > remaining_balance) {
+                            Swal.showValidationMessage(`Payment Inserted is more than the Remaining Balance`);
+                        }
+    
+                        return {
+                            payment: payment, payment_id: payment_id,
+                            client_id: client_id, form_id: form_id, 
+                            service_id: service_id, service_price: service_price,
+                            remaining_balance: remaining_balance, total_paid: total_paid
+                        }
+    
+                    }
+                }).then((result) => {
+    
+                    // Submit New Payment
+                    $.ajax({
+                        url: '../controller/ServicesController.php',
+                        type: 'POST',
+                        data: {
+                            case: 'update client payment', payment: result.value.payment,
+                            client_id: result.value.client_id, payment_id: result.value.payment_id,
+                            form_id: result.value.form_id, service_id: result.value.service_id,
+                            service_price: result.value.service_price, remaining_balance: result.value.remaining_balance,
+                            total_paid: result.value.total_paid
+                        },
+                        success: function(response) {
+
+                            if(response.status) {
+
+                                Swal.fire({
+                                    position: 'top',
+                                    icon: 'success',
+                                    title: 'Payment Successful!',
+                                }).then(function() {
+                                    location.reload();
+                                });
+
+                            }
+                            else {
+                                Swal.fire({
+                                    position: 'top',
+                                    icon: 'warning',
+                                    title: response.message,
+                                    showConfirmButton: true
+                                });
+                            }
+
+                        }
+                    });
+    
+                });
+    
+            }// confirmed
+            
+    
+        }); // sweet alert end
+
+    }// if remaining balance is not equal to 0
+
+    
+
+});// on select

@@ -275,6 +275,35 @@ class Services {
 
     }// get client payment
 
+    public function updatePayment() {
+
+        try {
+
+            // Insert tbl_payment_logs
+            $query_logs = "INSERT INTO tbl_payment_logs (client_id, payment, payment_id) VALUES(?,?,?)";
+            $stmt_logs = $this->conn->prepare($query_logs);
+            $stmt_logs->bindParam(1, $this->client_id);
+            $stmt_logs->bindParam(2, $this->payment);
+            $stmt_logs->bindParam(3, $this->payment_id);
+            $stmt_logs->closeCursor();
+            $stmt_logs->execute();
+
+            // Update tbl_payments
+            $query = "UPDATE tbl_payments SET total_paid = ? WHERE payment_id = ?";
+            $stmt = $this->conn->prepare($query);
+            $stmt->bindParam(1, $this->total_paid);
+            $stmt->bindParam(2, $this->payment_id);
+            $stmt->closeCursor();
+            $stmt->execute();
+
+            return ['status' => true];
+
+        }catch(Exception $e) {
+            return ['status' => false, 'message'=> $e->getMessage()];
+        }
+
+    }// update payment
+
 }// class
 
 ?>
