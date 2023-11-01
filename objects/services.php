@@ -16,6 +16,7 @@ class Services {
 
     // client form
     public $form_id;
+    public $date;
     public $client_id;
     public $payment_id;
     public $status;
@@ -145,6 +146,17 @@ class Services {
 
     }// update status
 
+    public function updateClientFormDate() {
+
+        $query = "UPDATE tbl_client_form SET date = ? WHERE id = ?";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(1, $this->date);
+        $stmt->bindParam(2, $this->form_id);
+        $stmt->closeCursor();
+        $stmt->execute();
+
+    }// update client form date
+
     public function updateServiceAvailability() {
 
         $query = "UPDATE tbl_type_of_service SET availability_status = ? WHERE type_id = ? ";
@@ -234,8 +246,11 @@ class Services {
         $stmt_logs->closeCursor();
         $stmt_logs->execute();
 
+        // Update Client Form Payment Date
+        $this->updateClientFormDate();
+
         // Change Status
-        $this->status = "Client Payment";
+        $this->status = ($this->total_paid == $this->price) ? "Paid" : "Client Payment";
         $this->updateStatus();
 
         // Update Service to No after Payment
