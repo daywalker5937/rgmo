@@ -371,6 +371,7 @@ payments_table.on('select', function(e, dt, type, indexes) {
                         const service_price = selected_row.service_price;
                         const remaining_balance = selected_row.remaining_balance;
                         const total_paid = selected_row.total_paid;
+                        const status = selected_row.status;
     
                         // If Empty
                         if(!payment) {
@@ -386,7 +387,8 @@ payments_table.on('select', function(e, dt, type, indexes) {
                             payment: payment, payment_id: payment_id,
                             client_id: client_id, form_id: form_id, 
                             service_id: service_id, service_price: service_price,
-                            remaining_balance: remaining_balance, total_paid: total_paid
+                            remaining_balance: remaining_balance, total_paid: total_paid,
+                            status: status
                         }
     
                     }
@@ -397,11 +399,11 @@ payments_table.on('select', function(e, dt, type, indexes) {
                         url: '../controller/ServicesController.php',
                         type: 'POST',
                         data: {
-                            case: 'update client payment', payment: result.value.payment,
+                            case: 'submit client payment', payment: result.value.payment,
                             client_id: result.value.client_id, payment_id: result.value.payment_id,
                             form_id: result.value.form_id, service_id: result.value.service_id,
                             service_price: result.value.service_price, remaining_balance: result.value.remaining_balance,
-                            total_paid: result.value.total_paid
+                            total_paid: result.value.total_paid, status: result.value.status
                         },
                         success: function(response) {
 
@@ -428,7 +430,7 @@ payments_table.on('select', function(e, dt, type, indexes) {
                         }
                     });
     
-                });
+                });// swal
     
             }// confirmed
             
@@ -436,7 +438,5 @@ payments_table.on('select', function(e, dt, type, indexes) {
         }); // sweet alert end
 
     }// if remaining balance is not equal to 0
-
-    
 
 });// on select

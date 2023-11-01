@@ -22,6 +22,7 @@ class Services {
     public $status;
     public $total_paid;
     public $payment;
+    public $payment_balance;
     public $due_date;
 
     // connection
@@ -238,11 +239,12 @@ class Services {
         $payment_id = $this->conn->lastInsertId();
 
         // insert into tbl_payment_logs
-        $query_logs = "INSERT INTO tbl_payment_logs (client_id, payment, payment_id) VALUES (?,?,?)";
+        $query_logs = "INSERT INTO tbl_payment_logs (client_id, payment, payment_balance, payment_id) VALUES (?,?,?,?)";
         $stmt_logs = $this->conn->prepare($query_logs);
         $stmt_logs->bindParam(1, $this->client_id);
         $stmt_logs->bindParam(2, $this->payment);
-        $stmt_logs->bindParam(3, $payment_id);
+        $stmt_logs->bindParam(3, $this->payment_balance);
+        $stmt_logs->bindParam(4, $payment_id);
         $stmt_logs->closeCursor();
         $stmt_logs->execute();
 
@@ -292,30 +294,23 @@ class Services {
 
     public function updatePayment() {
 
-        try {
+        // Insert tbl_payment_logs
+        $query_logs = "INSERT INTO tbl_payment_logs (client_id, payment, payment_balance, payment_id) VALUES(?,?,?,?)";
+        $stmt_logs = $this->conn->prepare($query_logs);
+        $stmt_logs->bindParam(1, $this->client_id);
+        $stmt_logs->bindParam(2, $this->payment);
+        $stmt_logs->bindParam(3, $this->payment_balance);
+        $stmt_logs->bindParam(4, $this->payment_id);
+        $stmt_logs->closeCursor();
+        $stmt_logs->execute();
 
-            // Insert tbl_payment_logs
-            $query_logs = "INSERT INTO tbl_payment_logs (client_id, payment, payment_id) VALUES(?,?,?)";
-            $stmt_logs = $this->conn->prepare($query_logs);
-            $stmt_logs->bindParam(1, $this->client_id);
-            $stmt_logs->bindParam(2, $this->payment);
-            $stmt_logs->bindParam(3, $this->payment_id);
-            $stmt_logs->closeCursor();
-            $stmt_logs->execute();
-
-            // Update tbl_payments
-            $query = "UPDATE tbl_payments SET total_paid = ? WHERE payment_id = ?";
-            $stmt = $this->conn->prepare($query);
-            $stmt->bindParam(1, $this->total_paid);
-            $stmt->bindParam(2, $this->payment_id);
-            $stmt->closeCursor();
-            $stmt->execute();
-
-            return ['status' => true];
-
-        }catch(Exception $e) {
-            return ['status' => false, 'message'=> $e->getMessage()];
-        }
+        // Update tbl_payments
+        $query = "UPDATE tbl_payments SET total_paid = ? WHERE payment_id = ?";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(1, $this->total_paid);
+        $stmt->bindParam(2, $this->payment_id);
+        $stmt->closeCursor();
+        $stmt->execute();
 
     }// update payment
 

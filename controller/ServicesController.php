@@ -89,9 +89,6 @@ function occupiedSlots($db) {
 
 function submitPayment($db) {
 
-    // Services Instance
-    $SERVICES = new Services($db);
-
     try {
 
         // Check Payment Status
@@ -99,16 +96,37 @@ function submitPayment($db) {
 
             // Insert new data in tbl_payments
             case 'Pending':
+                $SERVICES = new Services($db);
                 $SERVICES->price = $_POST['service_price'];
                 $SERVICES->total_paid = $_POST['payment'];
                 $SERVICES->due_date = '';
                 $SERVICES->form_id = $_POST['form_id'];
                 $SERVICES->client_id = $_POST['client_id'];
                 $SERVICES->payment = $_POST['payment'];
+                $SERVICES->payment_balance = $SERVICES->price - $SERVICES->total_paid;
                 $SERVICES->type_id = $_POST['service_id'];
                 $SERVICES->availability_status = 'no';
                 $SERVICES->date = date('Y-m-d');
                 $SERVICES->insertClientPayment();
+            break;
+
+            case 'Client Payment':
+
+                $SERVICES = new Services($db);
+                $SERVICES->client_id = $_POST['client_id'];
+                $SERVICES->payment = $_POST['payment'];
+                $SERVICES->payment_balance = $_POST['remaining_balance'] - $SERVICES->payment;
+                $SERVICES->payment_id = $_POST['payment_id'];
+                $SERVICES->total_paid = $_POST['total_paid'] + $SERVICES->payment;
+                $SERVICES->updatePayment();
+
+                // Check if Rental is Fully Paid
+                if($SERVICES->total_paid == $_POST['service_price']) {
+                    $SERVICES->status = 'Paid';
+                    $SERVICES->form_id = $_POST['form_id'];
+                    $SERVICES->updateStatus();
+                }
+
             break;
 
         }// switch
@@ -215,37 +233,6 @@ function getClientPayments($db) {
 
 }// get payment history
 
-function updateClientPayment($db) {
-
-    $SERVICES = new Services($db);
-    $SERVICES->client_id = $_POST['client_id'];
-    $SERVICES->payment = $_POST['payment'];
-    $SERVICES->payment_id = $_POST['payment_id'];
-    $SERVICES->total_paid = $_POST['total_paid'] + $SERVICES->payment;
-    $result = $SERVICES->updatePayment();
-
-    try {
-
-        // Update Status if Payment is Successful
-        if($result['status'] == true) {
-    
-            // Check if Rental is Fully Paid
-            if($SERVICES->total_paid == $_POST['service_price']) {
-                $SERVICES->status = 'Paid';
-                $SERVICES->form_id = $_POST['form_id'];
-                $SERVICES->updateStatus();
-            }
-    
-        }// if successful payment
-
-        return json_encode(['status' => true]);
-
-    }catch(Exception $e) {
-        return json_encode(['status' => false,'message'=> $e->getMessage()]);
-    }
-
-}// update payment
-
 switch($_POST['case']) {
 
     // Get All Services
@@ -274,8 +261,6 @@ switch($_POST['case']) {
     case 'client reports': echo getPaymentHistory($db); break;
     // Get All Client Payments
     case 'get client payments': echo getClientPayments($db); break;
-    // Update Client Payment
-    case 'update client payment': echo updateClientPayment($db); break;
 
 }// switch
 
