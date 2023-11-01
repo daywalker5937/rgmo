@@ -147,7 +147,7 @@
                             {title: 'Price', 'data': 'service_price', targets: [2]},
                             {title: 'Total Paid', 'data': 'total_paid', targets: [3]},
                             {title: 'Paid in Transaction', 'data': 'payment', targets: [4]},
-                            {title: 'Balance', 'data': 'balance', targets: [5]}
+                            {title: 'Balance', 'data': 'payment_balance', targets: [5]}
                         ]
                     });
 
