@@ -299,33 +299,13 @@ function deleteUser($db) {
 
 switch($_POST['case']) {
 
-    case 'get_info':
-        echo getInfo($_POST['id'], $db);
-    break;
-
-    case 'get all clients':
-        echo getAllClients($db);
-    break;
-
-    case 'update client registration':
-        echo updateClientRegistration($db);
-    break;
-
-    case 'get registered clients':
-        echo getRegisteredClients(getAllClients($db));
-    break;
-
-    case 'get for update':
-        echo updateDisplay(json_decode(getInfo($_POST['id'], $db)));
-    break;
-
-    case 'update client info':
-        echo updateClientInfo($db);
-    break;
-
-    case 'delete user':
-        echo deleteUser($db);
-    break;
+    case 'get_info': echo getInfo($_POST['id'], $db); break;
+    case 'get all clients': echo getAllClients($db); break;
+    case 'update client registration': echo updateClientRegistration($db); break;
+    case 'get registered clients': echo getRegisteredClients(getAllClients($db)); break;
+    case 'get for update': echo updateDisplay(json_decode(getInfo($_POST['id'], $db))); break;
+    case 'update client info': echo updateClientInfo($db); break;
+    case 'delete user': echo deleteUser($db); break;
 
 }// switch
 
