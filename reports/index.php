@@ -37,7 +37,7 @@
                 <div class="container-fluid">
                     <div class="row mb-2">
                         <div class="col-sm-6">
-                            <h1 class="m-0">Reports</h1>
+                            <!-- <h1 class="m-0">Reports</h1> -->
                         </div><!-- /.col -->
                     </div><!-- /.row -->
                 </div><!-- /.container-fluid -->
@@ -48,29 +48,17 @@
             <section class="content">
                 <div class="container-fluid">
                     
-                    <!-- Admin Dashboard View -->
-                    <?php if($SES->role_name == 'admin') { ?>
+                    <!-- Admin Report View -->
+                    <?php
+                        if($SES->role_name == 'admin') {
 
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="card">
-                                    <div class="card-header">
-                                        <h4>Payments Report</h4>
-                                    </div>
-                                    <!-- /.card-header -->
-                                    <div class="card-body">
-                                        <table class="table table-bordered table-striped" id="admin-reports-table"></table>
-                                    </div>
-                                    <!-- /.card-body -->
-                                </div>
-                                <!-- /.card -->
-                            </div>
-                            <!-- /.col-12 -->
-                        </div>
-                        <!-- /.row -->
+                            // Switch Get
+                            switch($_GET['link']) {
+                                case 'payment': require_once 'payment.html'; break;
+                            }// switch
 
-                    <?php } ?>
-                    <!-- Admin Dashboard View End -->
+                        }
+                    ?>
                     
                     <!-- Client Dashboard View -->
                     <?php if($SES->role_name == 'client') { ?>
@@ -130,26 +118,33 @@
                 // If Admin
                 case 'admin':
 
-                    // Reports Table
-                    $('#admin-reports-table').DataTable({
-                        "responsive": true,
-                        "autoWidth": false,
-                        "lengthChange": false,
-                        "aaSorting": [],
-                        ajax: {
-                            url: '../controller/ServicesController.php',
-                            type: 'POST',
-                            data: {case: 'get client payments'}
-                        },
-                        columns: [
-                            {title: 'Client Name', 'data': 'client_name', targets: [0]},
-                            {title: 'Service', 'data': 'type_name', targets: [1]},
-                            {title: 'Price', 'data': 'service_price', targets: [2]},
-                            {title: 'Total Paid', 'data': 'total_paid', targets: [3]},
-                            {title: 'Paid in Transaction', 'data': 'payment', targets: [4]},
-                            {title: 'Balance', 'data': 'payment_balance', targets: [5]}
-                        ]
-                    });
+                    switch(GetURLParameter('link')) {
+                        
+                        // Reports Table
+                        case 'payment':
+                            $('#admin-reports-table').DataTable({
+                                "responsive": true,
+                                "autoWidth": false,
+                                "lengthChange": false,
+                                "aaSorting": [],
+                                ajax: {
+                                    url: '../controller/ServicesController.php',
+                                    type: 'POST',
+                                    data: {case: 'get client payments'}
+                                },
+                                columns: [
+                                    {title: 'Client Name', 'data': 'client_name', targets: [0]},
+                                    {title: 'Service', 'data': 'type_name', targets: [1]},
+                                    {title: 'Price', 'data': 'service_price', targets: [2]},
+                                    {title: 'Total Paid', 'data': 'total_paid', targets: [3]},
+                                    {title: 'Paid in Transaction', 'data': 'payment', targets: [4]},
+                                    {title: 'Balance', 'data': 'payment_balance', targets: [5]}
+                                ]
+                            });
+                        break;
+
+                    }// switch
+                    
 
                 break;
 
@@ -177,8 +172,6 @@
                 break;
 
             }// switch
-
-            
 
         });// document ready
 
