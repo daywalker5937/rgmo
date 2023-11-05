@@ -1,35 +1,22 @@
 
 // Client Dashboard
-$.ajax({
-    url: '../controller/ServicesController.php',
-    type: 'POST',
-    data: {case: 'services'},
-    success: function(data) {
-
-        // Icon Total Number of Services
-        $('#number-icon-id').addClass("bi bi-"+data.length+"-circle fa-lg");
-        
-        // List of Services
-        data.forEach(element => {
-            
-            let outer_div = $("<div class='row justify-content-center mb-2'></div>");
-            let inner_div = $("<div class='col-11'></div>");
-            let data_a = $("<a href='#'></a>");
-            let data_div = $("<div class='form-control border border-dark'></div>");
-
-            data_div.text(element.service_name).on('mouseover', () => { 
-                $(data_div).css('background-color', '#A9A9A9').css('color', '#fff');
-            }).on('mouseleave', () => { 
-                $(data_div).css('background-color', '#fff').css('color', '#000000');
-            });
-            data_a.append(data_div)
-            inner_div.append(data_a);
-            outer_div.append(inner_div);
-            $('#card-services-id').append(outer_div);
-
-        });
-    }
-});// ajaxs
+let client_payments = $('#client-payments-table').DataTable({
+    "responsive": true,
+    "autoWidth": false,
+    "lengthChange": false,
+    select: true,
+    ajax: {
+        url: '../controller/ServicesController.php',
+        type: 'POST',
+        data: {case: 'user payment'}
+    },
+    columns: [
+        {title: 'Service', 'data': 'type_name', targets: [0]},
+        {title: 'Price', 'data': 'service_price', targets: [1]},
+        {title: 'Payment', 'data': 'payment', targets: [2]},
+        {title: 'Balance', 'data': 'payment_balance', targets: [3]}
+    ]
+});
 
 // Get Number of Tenants
 $.ajax({
@@ -338,8 +325,6 @@ let payments_table = $('#admin-payment-list').DataTable({
 payments_table.on('select', function(e, dt, type, indexes) {
 
     let selected_row = payments_table.row('.selected').data();
-
-    console.log("selected payment", selected_row);
 
     if(selected_row.remaining_balance !== 0) {
 

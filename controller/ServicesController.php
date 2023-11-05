@@ -8,6 +8,7 @@ header("Access-Control-Allow-Methods: POST");
 header('Content-Type: application/json; charset=utf-8');
 
 include_once  __DIR__ . '/../includes/config/database.php';
+include_once __DIR__ . '/../objects/session.php';
 include_once __DIR__ . '/../objects/services.php';
 include_once __DIR__ . '/../objects/profile.php';
 include_once __DIR__ . '/EmailController.php';
@@ -233,6 +234,50 @@ function getClientPayments($db) {
 
 }// get payment history
 
+// Get this Logged In User Payment
+function getUserPayments($db) {
+
+    $SES = Session::getInstance();
+    $id = $SES->id;
+    
+    $query = "SELECT A.*, B.* FROM tbl_payment_logs as A
+            LEFT JOIN tbl_payments as B
+            ON A.payment_id = B.payment_id
+            WHERE A.client_id = ?
+            ORDER BY A.logs_id DESC
+        ";
+
+    $stmt = $db->prepare($query);
+    $stmt->bindParam(1, $id);
+    $stmt->closeCursor();
+    $stmt->execute();
+    $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    foreach($data as $key => $value) {
+        
+        // Get Name of Id
+        $PROFILE = new Profile($db, $value['client_id']);
+        $data[$key]['client_name'] = $PROFILE->firstname . " " . $PROFILE->lastname;
+
+        // Get Service Name
+        $SERVICE_DATA = new Services($db);
+        $SERVICE_DATA->form_id = $value['form_id'];
+        $SERVICE_DATA->type_id = $SERVICE_DATA->getClientFormData()['service_id'];
+        $SERVICE_DATA->getServiceInfo();
+        $data[$key]['type_name'] = $SERVICE_DATA->type_name;
+        $data[$key]['location'] = $SERVICE_DATA->location;
+        $data[$key]['price'] = $SERVICE_DATA->price;
+        $data[$key]['description'] = $SERVICE_DATA->description;
+        $data[$key]['availability_status'] = $SERVICE_DATA->availability_status;
+        $data[$key]['service_id'] = $SERVICE_DATA->service_id;
+        $data[$key]['balance'] = $value['service_price'] - $value['total_paid'];
+
+    }// foreach
+
+    return json_encode(['data' => $data]);
+
+}// get user payments
+
 switch($_POST['case']) {
 
     // Get All Services
@@ -261,6 +306,8 @@ switch($_POST['case']) {
     case 'client reports': echo getPaymentHistory($db); break;
     // Get All Client Payments
     case 'get client payments': echo getClientPayments($db); break;
+    // Get this Logged In User Payments
+    case 'user payment': echo getUserPayments($db); break;
 
 }// switch
 

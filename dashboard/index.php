@@ -140,47 +140,21 @@
                     <!-- Client Dashboard View -->
                     <?php if($SES->role_name == 'client') { ?>
 
-                        <!-- Header -->
                         <div class="row">
-
-                            <div class="card border border-dark col-12">
-
-                                <div class="card-header">
-                                    
-                                    <div class="row">
-                                        <div class="col-11">
-                                            <h3>Total Number of Services Available</h3>
-                                        </div>
-
-                                        <div class="col-1">
-                                            <h3><i id="number-icon-id"></i></h3>
-                                        </div>
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h4>Payments</h4>
                                     </div>
-
+                                    <!-- /.card-header -->
+                                    <div class="card-body">
+                                        <table class="table table-bordered table-striped" id="client-payments-table"></table>
+                                    </div>
+                                    <!-- /.card-body -->
                                 </div>
-                                <!-- /.card-header -->
-
+                                <!-- /.card -->
                             </div>
-                            <!-- /.card -->
-
-                        </div>
-                        <!-- /.row -->
-
-                        <!-- List of Services -->
-                        <div class="row">
-
-                            <div class="card border border-dark col-12">
-
-                                <div class="card-header">
-                                    <h3>List of Services</h3>
-                                </div>
-                                <!-- /.card-header -->
-
-                                <div class="card-body" id="card-services-id"></div>
-
-                            </div>
-                            <!-- /.card -->
-
+                            <!-- /.col-12 -->
                         </div>
                         <!-- /.row -->
 
